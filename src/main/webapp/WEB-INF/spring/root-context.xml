@@ -28,6 +28,6 @@
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactoryBean"/>
 	</bean>
-	<mybatis-spring:scan base-package="com.multi.mapper"/>
+	<!-- <mybatis-spring:scan base-package="com.multi.mapper"/>  -->
 	
 </beans>

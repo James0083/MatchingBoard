@@ -104,7 +104,7 @@
 				</tr>
 				<tr>
 					<td style="width: 20%"><b>최대인원*</b></td>
-					<td style="width: 80%"><input type="number" value="2" min="2" id="rmaxpeople"></td>
+					<td style="width: 80%"><input type="number" value="2" min="2" max="20" id="rmaxpeople"></td>
 				</tr>
 				<tr>
 					<td style="width: 20%"><b>장소*</b></td>

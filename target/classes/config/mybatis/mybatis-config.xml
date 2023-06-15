@@ -6,9 +6,10 @@
   
   <!-- typeAlias 타입 별칭 설정 ========================== -->
   <typeAliases>
-<!-- 
-  	<typeAlias type="com.user.model.UserVO" alias="User"/>
--->
+  	<typeAlias type="com.multi.model.GameVO" alias="Game"/>
+  	<typeAlias type="com.multi.model.RoomVO" alias="Room"/>
+  	<typeAlias type="com.multi.model.ShopVO" alias="Shop"/>
+  	<typeAlias type="com.multi.model.UserVO" alias="User"/>
   </typeAliases>
   
   

@@ -18,10 +18,6 @@ public class mainController {
 	@GetMapping(value="/createRoom")
 	public String createRoom() {
 		
-		//attribute 설정
-		//jsp ${dateString }
-		//html input-date value="2023-06-13" min="2023-06-13" 
-		// input-time value="13:34"
 		return "matchingRoom/createRoom";
 	}
 	

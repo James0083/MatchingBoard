@@ -41,14 +41,14 @@ CREATE TABLE Room (
 CREATE TABLE Roompeople (
     userid VARCHAR2(100),
     roomid VARCHAR2(30),
-    FOREIGN KEY (userid) REFERENCES WebUser(userid),
+    FOREIGN KEY (userid) REFERENCES Member(userid),
     FOREIGN KEY (roomid) REFERENCES Room(roomid)
 );
 
 CREATE TABLE Schedule (
     userid VARCHAR2(100),
     roomid VARCHAR2(30),
-    FOREIGN KEY (userid) REFERENCES WebUser(userid),
+    FOREIGN KEY (userid) REFERENCES Member(userid),
     FOREIGN KEY (roomid) REFERENCES Room(roomid)
 );
 
@@ -57,7 +57,7 @@ CREATE TABLE Game (
     explane VARCHAR2(2000) NOT NULL,
     minpeople NUMBER(1) NOT NULL,
     maxpeople NUMBER(2) NOT NULL,
-    playtime NUMBER(2) NOT NULL,
+    playtime NUMBER(3) NOT NULL,
     genre VARCHAR2(15) NOT NULL,
     dlevel NUMBER(1) NOT NULL,
     pubYear NUMBER(4) NOT NULL,

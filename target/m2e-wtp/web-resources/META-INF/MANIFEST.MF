@@ -1,5 +1,10 @@
 Manifest-Version: 1.0
-Built-By: jaewonyou
-Build-Jdk: 11.0.19
+<<<<<<< HEAD
+Built-By: home
+Build-Jdk: 11.0.1
+=======
+Built-By: user
+Build-Jdk: 11.0.18
+>>>>>>> 9a643c664cac4839a9ef9dc51bc574ddaaec3e08
 Created-By: Maven Integration for Eclipse
 

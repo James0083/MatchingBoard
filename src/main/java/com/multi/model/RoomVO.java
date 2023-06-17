@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class RoomVO {
 
-	private int roomid;
+	private String roomid;
 	private String rname;
 	private String rplace;
 	private int rmaxpeople;
@@ -20,7 +20,7 @@ public class RoomVO {
 	private Timestamp rdatetime;
 	
 	
-	public RoomVO(int roomid, String rname, String rplace, int rmaxpeople, String rgenre, String rgame, String rstr,
+	public RoomVO(String roomid, String rname, String rplace, int rmaxpeople, String rgenre, String rgame, String rstr,
 			Timestamp rdatetime) {
 		super();
 		this.roomid = roomid;
@@ -36,7 +36,7 @@ public class RoomVO {
 
 
 	public RoomVO() {
-		this(0, null, null, 0, null, null, null, null);
+		this(null, null, null, 0, null, null, null, null);
 	}
 	
 }

@@ -14,12 +14,14 @@ public class GameVO {
 
 	private int age;
 	private int pubYear;
+	private int dlevel;
 	private String genre;
 	private String explane;
 	
-	private String expl_link;
-	private String shop_link1;
-	private String shop_link2;
+	private String youtube_link;
+	private String namu_link;
+	private String shop_link;
+	
 	
 	private String gimage;
 	

@@ -11,6 +11,7 @@
 
 <P>  The time on the server is ${serverTime}. </P>
 
-<a href="./createRoom">createRoom</a>
+<p><a href="./createRoom">createRoom</a></p>
+<p><a href="./user/mypage">user-mypage</a></p>
 </body>
 </html>

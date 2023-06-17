@@ -52,19 +52,20 @@
 		<!-- navbar----------------------------- -->
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 			<!-- Brand -->
-			<a class="navbar-brand" href="${myctx}/index">Logo</a>
+			<a class="navbar-brand" href="${myctx}">
+				<img src="${myctx}/images/dice_logo.png" style="width:30px; height: 30px; filter: invert(100%);">
+			</a>
 
 			<!-- Links -->
 			<ul class="navbar-nav">
-
 				<!-- Dropdown -->
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" id="navbardrop"
-					data-toggle="dropdown"> Auth Page </a>
+				<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> Auth Page </a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="${myctx}/admin">AdminPage</a> <a
-							class="dropdown-item" href="${myctx}/user/myPage">MyPage</a>
-					</div></li>
+						<a class="dropdown-item" href="${myctx}/admin">AdminPage</a> 
+						<a class="dropdown-item" href="${myctx}/user/mypage">MyPage</a>
+					</div>
+				</li>
 
 				<c:if test="${loginUser eq null }">
 					<!-- 로그인 하지 않은 경우라면 ----------------------- -->

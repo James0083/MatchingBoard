@@ -1,0 +1,196 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<style>
+.myPageTable {
+	width: 70%;
+	margin: 1em auto;
+}
+
+td {
+	padding: 7px;
+	text-align: center;
+}
+
+td:last-child {
+	text-align: left;
+}
+
+.attendance {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	text-align: center;
+	font-size: 1.2em;
+	weight: bold;
+	color: white;
+	line-height: 50px;
+}
+
+#attend {
+	background-color: #2268aa;
+}
+
+#late {
+	background-color: #ecba10;
+}
+
+#absent {
+	background-color: #de352e;
+}
+
+.progress {
+	appearance: none;
+}
+
+.progress::-webkit-progress-bar {
+	background: #f0f0f0;
+	border-radius: 15px;
+	/* box-shadow: inset 3px 3px 10px #ccc; */
+}
+
+.progress::-webkit-progress-value {
+	border-radius: 10px;
+	background: #1D976C;
+	background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);
+	background: linear-gradient(to right, #93F9B9, #1D976C);
+	overflow: hidden;
+}
+
+#profile_img {
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.ac_link_logo_img {
+	width: 35px;
+	height: 35px;
+}
+</style>
+<div class="container text-center">
+	<h1>MyPage-${loginUser.nickname} 님 정보</h1>
+	<p>회원 인증 페이지 - 로그인 해야 들어올 수 있는 페이지입니다</p>
+	<div class="row">
+	<div class="col-4" style="padding: 0px;">
+		<table border="1" class="mt-3 text-center" style="width:100%;">
+			<tr>
+				<%-- <td width="25%"><img src="${loginUser.profile_img}"></td> --%>
+				<td width="25%"><img id="profile_img"
+					src="../images/profile_example.png"></td>
+				<%-- <td width="75%">
+					<a href=""><img src="../images/grade1.png"></a>
+					<b>${loginUser.nickname}</b>
+				</td> --%>
+				<td width="75%"><a href=""><img src="../images/grade1.png"></a>
+					<b style="color: #505050;">유저 닉네임</b></td>
+			</tr>
+			<tr>
+				<td>지역</td>
+				<td><b>${loginUser.area}</b></td>
+			</tr>
+			<tr>
+				<td>선호 장르</td>
+				<%-- <td><b>${loginUser.fgenre1}, ${loginUser.fgenre2}, ${loginUser.fgenre3}</b></td> --%>
+				<td><b>장르1, 장르2, 장르3</b></td>
+			</tr>
+			<tr>
+				<td>선호 게임 Top3</td>
+				<%-- <td><b>${loginUser.fgame1}, ${loginUser.fgame2}, ${loginUser.fgame3}</b></td> --%>
+				<td><b>게임1, 게임2, 게임3</b></td>
+			</tr>
+			<tr>
+				<td>경험치</td>
+				<td><progress class="progress" value="${loginUser.exp}"
+						max="${loginUser.grade *100}"></progress></td>
+			</tr>
+			<tr>
+				<td>매너점수</td>
+				<td><progress class="progress" value="${loginUser.manner}"
+						max="100"></progress></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<table border="0">
+						<tr>
+							<td><div class="attendance" id="attend">0${loginUser.attend}</div></td>
+							<td><div class="attendance" id="late">0${loginUser.late}</div></td>
+							<td><div class="attendance" id="absent">0${loginUser.absent}</div></td>
+						</tr>
+						<tr>
+							<td style="text-align: center">출석</td>
+							<td style="text-align: center">지각</td>
+							<td style="text-align: center">결석</td>
+						</tr>
+					</table>
+	
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div>
+						<img class="ac_link_logo_img" src="../images/google_icon.png" style="width: 29px; height: 29px; margin: 3px;"> 
+		<!-- 				<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18">
+							<path fill="#4285F4"
+								d="M17.785 9.169c0-.738-.06-1.276-.189-1.834h-8.42v3.328h4.942c-.1.828-.638 2.073-1.834 2.91l-.016.112 2.662 2.063.185.018c1.694-1.565 2.67-3.867 2.67-6.597z"></path>
+							<path fill="#34A853"
+								d="M9.175 17.938c2.422 0 4.455-.797 5.94-2.172l-2.83-2.193c-.758.528-1.774.897-3.11.897-2.372 0-4.385-1.564-5.102-3.727l-.105.01-2.769 2.142-.036.1c1.475 2.93 4.504 4.943 8.012 4.943z"></path>
+							<path fill="#FBBC05"
+								d="M4.073 10.743c-.19-.558-.3-1.156-.3-1.774 0-.618.11-1.216.29-1.774l-.005-.119L1.254 4.9l-.091.044C.555 6.159.206 7.524.206 8.969c0 1.445.349 2.81.957 4.026l2.91-2.252z"></path>
+							<path fill="#EB4335"
+								d="M9.175 3.468c1.684 0 2.82.728 3.468 1.335l2.531-2.471C13.62.887 11.598 0 9.175 0 5.667 0 2.638 2.013 1.163 4.943l2.9 2.252c.727-2.162 2.74-3.727 5.112-3.727z"></path>
+						</svg> -->
+						<span> 연동정보 / 연동하기 </span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div>
+						<img class="ac_link_logo_img" src="../images/naver_icon.png" style="width: 35px; height: 35px;">
+						<span> 연동정보 / 연동하기 </span>
+					</div>
+			 	</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div>
+						<div style="border-radius: 3px; background-color: #f8e20a; width: 35px; height: 35px; text-align: center; display: inline-block;">
+							<img class="ac_link_logo_img" src="../images/kakaoicon.png" style="width: 35px; height: 35px;">
+							<!-- <img class="ac_link_logo_img" src="../images/kakao_icon.png"> -->
+							<!-- <svg width="18px" xmlns="http://www.w3.org/2000/svg" height="17" viewBox="0 0 18 17">
+								<g transform="translate(0.000000,17.000000) scale(0.100000,-0.100000)" stroke="none">
+								<path fill="#212529"
+									d="M38 154 c-15 -8 -30 -25 -34 -38 -6 -26 10 -66 27 -66 7 0 9 -10 5 -26 -7 -25 -6 -25 16 -10 12 9 31 16 41 16 29 0 75 28 82 50 10 31 -3 59 -35 75 -36 19 -67 18 -102 -1z"></path>
+								</g>
+							</svg> -->
+							</div>
+						<span> 연동정보 / 연동하기 </span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="text-align: center">
+					<form name='f' method='post' action='modify'>
+						<input type="hidden" name="idx" value="${loginUser.idx}">
+						<button class="btn btn-success">정보수정|탈퇴</button>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-8" style="padding: 0px;">
+		<table border="0" class="mt-3 text-center" style="width:100%; padding: 0px;">
+			<tr>
+				<td colspan="2">
+					<div class="calendar" id="calender">
+						Calendar
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</div>
+</div>

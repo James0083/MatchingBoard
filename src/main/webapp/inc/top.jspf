@@ -45,10 +45,10 @@
 </script>
 </head>
 <body>
-	<div class="container-fluid">
-		<div class="jumbotron text-center" style="margin-bottom: 0">
+	<div class="container container-fluid">
+<!-- 		<div class="jumbotron text-center" style="margin-bottom: 0">
 			<h1>Matching Board</h1>
-		</div>
+		</div> -->
 		<!-- navbar----------------------------- -->
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 			<!-- Brand -->

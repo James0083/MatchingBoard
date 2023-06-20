@@ -13,5 +13,9 @@
 
 <p><a href="./createRoom">createRoom</a></p>
 <p><a href="./user/mypage">user-mypage</a></p>
+<p><a href="./search/BoardSearch">BoardSearch</a></p>
 </body>
 </html>
+
+
+<!--  -->

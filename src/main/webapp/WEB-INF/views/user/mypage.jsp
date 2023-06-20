@@ -181,16 +181,11 @@ td:last-child {
 			</tr>
 		</table>
 	</div>
-	<div class="col-8" style="padding: 0px;">
-		<table border="0" class="mt-3 text-center" style="width:100%; padding: 0px;">
-			<tr>
-				<td colspan="2">
-					<div class="calendar" id="calender">
-						Calendar
-					</div>
-				</td>
-			</tr>
-		</table>
+	<div class="col-8" style="padding: 10px;">
+		<div class="my_calendar" id="my_calendar">
+			<!-- Calendar 보여주기 -->
+			<%@ include file="/inc/calendar.jspf" %>
+		</div>
 	</div>
 	</div>
 </div>

@@ -62,7 +62,7 @@ h1 {
 </style>
 </head>
 <body>
-	<h1>${moimRoom.rname}매장 평가</h1>
+	<h1>${moimRoom.rname}매장평가</h1>
 	<form>
 		<div class="rating-container">
 			<p>질문 1: 해당 카페의 게임 종류는 다양했나요?</p>
@@ -138,7 +138,8 @@ h1 {
 
 	<script>
     let ratings = {};
-
+    
+    //별점 체크
     function setRating(value, questionNumber) {
       ratings[questionNumber] = value;
 
@@ -151,6 +152,16 @@ h1 {
         }
       }
     }
+    
+    //별점 총합
+    function averageRating(ratings) {
+   	  const values = Object.values(ratings);
+   	  const totalRating = values.reduce((sum, value) => sum + value, 0);
+	  const questionCount = Object.keys(ratings).length;
+   	  const avgRating = questionCount > 0 ? totalRating / questionCount : 0;
+      return avgRating.toFixed(2);//소수점 2째자리
+   	}
+    
 	
     //모임원 평가로 이동
     function redirectMemEval() {
@@ -159,14 +170,18 @@ h1 {
     
     document.querySelector('form').addEventListener('submit', function (e) {
       e.preventDefault();
-      const hasEmptyRating = Object.values(ratings).some(value => value === undefined);
+      /* const hasEmptyRating = Object.values(ratings).some(value => value === undefined || value === null);
       if (hasEmptyRating) {
         alert('모든 질문에 별점을 선택해주세요.');
         return;
-      }
-      alert('평가에 참여해주셔서 감사합니다.');
+      } */
+      const avgStar = averageRating(ratings);
+      alert('평가에 참여해주셔서 감사합니다. 총점: ' + avgStar);
       this.reset();
       window.location.href = '../';
+      
+      
+      
     });
   </script>
 </body>

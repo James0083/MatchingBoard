@@ -66,84 +66,94 @@ h1 {
 <body>
 	<h1>모임원 평가</h1>
 
-	<%!public static int getMemberNum() {
-		// VO에서 인원 수 가져와야 함
-		int memberNum = 3; // 예시로 3명이라 가정
-		return memberNum;
-	}%>
+	<c:set var="memberNum" value="3" />
+	<!-- 참여인원 수 -->
 
-	<%
-	int memberNum = getMemberNum();
+	<form>
+		<c:forEach var="i" begin="1" end="${memberNum}">
+			<div class="member-rating">
+				<h4>${i}님평가</h4>
+				<!-- 참여인원 닉네임 필요 -->
+				<div class="rating-container">
+					<p>질문 1: 해당 모임원이 시간약속은 잘 지켰나요?</p>
+					<%-- <div class="stars">
+						<c:forEach var="star" begin="1" end="5">
+							<span class="star" onclick="setRating(${star}, ${(i*2)})">&#9734;</span>
+						</c:forEach>
+					</div> --%>
+					<div class="stars">
+						<span class="star" onclick="setRating(1, ${(i-1)*3+1})">&#9734;</span> 
+						<span class="star" onclick="setRating(2, ${(i-1)*3+1})">&#9734;</span> 
+						<span class="star" onclick="setRating(3, ${(i-1)*3+1})">&#9734;</span> 
+						<span class="star" onclick="setRating(4, ${(i-1)*3+1})">&#9734;</span> 
+						<span class="star" onclick="setRating(5, ${(i-1)*3+1})">&#9734;</span>
+					</div>
+					<p>질문 2: 해당 모임원의 게임플레이 매너는 어떠했나요?</p>
+					<div class="stars">
+						<span class="star" onclick="setRating(1, ${(i-1)*3+2})">&#9734;</span> 
+						<span class="star" onclick="setRating(2, ${(i-1)*3+2})">&#9734;</span> 
+						<span class="star" onclick="setRating(3, ${(i-1)*3+2}">&#9734;</span>
+						<span class="star" onclick="setRating(4, ${(i-1)*3+2})">&#9734;</span> 
+						<span class="star" onclick="setRating(5, ${(i-1)*3+2})">&#9734;</span>
+					</div>
+					<p>질문 3: 해당 모임원의 모임참여 매너는 어떠했나요?</p>
+					<div class="stars">
+						<span class="star" onclick="setRating(1, ${(i-1)*3+3})">&#9734;</span>
+						<span class="star" onclick="setRating(2, ${(i-1)*3+3})">&#9734;</span> 
+						<span class="star" onclick="setRating(3, ${(i-1)*3+3})">&#9734;</span>
+						<span class="star" onclick="setRating(4, ${(i-1)*3+3})">&#9734;</span> 
+						<span class="star" onclick="setRating(5, ${(i-1)*3+3})">&#9734;</span>
+					</div>
+				</div>
+			</div>
+		</c:forEach>
 
-	StringBuilder buf = new StringBuilder();
-	buf.append("<form>\n");
-
-	/* 인원 수 만큼 반복 */
-	for (int i = 1; i <= memberNum; i++) {
-		buf.append("  <h4>").append(i).append("님 평가</h4>\n");
-		buf.append("  <div class=\"rating-container\">\n");
-		buf.append("    <p>질문 1: 해당 모임원이 시간약속은 잘 지켰나요?</p>\n");
-		buf.append("    <div class=\"stars\">\n");
-		/* 별점 반복 */
-		for (int j = 1; j <= 5; j++) {
-			buf.append("      <span class=\"star\" onclick=\"setRating(").append(j).append(", ").append(i)
-			.append(")\">&#9734;</span>\n");
-		}
-		buf.append("    </div>\n");
-		buf.append("  </div>\n");
-
-		buf.append("  <div class=\"rating-container\">\n");
-		buf.append("    <p>질문 2: 해당 모임원의 게임플레이 매너는 어떠했나요?</p>\n");
-		buf.append("    <div class=\"stars\">\n");
-		for (int j = 1; j <= 5; j++) {
-			buf.append("      <span class=\"star\" onclick=\"setRating(").append(j).append(", ").append(i)
-			.append(")\">&#9734;</span>\n");
-		}
-		buf.append("    </div>\n");
-		buf.append("  </div>\n");
-
-		buf.append("  <div class=\"rating-container\">\n");
-		buf.append("    <p>질문 3: 해당 모임원의 모임참여 매너는 어떠했나요?</p>\n");
-		buf.append("    <div class=\"stars\">\n");
-		for (int j = 1; j <= 5; j++) {
-			buf.append("      <span class=\"star\" onclick=\"setRating(").append(j).append(", ").append(i)
-			.append(")\">&#9734;</span>\n");
-		}
-		buf.append("    </div>\n");
-		buf.append("  </div>\n");
-	}
-
-	buf.append("  <br>\n");
-	buf.append("  <button type=\"submit\">제출</button>\n");
-	buf.append("</form>");
-
-	out.println(buf.toString());
-	%>
+		<br>
+		<button type="submit">제출</button>
+	</form>
 
 	<script>
-        let ratings = {};
+	  let ratings = {};
+	
+	  // 별점 체크
+	  function setRating(value, questionNumber) {
+	    ratings[questionNumber] = value;
+	    
+	    const ratingContainer = document.querySelectorAll('.rating-container')[questionNumber - 1];
+	    const stars = ratingContainer.querySelectorAll('.stars .star');
+	    
+	    for (let i = 0; i < stars.length; i++) {
+	      if (i < value) {
+	        stars[i].classList.add('active');
+	      } else {
+	        stars[i].classList.remove('active');
+	      }
+	    }
+	  }
 
-        function setRating(value, questionNumber) {
-            ratings[questionNumber] = value;
-
-            const stars = document.querySelectorAll('.rating-container:nth-child(' + questionNumber + ') .star');
-            for (let i = 0; i < stars.length; i++) {
-                if (i < value) {
-                    stars[i].classList.add('active');
-                } else {
-                    stars[i].classList.remove('active');
-                }
+        //참가자별 평균 별점 계산
+        function averageRatings(ratings) {
+            const memberCount = ${memberNum};
+            const avgRatings = {};
+            for (let i = 1; i <= memberCount; i++) {
+                const memberRatings = Object.values(ratings).filter(key => key.startsWith(i));
+                const ratingSum = memberRatings.reduce((sum, value) => sum + value, 0);
+                const ratingCount = memberRatings.length;
+                const avgRating = ratingSum / ratingCount;
+                avgRatings[i] = avgRating;
             }
+            return avgRatings;
         }
-
+        
         document.querySelector('form').addEventListener('submit', function (e) {
             e.preventDefault();
             const hasEmptyRating = Object.values(ratings).some(value => value === undefined);
-            if (hasEmptyRating) {
+            /* if (hasEmptyRating) {
                 alert('모든 질문에 별점을 선택해주세요.');
                 return;
-            }
-            alert('평가에 참여해주셔서 감사합니다.');
+            } */
+            const avgStars = averageRatings(ratings);
+            alert('평가에 참여해주셔서 감사합니다. 총점: ' + avgStars);
             this.reset();
             window.location.href = '../';
         });

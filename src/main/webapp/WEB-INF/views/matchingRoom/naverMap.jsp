@@ -78,6 +78,7 @@
 				infowindow
 						.setContent('<div style="padding:20px;"><h5 style="margin-bottom:5px;color:#f00;">Geolocation not supported</h5></div>');
 				infowindow.open(map, center);
+				imfowindow.open(map,marker);
 			}
 		});
 
@@ -92,6 +93,18 @@
 	            position: naver.maps.Position.TOP_RIGHT
 	        }
 		});
+		console.log("지도 초기화 완료");
+
+        var tm128 = new naver.maps.Point(304793, 533627);
+        var latLng = naver.maps.TransCoord.fromTM128ToLatLng(tm128);
+
+        console.log("마커 위치: " + latLng.toString());
+
+        var markerOptions = {
+            position: latLng,
+            map: map
+        };
+        var marker = new naver.maps.Marker(markerOptions);
 
 		//지도 컨트롤
 		$("#controls").on("click", function(e) {

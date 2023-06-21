@@ -2,41 +2,10 @@
 	pageEncoding="UTF-8"%>
 
 <script type="text/javascript">
-/* 	function formcheck() {
-		if (croomf.rname.value == "") {
-			alert('방이름을 입력하세요');
-			croomf.rname.focus();
-			return;
-		}
-		if (croomf.rgenre.value == "") {
-			alert('장르를 선택하세요');
-			croomf.rgenre.focus();
-			return;
-		} */
-		/* if (croomf.rplace.value == "") {
-			alert('장소를 입력하세요');
-			croomf.rplace.focus();
-			return;
-		} */
-/* 		if (croomf.rdate.value == "") {
-			alert('날짜를 입력하세요');
-			croomf.rdate.focus();
-			return;
-		}
-		if (croomf.rtime.value == "") {
-			alert('시간을 입력하세요');
-			croomf.rtime.focus();
-			return;
-		}
-		croomf.rdatetime.value=croomf.rdate.value+" "+croomf.rtime.value;
-		alert(croomf.rdate.value+" + "+croomf.rtime.value+"/"+croomf.rdatetime.value);
-		
-		//window.document.croomf.submit();
-		croomf.submit();
-	} */
-	
 	$(function(){
-		$('#croomf').submit(function(){
+		$('#croomf').submit(function(e){
+			//alert('aa');
+			//e.preventDefault();
 			if (!$('#rname').val()) {
 				alert('방이름을 입력하세요');
 				$('#rname').focus();
@@ -62,8 +31,9 @@
 				$('#rtime').focus();
 				return false;
 			}
-			$('#rdatetime').val()=$('#rdate').val()+" "+$('#rtime').val();
-			alert($('#rdate').val()+" + "+$('#rtime').val()+"/"+$('#rdatetime').val());
+			$('#rdatetime').attr('value',$('#rdate').val()+"T"+$('#rtime').val());
+			//alert($('#rdate').val()+" + "+$('#rtime').val()+"==>"+$('#rdatetime').val());
+			//alert($('#rmaxpeople').val()+" , "+$('#rgenre').val()+" , "+$('#rstr').val());
 			
 		})//submit------------------
 	})//$() end-----------------
@@ -85,7 +55,7 @@
 			<tr>
 				<td style="width: 20%"><b>장르*</b></td>
 				<td style="width: 80%">
-					<select style="width:100px; padding:4px" id="rgenre">
+					<select style="width:100px; padding:4px" name="rgenre" id="rgenre">
 						<option value="">장르선택</option>
 						<option value="IQ">IQ</option>
 						<option value="strategy">전략</option>
@@ -100,11 +70,13 @@
 			</tr>
 			<tr>
 				<td style="width: 20%"><b>기본 보드게임</b></td>
-				<td style="width: 80%"><input type="text" name="rgame" id="rgame" readonly></td>
+				<td style="width: 80%"><input type="text" name="rgame" id="rgame"></td>
 			</tr>
 			<tr>
 				<td style="width: 20%"><b>최대인원*</b></td>
-				<td style="width: 80%"><input type="number" value="2" min="2" max="20" id="rmaxpeople"></td>
+				<td style="width: 80%">
+					<input type="number" value="2" min="2" max="20" name="rmaxpeople" id="rmaxpeople">
+				</td>
 			</tr>
 			<tr>
 				<td style="width: 20%"><b>장소*</b></td>
@@ -119,7 +91,7 @@
 				<td style="width: 80%">
 				<input type="hidden" name="rdatetime" id="rdatetime"> 
 				<input type="date" name="rdate" id="rdate"> 
-				<input type="time" name="rtime" id="rtime">
+				<input type="time" name="rtime" id="rtime" step="5">
 				<!-- <input type="datetime-local" name="rdatetime" id="rdatetime"> -->
 				<p id="testp"></p>
 				</td>
@@ -127,7 +99,7 @@
 			<tr>
 				<td style="width: 20%"><b>방설명</b></td>
 				<td style="width: 80%">
-				<textarea name="content" id="rstr" rows="10" cols="50" class="form-control" placeholder="모임방을 소개해보세요!"></textarea>
+				<textarea name="rstr" id="rstr" rows="10" cols="50" class="form-control" placeholder="모임방을 소개해보세요!"></textarea>
 				</td>
 			</tr>
 			<tr>

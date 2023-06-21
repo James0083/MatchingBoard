@@ -17,11 +17,11 @@ public class RoomVO {
 	
 //	private Date rdate;
 //	private Time rtime;
-	private Timestamp rdatetime;
+	private String rdatetime;
 	
 	
 	public RoomVO(String roomid, String rname, String rplace, int rmaxpeople, String rgenre, String rgame, String rstr,
-			Timestamp rdatetime) {
+			String rdatetime) {
 		super();
 		this.roomid = roomid;
 		this.rname = rname;

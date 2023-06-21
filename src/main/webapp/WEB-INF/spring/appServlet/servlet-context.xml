@@ -60,7 +60,7 @@
 	</beans:bean>
 -->
 	<!-- 스캔 대상 패키지를 등록=================================== -->
-	<context:component-scan base-package="com.multi.matchingBoard" />
+	<context:component-scan base-package="com.multi" />
 	
 	
 	

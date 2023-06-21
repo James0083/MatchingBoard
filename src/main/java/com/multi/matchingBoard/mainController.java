@@ -30,7 +30,7 @@ public class MainController {
 		log.info("room=="+room);
 		
 		
-		return "matchingRoom/roomDetail";
+		return "matchingRoom/roomView";
 	}
 	
 	@GetMapping(value="/roomView")

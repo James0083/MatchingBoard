@@ -70,21 +70,21 @@ td:last-child {
 	height: 35px;
 }
 </style>
+
 <div class="container text-center">
 	<h1>MyPage-${loginUser.nickname} 님 정보</h1>
 	<p>회원 인증 페이지 - 로그인 해야 들어올 수 있는 페이지입니다</p>
 	<div class="row">
-	<div class="col-4" style="padding: 0px;">
+	<div class="col-4" style="padding: 10px;">
 		<table border="1" class="mt-3 text-center" style="width:100%;">
 			<tr>
 				<%-- <td width="25%"><img src="${loginUser.profile_img}"></td> --%>
-				<td width="25%"><img id="profile_img"
-					src="../images/profile_example.png"></td>
+				<td width="25%"><img id="profile_img" src="../images/profile_example.png"></td>
 				<%-- <td width="75%">
 					<a href=""><img src="../images/grade1.png"></a>
 					<b>${loginUser.nickname}</b>
 				</td> --%>
-				<td width="75%"><a href=""><img src="../images/grade1.png"></a>
+				<td width="75%"><a href=""><img src="../images/grades/grade1.png" style="width:1.2em; height:1.2em;"></a>
 					<b style="color: #505050;">유저 닉네임</b></td>
 			</tr>
 			<tr>
@@ -149,7 +149,7 @@ td:last-child {
 			<tr>
 				<td colspan="2">
 					<div>
-						<img class="ac_link_logo_img" src="../images/naver_icon.png" style="width: 35px; height: 35px;">
+						<img class="ac_link_logo_img" src="../images/naver_icon.png">
 						<span> 연동정보 / 연동하기 </span>
 					</div>
 			 	</td>
@@ -158,7 +158,7 @@ td:last-child {
 				<td colspan="2">
 					<div>
 						<div style="border-radius: 3px; background-color: #f8e20a; width: 35px; height: 35px; text-align: center; display: inline-block;">
-							<img class="ac_link_logo_img" src="../images/kakaoicon.png" style="width: 35px; height: 35px;">
+							<img class="ac_link_logo_img" src="../images/kakaoicon.png">
 							<!-- <img class="ac_link_logo_img" src="../images/kakao_icon.png"> -->
 							<!-- <svg width="18px" xmlns="http://www.w3.org/2000/svg" height="17" viewBox="0 0 18 17">
 								<g transform="translate(0.000000,17.000000) scale(0.100000,-0.100000)" stroke="none">
@@ -181,16 +181,11 @@ td:last-child {
 			</tr>
 		</table>
 	</div>
-	<div class="col-8" style="padding: 0px;">
-		<table border="0" class="mt-3 text-center" style="width:100%; padding: 0px;">
-			<tr>
-				<td colspan="2">
-					<div class="calendar" id="calender">
-						Calendar
-					</div>
-				</td>
-			</tr>
-		</table>
+	<div class="col-8" style="padding: 10px;">
+		<div class="my_calendar" id="my_calendar">
+			<!-- Calendar 보여주기 -->
+			<%@ include file="/inc/calendar.jspf" %>
+		</div>
 	</div>
 	</div>
 </div>

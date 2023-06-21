@@ -7,48 +7,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matching Board</title>
-<!-- jQuery library -->
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<!-- Popper JS -->
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- 화면 해상도에 따라 글자 크기 대응(모바일 대응) -->
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>Matching Board</title>
+	<!-- jQuery library -->
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	<!-- Popper JS -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<!-- Latest compiled JavaScript -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
-/* div{
-        border:1px solid red;
-    } */
-/* 스크롤링은 되도록하되 스크롤바는 보이지 않게 */
-#content {
-	overflow-y: scroll;
-	-ms-overflow-style: none; /* 인터넷 익스플로러 */
-	scrollbar-width: none; /* 파이어폭스 */
-}
-
-#content::-webkit-scrollbar {
-	display: none; /* 크롬, 사파리, 오페라, 엣지 */
-}
+	/* 스크롤링은 되도록하되 스크롤바는 보이지 않게 */
+	#content {
+		overflow-y: scroll;
+		-ms-overflow-style: none; /* 인터넷 익스플로러 */
+		scrollbar-width: none; /* 파이어폭스 */
+	}
+	#content::-webkit-scrollbar {
+		display: none; /* 크롬, 사파리, 오페라, 엣지 */
+	}
 </style>
 <script>
-	$(document).ready(function() {
+	/* $(document).ready(function() {
 		$('.dropdown-toggle').dropdown()
-	});
+	}); */
 </script>
 </head>
 <body>
-	<div class="container-fluid">
-		<div class="jumbotron text-center" style="margin-bottom: 0">
+<div style="min-width: 900px">
+	<div class="container container-fluid">
+<!-- 		<div class="jumbotron text-center" style="margin-bottom: 0">
 			<h1>Matching Board</h1>
-		</div>
+		</div> -->
 		<!-- navbar----------------------------- -->
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 			<!-- Brand -->
@@ -85,4 +79,4 @@
 		<!-- ----------------------------------- -->
 	</div>
 
-	<div class="container mt-3" style="" id="content">
+	<div class="container mt-3" id="content">

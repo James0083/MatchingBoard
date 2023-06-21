@@ -9,7 +9,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @RequestMapping("/user")
 @Log4j
-public class userController {
+public class UserController {
 	
 	@GetMapping(value="/mypage")
 	public String mypage() {

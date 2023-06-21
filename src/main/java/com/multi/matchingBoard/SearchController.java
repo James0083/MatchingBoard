@@ -4,17 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/user")
-@Log4j
-public class UserController {
+@RequestMapping("/search")
+public class SearchController {
 	
-	@GetMapping(value="/mypage")
-	public String mypage() {
+	@GetMapping(value="/boardSearch")
+	public String boardSearch() {
 		
-		return "user/mypage";
+		return "search/boardSearch";
 	}
-	
+
 }

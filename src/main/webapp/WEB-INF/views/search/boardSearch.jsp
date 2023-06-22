@@ -50,7 +50,7 @@
       .nav-scroller .nav {
         display: flex;
         flex-wrap: nowrap;
-        padding-bottom: 1rem;
+        padding-bottom: 1rem; 
         margin-top: -1px;
         overflow-x: auto;
         text-align: center;
@@ -60,7 +60,7 @@
       
       
     
-      .search {
+.search {
   position: relative;
   width: 300px;
 }
@@ -82,8 +82,38 @@ img {
    display: block;
 }
 
+/* 좋아요 */
+.btn-like {
+  color: transparent;
+  text-shadow: 0 0 2px rgba(255,255,255,.7), 0 0 0 #000;
 
-      
+  
+}
+.btn-like:hover {
+  text-shadow: 0 0 0 #ea0;
+}
+.btn-like.done {
+  color: inherit;
+  text-shadow: 0;
+}
+.btn-like.done:hover {
+  color: transparent;
+  text-shadow: 0 0 0 #777; 
+}
+
+.ac_link_logo_img {
+	width: 35px;
+	height: 35px;
+}
+
+/*
+.card-body {
+margin-bottom: 10px;
+
+}
+*/
+
+  
     </style>
 
 </head>
@@ -105,29 +135,37 @@ img {
       
       <!-- 보드게임 모임방 목록 -->
       
+      <!--  클릭시 모임방 목록 자세히보는 이벤트구현  -->
         <div class="col">
           <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: pla" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#e6e8e6"/>
-            
-            <!--rect 안에 이미지   href="svg_image.png"  여기에 test 이미지 넣기 -->
           
-          <!--    <image href="../images/search_test.png"  height="350" width="350"/>  -->
-          
-            
-            <text x="50%" y="50%" fill="#353635" dy=".3em">방이름</text></svg>
-            <div class="card-body">
-              <p class="card-text">방설명</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">자세히</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">좋아요</button>
-                </div>
-              </div>
+          <!-- 팝업창 안뜸! -->
+            <div class='my-div' onclick="window.open('clickRoom.jsp', 'width=430, height=500, location=no, status=no, scrollbars=yes');">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: pla" preserveAspectRatio="xMidYMid slice" focusable="false">        
+            <rect width="100%" height="100%" fill="#e6e8e6"/>                        
+            <!--rect 안에 이미지   href="svg_image.png"  여기에 test 이미지 넣기 -->          
+          <!--    <image href="../images/search_test.png"  height="350" width="350"/>  -->          	           
+            <text x="50%" y="30%" fill="#353635" dy=".3em">방이름</text>
+            <text x="50%" y="45%" style="font-size:15px;" fill="#353635" dy=".3em">방설명</text>          
+            </svg>
             </div>
+            
+            <div class="card-body">
+            <!-- 글자 앞에 이미지 넣기 가 안됨!-->           
+             <p class="card-text" style="font-size:12px;">장르</p>
+              <p class="card-text" style="font-size:12px;">위치</p>          
+           <div class="d-flex justify-content-between align-items-center" style="float: right;">           
+              <div  class="btn-group">                                      
+                  <!-- 좋아요 버튼 -->                 
+                  <button class="btn-like">❤️</button>
+               </div>
+              </div>            
+            </div>
+            
           </div>
         </div>
         
-        <br> <br> <br>
+       
         
           <div class="col">
           <div class="card shadow-sm">
@@ -219,4 +257,15 @@ img {
     </p>
 
 </body>
+
+<!-- 좋아요 버튼 -->
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script>
+$(".btn-like").click(function() {
+	$(this).toggleClass("done");
+})
+
+</script>
+
+
 </html>

@@ -1,30 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<style type="text/css">
+#foot-container {
+	display: none;
+}
+
+.navbar {
+	display:none;
+}
+#total_container{
+	min-width: 550px;
+}
+</style>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<div class="calendar-outer-container">
+	<div id='calendar-container'>
+	    <div id='calendar'></div>
+	</div>
+</div>
+
 <script>
 	$(function(){
 		var eventArr=[];
 		jsonData={
 			title: 'Test Day1',
-			start: '2023-06-21T12:30:00'
+			start: '2023-06-22T15:30:00'
 		};
 		jsonData1={
 				title: 'Test Day2',
-				start: '2023-06-23T13:30:00'
+				start: '2023-06-26T13:30:00'
 			}
 		eventArr.push(jsonData);
 		eventArr.push(jsonData1);
-		// calendar element 취득
+		
 		var calendarEl = $('#calendar')[0];
-		// full-calendar 생성하기
+		
 		var calendar = new FullCalendar.Calendar(calendarEl, {
-			height: 'auto', // calendar 높이 설정
+			height: 'auto', 
+			width: '600px',
 			expandRows: true, // 화면에 맞게 높이 재설정
 			slotMinTime: '00:00', // Day 캘린더에서 시작 시간
 			slotMaxTime: '24:00', // Day 캘린더에서 종료 시간
 			// 해더에 표시할 툴바
 			headerToolbar: {
-			  left: 'prev,next today',
+			  left: 'prev,next',
 			  center: 'title',
 			  right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 			},
@@ -44,8 +65,3 @@
 		calendar.render();
 	});
 </script>
-<div class="calendar-outer-container">
-	<div id='calendar-container'>
-	    <div id='calendar'></div>
-	</div>
-</div>

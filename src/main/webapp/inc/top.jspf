@@ -30,6 +30,9 @@
 	#content::-webkit-scrollbar {
 		display: none; /* 크롬, 사파리, 오페라, 엣지 */
 	}
+	#total_container{
+		min-width: 900px;
+	}
 </style>
 <script>
 	/* $(document).ready(function() {
@@ -38,7 +41,7 @@
 </script>
 </head>
 <body>
-<div style="min-width: 900px">
+<div id="total_container">
 	<div class="container container-fluid">
 <!-- 		<div class="jumbotron text-center" style="margin-bottom: 0">
 			<h1>Matching Board</h1>

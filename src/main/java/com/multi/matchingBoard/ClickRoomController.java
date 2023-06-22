@@ -5,12 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/room")
-public class NaverMapController {
-
-    @GetMapping(value = "/naverMap")
-    public String naverMap() {
-        return "matchingRoom/naverMap";
-    }
+@RequestMapping("/search")
+public class ClickRoomController {
+	
+	@GetMapping(value="/clickRoom")
+	public String clickRoom() {
+		
+		return "search/clickRoom";
+	}
 
 }

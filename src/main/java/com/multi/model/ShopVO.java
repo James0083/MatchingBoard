@@ -11,6 +11,7 @@ public class ShopVO {
 	private String price_img;
 	private int hour_price;
 	private int unlim_price;
-	private int stars;
-	
+	private double stars;
+	private int reviews;
+	private double avgRating;
 }

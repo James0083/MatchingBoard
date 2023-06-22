@@ -108,8 +108,8 @@
 			</tr>
 			<tr>
 				<td style="width: 20%"><b>장소*</b></td>
-				<td style="width: 80%"><input type="text" name="rplace" id="rplace" readonly>
-					<button class="btn btn-success">
+				<td style="width: 80%"><input type="text" name="rplace" id="rplace" readonly style="width:250px";>
+					<button class="btn btn-success" onclick="openNaverMap()">
 						가게 찾기
 						<!-- 중복 닉네임검사 , 새 창 띄워서 지도 api페이지 -> 주소 받아서 입력 -->
 					</button></td>
@@ -148,6 +148,12 @@
 	document.getElementById('rdate').min = today.toISOString().substring(0, 10);
 	document.getElementById('rtime').value = today.toISOString().slice(11, 16);
 //	document.getElementById('rdatetime').value = today.toISOString().slice(0, 10)+today.toISOString().slice(11, 16);
-	
+	function openNaverMap() {
+  		var popup = window.open('naverMap', 'NaverMapPopup', 'width=1000px,height=1000px');
+  		window.addEventListener('message', function(event) {
+  		   var storeName = event.data;
+  		   document.getElementById('rplace').value = storeName;
+  		});
+	}
 </script>
 </html>

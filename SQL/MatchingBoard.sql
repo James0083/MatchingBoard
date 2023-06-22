@@ -2,12 +2,13 @@ DROP TABLE ShopGame CASCADE CONSTRAINTS;
 DROP TABLE Shop CASCADE CONSTRAINTS;
 DROP TABLE Game CASCADE CONSTRAINTS;
 DROP TABLE Schedule CASCADE CONSTRAINTS;
+DROP TABLE LikeRoom CASCADE CONSTRAINTS;
 DROP TABLE Roompeople CASCADE CONSTRAINTS;
 DROP TABLE Room CASCADE CONSTRAINTS;
 DROP TABLE Member CASCADE CONSTRAINTS;
 
 CREATE TABLE Member (
-    userid VARCHAR2(100) NOT NULL,
+    userid VARCHAR2(40) NOT NULL,
     profile_img VARCHAR2(500),
     nickname VARCHAR2(30) NOT NULL,
     area NUMBER(10),
@@ -27,27 +28,27 @@ CREATE TABLE Member (
 );
 
 CREATE TABLE Room (
-    roomid VARCHAR2(30) NOT NULL,
+    roomid VARCHAR2(40) NOT NULL,
     rname VARCHAR2(60) NOT NULL,
     rplace VARCHAR2(60) NOT NULL,
     rmaxpeople NUMBER(2) NOT NULL,
     rgenre VARCHAR2(15) NOT NULL,
     rgame VARCHAR2(60),
     rstr VARCHAR2(3000),
-    rdatetime DATE DEFAULT SYSDATE NOT NULL,
+    rdatetime varchar2(20) DEFAULT to_char(SYSDATE, 'YYYY-MM-DD HH24:MI') NOT NULL,
     PRIMARY KEY (roomid)
 );
 
 CREATE TABLE Roompeople (
-    userid VARCHAR2(100),
-    roomid VARCHAR2(30),
+    userid VARCHAR2(40),
+    roomid VARCHAR2(40),
     FOREIGN KEY (userid) REFERENCES Member(userid),
     FOREIGN KEY (roomid) REFERENCES Room(roomid)
 );
 
-CREATE TABLE Schedule (
-    userid VARCHAR2(100),
-    roomid VARCHAR2(30),
+CREATE TABLE LikeRoom (
+    userid VARCHAR2(40),
+    roomid VARCHAR2(40),
     FOREIGN KEY (userid) REFERENCES Member(userid),
     FOREIGN KEY (roomid) REFERENCES Room(roomid)
 );

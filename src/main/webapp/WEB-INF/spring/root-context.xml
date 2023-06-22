@@ -13,7 +13,7 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
-		<property name="username" value="multishop"/>
+		<property name="username" value="matchingboard"/>
 		<property name="password" value="tiger"/>
 	</bean>
 	
@@ -28,6 +28,6 @@
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactoryBean"/>
 	</bean>
-	<!-- <mybatis-spring:scan base-package="com.multi.mapper"/>  -->
+	<mybatis-spring:scan base-package="com.multi.mapper"/>
 	
 </beans>

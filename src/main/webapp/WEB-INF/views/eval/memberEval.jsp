@@ -70,40 +70,21 @@ h1 {
 	<!-- 참여인원 수 -->
 
 	<form>
-		<c:forEach var="i" begin="1" end="${memberNum}">
+		<c:forEach var="i" begin="1" end="${memberNum}" varStatus="stat">
+
 			<div class="member-rating">
-				<h4>${i}님평가</h4>
+				<h4>${i}님 평가</h4>
 				<!-- 참여인원 닉네임 필요 -->
 				<div class="rating-container">
-					<p>질문 1: 해당 모임원이 시간약속은 잘 지켰나요?</p>
-					<%-- <div class="stars">
-						<c:forEach var="star" begin="1" end="5">
-							<span class="star" onclick="setRating(${star}, ${(i*2)})">&#9734;</span>
-						</c:forEach>
-					</div> --%>
-					<div class="stars">
-						<span class="star" onclick="setRating(1, ${(i-1)*3+1})">&#9734;</span> 
-						<span class="star" onclick="setRating(2, ${(i-1)*3+1})">&#9734;</span> 
-						<span class="star" onclick="setRating(3, ${(i-1)*3+1})">&#9734;</span> 
-						<span class="star" onclick="setRating(4, ${(i-1)*3+1})">&#9734;</span> 
-						<span class="star" onclick="setRating(5, ${(i-1)*3+1})">&#9734;</span>
-					</div>
-					<p>질문 2: 해당 모임원의 게임플레이 매너는 어떠했나요?</p>
-					<div class="stars">
-						<span class="star" onclick="setRating(1, ${(i-1)*3+2})">&#9734;</span> 
-						<span class="star" onclick="setRating(2, ${(i-1)*3+2})">&#9734;</span> 
-						<span class="star" onclick="setRating(3, ${(i-1)*3+2}">&#9734;</span>
-						<span class="star" onclick="setRating(4, ${(i-1)*3+2})">&#9734;</span> 
-						<span class="star" onclick="setRating(5, ${(i-1)*3+2})">&#9734;</span>
-					</div>
-					<p>질문 3: 해당 모임원의 모임참여 매너는 어떠했나요?</p>
-					<div class="stars">
-						<span class="star" onclick="setRating(1, ${(i-1)*3+3})">&#9734;</span>
-						<span class="star" onclick="setRating(2, ${(i-1)*3+3})">&#9734;</span> 
-						<span class="star" onclick="setRating(3, ${(i-1)*3+3})">&#9734;</span>
-						<span class="star" onclick="setRating(4, ${(i-1)*3+3})">&#9734;</span> 
-						<span class="star" onclick="setRating(5, ${(i-1)*3+3})">&#9734;</span>
-					</div>
+					<c:forEach var="j" items="${question}" varStatus="stat2">
+						<p>${j.key}:${j.value}?</p>
+						<div class="stars" id="stars${stat.index*3+stat2.index}">
+							<c:forEach var="star" begin="1" end="5">
+								<span class="star"
+									onclick="setRating(${star},${stat.index*3+stat2.index})">&#9734;</span>
+							</c:forEach>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 		</c:forEach>
@@ -117,10 +98,13 @@ h1 {
 	
 	  // 별점 체크
 	  function setRating(value, questionNumber) {
+		//console.log(questionNumber+"<<<<")
 	    ratings[questionNumber] = value;
 	    
-	    const ratingContainer = document.querySelectorAll('.rating-container')[questionNumber - 1];
-	    const stars = ratingContainer.querySelectorAll('.stars .star');
+	   const ratingContainer = document.querySelectorAll('.rating-container')[questionNumber - 1];
+	   // const stars = ratingContainer.querySelectorAll('.stars .star');//동적인 코드를 정적으로 이용하는 부분에서 문제
+	   const stars =$('#stars'+questionNumber+".star");
+	   //alert(stars.length)
 	    
 	    for (let i = 0; i < stars.length; i++) {
 	      if (i < value) {
@@ -136,10 +120,9 @@ h1 {
             const memberCount = ${memberNum};
             const avgRatings = {};
             for (let i = 1; i <= memberCount; i++) {
-                const memberRatings = Object.values(ratings).filter(key => key.startsWith(i));
+                const memberRatings = Object.values(ratings).filter(key => key.startsWith(i));//참가자 인덱스를 key로 변환
                 const ratingSum = memberRatings.reduce((sum, value) => sum + value, 0);
-                const ratingCount = memberRatings.length;
-                const avgRating = ratingSum / ratingCount;
+                const avgRating = ratingSum / 3;
                 avgRatings[i] = avgRating;
             }
             return avgRatings;

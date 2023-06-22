@@ -62,7 +62,7 @@ h1 {
 </style>
 </head>
 <body>
-	<h1>${moimRoom.rname}매장평가</h1>
+	<h1>${Room.rplace} 매장평가</h1>
 	<form>
 		<div class="rating-container">
 			<p>질문 1: 해당 카페의 게임 종류는 다양했나요?</p>
@@ -153,13 +153,13 @@ h1 {
       }
     }
     
-    //별점 총합
+    //별점 평균
     function averageRating(ratings) {
    	  const values = Object.values(ratings);
    	  const totalRating = values.reduce((sum, value) => sum + value, 0);
 	  const questionCount = Object.keys(ratings).length;
-   	  const avgRating = questionCount > 0 ? totalRating / questionCount : 0;
-      return avgRating.toFixed(2);//소수점 2째자리
+   	  const avgRating = questionCount > 0 ? (totalRating / questionCount).toFixed(2) : 0;
+      return avgRating;//소수점 2째자리
    	}
     
 	

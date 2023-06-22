@@ -10,6 +10,7 @@
 <html>
 <head>
 <title>Evaluation - MEMBER</title>
+<script src="https://jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 body {
 	font-family: Arial, sans-serif;
@@ -103,9 +104,10 @@ h1 {
 	    
 	   const ratingContainer = document.querySelectorAll('.rating-container')[questionNumber - 1];
 	   // const stars = ratingContainer.querySelectorAll('.stars .star');//동적인 코드를 정적으로 이용하는 부분에서 문제
-	   const stars =$('#stars'+questionNumber+".star");
+	   const stars =$('#stars'+questionNumber+" .star");
 	   //alert(stars.length)
 	    
+	   //별점 active로 색칠하기
 	    for (let i = 0; i < stars.length; i++) {
 	      if (i < value) {
 	        stars[i].classList.add('active');
@@ -113,30 +115,29 @@ h1 {
 	        stars[i].classList.remove('active');
 	      }
 	    }
-	  }
+	   }
 
         //참가자별 평균 별점 계산
         function averageRatings(ratings) {
             const memberCount = ${memberNum};
             const avgRatings = {};
+            
             for (let i = 1; i <= memberCount; i++) {
-                const memberRatings = Object.values(ratings).filter(key => key.startsWith(i));//참가자 인덱스를 key로 변환
-                const ratingSum = memberRatings.reduce((sum, value) => sum + value, 0);
-                const avgRating = ratingSum / 3;
-                avgRatings[i] = avgRating;
-            }
-            return avgRatings;
+            	let sumRatings=0;
+            	for(let questionNumber in ratings){
+            		if (questionNumber.startsWith(i)) {
+            			sumRatings+=ratings[questionNumber];
+           			}
+            	}
+            	avgRatings[i]=sumRatings/Object.keys(ratings).length;
+        	}
+        return avgRatings;
         }
-        
+            
         document.querySelector('form').addEventListener('submit', function (e) {
             e.preventDefault();
-            const hasEmptyRating = Object.values(ratings).some(value => value === undefined);
-            /* if (hasEmptyRating) {
-                alert('모든 질문에 별점을 선택해주세요.');
-                return;
-            } */
             const avgStars = averageRatings(ratings);
-            alert('평가에 참여해주셔서 감사합니다. 총점: ' + avgStars);
+            alert('평가에 참여해주셔서 감사합니다. 총점: ' + JSON.stringify(avgStars));
             this.reset();
             window.location.href = '../';
         });

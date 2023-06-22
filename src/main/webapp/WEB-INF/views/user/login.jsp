@@ -6,6 +6,13 @@
 <meta charset="UTF-8">
 <title>MatchingBoard- 보드게임카페 동행를 찾는 커뮤니티</title>
 <style>
+.container.container-fluid {
+  display: none;
+}
+#foot-container {
+	display: none;
+}
+
 .button-group {
   display: flex;
   flex-direction: row;
@@ -17,17 +24,30 @@
   margin: 0 10px;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  padding: 5px;
+  text-align: center; /* 추가 */
+ 
+}
 </style>
 </head>
 <body>
-	<div class="container text-center" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 80vh; padding: 5px;">
+	<div class="container text-center">
+	  <div style="padding-top:100px; padding-bottom: 100px; margin-top:100px; margin-bottom: 100px; border-radius: 10px;">
+	  	<img src="../images/dice_logo.png" style="width: 150px; height: 150px; margin-bottom: 30px;">
 		<h2 style="padding:30px;">MatchingBoard에 오신 것을 환영합니다.</h2>
 		<h4 style="padding:30px;">로그인 하기</h4>
-		<div class="button-group" style="padding:80px;">
-			<div><a class="button Naver"> <span>Sign in with Naver</span></a></div>
-			<div><a class="button Kakao"> <span>Sign in with Kakao</span></a></div> 
-			<div><a class="button Google"><span>Sign in with Google</span></a></div>
+		<div class="button-group" style="padding:30px;">
+			<div><a class="button Naver" href="${urlNaver}"><img src="../images/naver_login.png" style="width: 180px; height: 50px; margin: 3px;"></a></div>
+			<div><a class="button Kakao"><img src="../images/kakao_login.png" style="width: 180px; height: 50px; margin: 3px;"></a></div> 
+			<div><a class="button Google"><img src="../images/google_login.png" style="width: 180px; height: 50px; margin: 3px;"></a></div>
 		</div>
+	  </div>
 	</div>
 
 </body>

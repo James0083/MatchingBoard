@@ -15,7 +15,7 @@ public class RoomServiceImpl implements RoomService {
 	
 	@Override
 	public int insertRoom(RoomVO vo) {
-		System.out.println(vo.toString());
+//		System.out.println(vo.toString());
 		return rMapper.insertRoom(vo);
 	}
 

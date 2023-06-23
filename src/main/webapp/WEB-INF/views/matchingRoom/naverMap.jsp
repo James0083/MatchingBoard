@@ -14,12 +14,6 @@
 <title>간단한 지도 표시하기</title>
 <script type="text/javascript"
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=fbgfk756mi&submodules=geocoder"></script>
-</head>
-<body>
-	<!--<div id="map" style="width:100%;height:400px;"></div>-->
-	<div id="map" style="position: absolute; top: 40px; left: 0; right: 0; bottom: 0;""></div>
-
-
 <style type="text/css">
 #foot-container {
 	display: none;
@@ -59,7 +53,11 @@
 		border: none;
 		cursor: pointer;
 	}
-</style>
+</style>	
+</head>
+<body>
+	<!--<div id="map" style="width:100%;height:400px;"></div>-->
+	<div id="map" style="position: absolute; top: 40px; left: 0; right: 0; bottom: 0;""></div>
 	
 	<div id="search-container">
 		<input type="text" id="address" placeholder="지역을 검색하세요.">

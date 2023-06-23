@@ -76,7 +76,7 @@ td:last-child {
 	<p>회원 인증 페이지 - 로그인 해야 들어올 수 있는 페이지입니다</p>
 	<div class="row">
 	<div class="col-4" style="padding: 10px;">
-		<table border="1" class="mt-3 text-center" style="width:100%;">
+		<table border="0" class="table mt-3 text-center" style="width:100%; vertical-align: middle;">
 			<tr>
 				<%-- <td width="25%"><img src="${loginUser.profile_img}"></td> --%>
 				<td width="25%"><img id="profile_img" src="../images/profile_example.png"></td>
@@ -113,11 +113,11 @@ td:last-child {
 			</tr>
 			<tr>
 				<td colspan="2" style="text-align: center;">
-					<table border="0">
+					<table border="0" class="tb-attend table table-sm table-borderless " style="margin:0 auto;">
 						<tr>
-							<td><div class="attendance" id="attend">0${loginUser.attend}</div></td>
-							<td><div class="attendance" id="late">0${loginUser.late}</div></td>
-							<td><div class="attendance" id="absent">0${loginUser.absent}</div></td>
+							<td><div class="attendance" id="attend" style="margin:0 auto;">0${loginUser.attend}</div></td>
+							<td><div class="attendance" id="late" style="margin:0 auto;">0${loginUser.late}</div></td>
+							<td><div class="attendance" id="absent" style="margin:0 auto;">0${loginUser.absent}</div></td>
 						</tr>
 						<tr>
 							<td style="text-align: center">출석</td>
@@ -183,7 +183,7 @@ td:last-child {
 		</table>
 	</div>
 	<div class="col-8" style="padding: 10px;">
-		<div class="container my_calendar" id="my_calendar">
+		<div class="container my_calendar mt-3" id="my_calendar">
 			<!-- Calendar 보여주기 -->
 			<%@ include file="/inc/calendar.jspf" %>
 		</div>

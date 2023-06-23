@@ -81,7 +81,7 @@
 			<tr>
 				<td style="width: 20%"><b>장소*</b></td>
 				<td style="width: 80%"><input type="text" name="rplace" id="rplace" readonly style="width:250px";>
-					<button class="btn btn-success" onclick="openNaverMap()">
+					<button class="btn btn-success" id="searchplace">
 						가게 찾기
 						<!-- 중복 닉네임검사 , 새 창 띄워서 지도 api페이지 -> 주소 받아서 입력 -->
 					</button></td>
@@ -120,12 +120,19 @@
 	document.getElementById('rdate').min = today.toISOString().substring(0, 10);
 	document.getElementById('rtime').value = today.toISOString().slice(11, 16);
 //	document.getElementById('rdatetime').value = today.toISOString().slice(0, 10)+today.toISOString().slice(11, 16);
-	function openNaverMap() {
-  		var popup = window.open('naverMap', 'NaverMapPopup', 'width=1000px,height=1000px');
-  		window.addEventListener('message', function(event) {
-  		   var storeName = event.data;
-  		   document.getElementById('rplace').value = storeName;
-  		});
-	}
+	 function openNaverMap() {
+      $('#croomf').unbind('submit'); // submit 이벤트 핸들러 해제
+      var popup = window.open('../naverMap', 'NaverMapPopup', 'width=1000px,height=1000px');
+      window.addEventListener('message', function(event) {
+        var storeName = event.data;
+        document.getElementById('rplace').value = storeName;
+        $('#croomf').submit(); // submit 이벤트 발생
+      });
+    }
+
+    $('#searchplace').click(function(e) {
+      e.preventDefault(); // 클릭 이벤트의 기본 동작 막음
+      openNaverMap(); // 가게 찾기 함수 호출
+    });
 </script>
 </html>

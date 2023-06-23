@@ -68,7 +68,7 @@
 					<!-- 로그인 하지 않은 경우라면 ----------------------- -->
 					<li class="nav-item"><a class="nav-link" href="${myctx}/join">Signup</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="${myctx}/login">Login</a>
+					<li class="nav-item"><a class="nav-link" href="${myctx}/user/login">Login</a>
 					</li>
 				</c:if>
 				<c:if test="${loginUser ne null }">

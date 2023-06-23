@@ -68,4 +68,10 @@ public class RoomController {
 		return "matchingRoom/roomView";
 	}
 	
+	@GetMapping(value ="/popupCalendar")
+	public String popupCalendar(String roomid) {
+		
+		return "matchingRoom/calendarPopup";
+	}
+	
 }

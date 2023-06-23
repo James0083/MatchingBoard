@@ -10,6 +10,7 @@
 <html>
 <head>
 <title>Evaluation - MEMBER</title>
+<script src="https://jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 body {
 	font-family: Arial, sans-serif;
@@ -70,40 +71,21 @@ h1 {
 	<!-- 참여인원 수 -->
 
 	<form>
-		<c:forEach var="i" begin="1" end="${memberNum}">
+		<c:forEach var="i" begin="1" end="${memberNum}" varStatus="stat">
+
 			<div class="member-rating">
-				<h4>${i}님평가</h4>
+				<h4>${i}님 평가</h4>
 				<!-- 참여인원 닉네임 필요 -->
 				<div class="rating-container">
-					<p>질문 1: 해당 모임원이 시간약속은 잘 지켰나요?</p>
-					<%-- <div class="stars">
-						<c:forEach var="star" begin="1" end="5">
-							<span class="star" onclick="setRating(${star}, ${(i*2)})">&#9734;</span>
-						</c:forEach>
-					</div> --%>
-					<div class="stars">
-						<span class="star" onclick="setRating(1, ${(i-1)*3+1})">&#9734;</span> 
-						<span class="star" onclick="setRating(2, ${(i-1)*3+1})">&#9734;</span> 
-						<span class="star" onclick="setRating(3, ${(i-1)*3+1})">&#9734;</span> 
-						<span class="star" onclick="setRating(4, ${(i-1)*3+1})">&#9734;</span> 
-						<span class="star" onclick="setRating(5, ${(i-1)*3+1})">&#9734;</span>
-					</div>
-					<p>질문 2: 해당 모임원의 게임플레이 매너는 어떠했나요?</p>
-					<div class="stars">
-						<span class="star" onclick="setRating(1, ${(i-1)*3+2})">&#9734;</span> 
-						<span class="star" onclick="setRating(2, ${(i-1)*3+2})">&#9734;</span> 
-						<span class="star" onclick="setRating(3, ${(i-1)*3+2}">&#9734;</span>
-						<span class="star" onclick="setRating(4, ${(i-1)*3+2})">&#9734;</span> 
-						<span class="star" onclick="setRating(5, ${(i-1)*3+2})">&#9734;</span>
-					</div>
-					<p>질문 3: 해당 모임원의 모임참여 매너는 어떠했나요?</p>
-					<div class="stars">
-						<span class="star" onclick="setRating(1, ${(i-1)*3+3})">&#9734;</span>
-						<span class="star" onclick="setRating(2, ${(i-1)*3+3})">&#9734;</span> 
-						<span class="star" onclick="setRating(3, ${(i-1)*3+3})">&#9734;</span>
-						<span class="star" onclick="setRating(4, ${(i-1)*3+3})">&#9734;</span> 
-						<span class="star" onclick="setRating(5, ${(i-1)*3+3})">&#9734;</span>
-					</div>
+					<c:forEach var="j" items="${question}" varStatus="stat2">
+						<p>${j.key}:${j.value}?</p>
+						<div class="stars" id="stars${stat.index*3+stat2.index}">
+							<c:forEach var="star" begin="1" end="5">
+								<span class="star"
+									onclick="setRating(${star},${stat.index*3+stat2.index})">&#9734;</span>
+							</c:forEach>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 		</c:forEach>
@@ -117,11 +99,15 @@ h1 {
 	
 	  // 별점 체크
 	  function setRating(value, questionNumber) {
+		//console.log(questionNumber+"<<<<")
 	    ratings[questionNumber] = value;
 	    
-	    const ratingContainer = document.querySelectorAll('.rating-container')[questionNumber - 1];
-	    const stars = ratingContainer.querySelectorAll('.stars .star');
+	   const ratingContainer = document.querySelectorAll('.rating-container')[questionNumber - 1];
+	   // const stars = ratingContainer.querySelectorAll('.stars .star');//동적인 코드를 정적으로 이용하는 부분에서 문제
+	   const stars =$('#stars'+questionNumber+" .star");
+	   //alert(stars.length)
 	    
+	   //별점 active로 색칠하기
 	    for (let i = 0; i < stars.length; i++) {
 	      if (i < value) {
 	        stars[i].classList.add('active');
@@ -129,31 +115,29 @@ h1 {
 	        stars[i].classList.remove('active');
 	      }
 	    }
-	  }
+	   }
 
         //참가자별 평균 별점 계산
         function averageRatings(ratings) {
             const memberCount = ${memberNum};
             const avgRatings = {};
+            
             for (let i = 1; i <= memberCount; i++) {
-                const memberRatings = Object.values(ratings).filter(key => key.startsWith(i));
-                const ratingSum = memberRatings.reduce((sum, value) => sum + value, 0);
-                const ratingCount = memberRatings.length;
-                const avgRating = ratingSum / ratingCount;
-                avgRatings[i] = avgRating;
-            }
-            return avgRatings;
+            	let sumRatings=0;
+            	for(let questionNumber in ratings){
+            		if (questionNumber.startsWith(i)) {
+            			sumRatings+=ratings[questionNumber];
+           			}
+            	}
+            	avgRatings[i]=sumRatings/Object.keys(ratings).length;
+        	}
+        return avgRatings;
         }
-        
+            
         document.querySelector('form').addEventListener('submit', function (e) {
             e.preventDefault();
-            const hasEmptyRating = Object.values(ratings).some(value => value === undefined);
-            /* if (hasEmptyRating) {
-                alert('모든 질문에 별점을 선택해주세요.');
-                return;
-            } */
             const avgStars = averageRatings(ratings);
-            alert('평가에 참여해주셔서 감사합니다. 총점: ' + avgStars);
+            alert('평가에 참여해주셔서 감사합니다. 총점: ' + JSON.stringify(avgStars));
             this.reset();
             window.location.href = '../';
         });

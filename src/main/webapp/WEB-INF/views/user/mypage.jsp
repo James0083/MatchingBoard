@@ -112,7 +112,7 @@ td:last-child {
 						max="100"></progress></td>
 			</tr>
 			<tr>
-				<td colspan="2">
+				<td colspan="2" style="text-align: center;">
 					<table border="0">
 						<tr>
 							<td><div class="attendance" id="attend">0${loginUser.attend}</div></td>
@@ -157,8 +157,8 @@ td:last-child {
 			<tr>
 				<td colspan="2">
 					<div>
-						<div style="border-radius: 3px; background-color: #f8e20a; width: 35px; height: 35px; text-align: center; display: inline-block;">
-							<img class="ac_link_logo_img" src="../images/kakaoicon.png">
+<!-- 						<div style="border-radius: 3px; background-color: #f8e20a; width: 35px; height: 35px; text-align: center; display: inline-block;"> -->
+<!-- 							<img class="ac_link_logo_img" src="../images/kakaoicon.png"> -->
 							<!-- <img class="ac_link_logo_img" src="../images/kakao_icon.png"> -->
 							<!-- <svg width="18px" xmlns="http://www.w3.org/2000/svg" height="17" viewBox="0 0 18 17">
 								<g transform="translate(0.000000,17.000000) scale(0.100000,-0.100000)" stroke="none">
@@ -166,7 +166,8 @@ td:last-child {
 									d="M38 154 c-15 -8 -30 -25 -34 -38 -6 -26 10 -66 27 -66 7 0 9 -10 5 -26 -7 -25 -6 -25 16 -10 12 9 31 16 41 16 29 0 75 28 82 50 10 31 -3 59 -35 75 -36 19 -67 18 -102 -1z"></path>
 								</g>
 							</svg> -->
-							</div>
+<!-- 						</div> -->
+						<img class="ac_link_logo_img" src="../images/kakaoicon1.png">
 						<span> 연동정보 / 연동하기 </span>
 					</div>
 				</td>
@@ -182,7 +183,7 @@ td:last-child {
 		</table>
 	</div>
 	<div class="col-8" style="padding: 10px;">
-		<div class="my_calendar" id="my_calendar">
+		<div class="container my_calendar" id="my_calendar">
 			<!-- Calendar 보여주기 -->
 			<%@ include file="/inc/calendar.jspf" %>
 		</div>

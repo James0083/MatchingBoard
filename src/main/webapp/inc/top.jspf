@@ -30,6 +30,9 @@
 	#content::-webkit-scrollbar {
 		display: none; /* 크롬, 사파리, 오페라, 엣지 */
 	}
+	#total_container{
+		min-width: 900px;
+	}
 </style>
 <script>
 	/* $(document).ready(function() {
@@ -38,7 +41,7 @@
 </script>
 </head>
 <body>
-<div style="min-width: 900px">
+<div id="total_container">
 	<div class="container container-fluid">
 <!-- 		<div class="jumbotron text-center" style="margin-bottom: 0">
 			<h1>Matching Board</h1>
@@ -65,7 +68,7 @@
 					<!-- 로그인 하지 않은 경우라면 ----------------------- -->
 					<li class="nav-item"><a class="nav-link" href="${myctx}/join">Signup</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="${myctx}/login">Login</a>
+					<li class="nav-item"><a class="nav-link" href="${myctx}/user/login">Login</a>
 					</li>
 				</c:if>
 				<c:if test="${loginUser ne null }">

@@ -1,13 +1,10 @@
-package com.multi.mapper;
+package com.multi.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.multi.model.ShopVO;
 
-@Mapper
-public interface EvalCafeMapper {
+public interface EvalCafeService {
 	List<ShopVO> listShop();
 	int updateStars(ShopVO shop);//별점 가져오기
 

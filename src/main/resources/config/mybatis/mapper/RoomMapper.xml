@@ -8,4 +8,8 @@
     	values (#{roomid}, #{rname}, #{rplace}, #{rmaxpeople}, #{rgenre}, #{rgame}, #{rstr}, #{rdatetime})
 	</insert>
 	
+	<select id="selectBoardByIdx" resultType="Room" parameterType="string">
+		select * from room where roomid=#{value}
+	</select>
+	
 </mapper>

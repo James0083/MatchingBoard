@@ -16,11 +16,11 @@
 				$('#rgenre').focus();
 				return false;
 			}
-			/* if (!$('#rplace').val()) {
+			if (!$('#rplace').val()) {
 				alert('장소를 입력하세요');
 				croomf.rplace.focus();
 				return false;
-			} */
+			}
 			if (!$('#rdate').val()) {
 				alert('날짜를 입력하세요');
 				$('#rdate').focus();
@@ -44,7 +44,7 @@
 		<table class="table">
 			<tr>
 				<th colspan="2" class="text-center">
-					<h3>::모임방 만들기::</h3>
+					<h3>::모임방 편집하기::</h3>
 				</th>
 			</tr>
 			<tr>

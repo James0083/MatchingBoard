@@ -24,22 +24,26 @@
 <script>
 	$(function(){
 		var eventArr=[];
+		let rdatetime='';
+		//rdatetime = rdatetime + ${rstart}
+		rdatetime='2023-06-21T13:30'
+		
 		jsonData={
-			title: 'Test Day1',
-			start: '2023-06-22T15:30:00'
+			title: 'rdatetime',
+			//start: '2023-06-21T13:30:00'
+			start: rdatetime
 		};
 		jsonData1={
-				title: 'Test Day2',
-				start: '2023-06-26T13:30:00'
-			}
+			title: 'Test Day2',
+			start: '2023-06-26T13:30:00'
+		};
 		eventArr.push(jsonData);
 		eventArr.push(jsonData1);
 		
 		var calendarEl = $('#calendar')[0];
 		
 		var calendar = new FullCalendar.Calendar(calendarEl, {
-			height: 'auto', 
-			width: '600px',
+			height: 'auto',
 			expandRows: true, // 화면에 맞게 높이 재설정
 			slotMinTime: '00:00', // Day 캘린더에서 시작 시간
 			slotMaxTime: '24:00', // Day 캘린더에서 종료 시간

@@ -104,7 +104,7 @@ h1 {
 	    
 	   const ratingContainer = document.querySelectorAll('.rating-container')[questionNumber - 1];
 	   // const stars = ratingContainer.querySelectorAll('.stars .star');//동적인 코드를 정적으로 이용하는 부분에서 문제
-	   const stars =$('#stars'+questionNumber+" .star");
+	   const stars =$('#stars'+questionNumber+' .star');
 	   //alert(stars.length)
 	    
 	   //별점 active로 색칠하기
@@ -116,31 +116,32 @@ h1 {
 	      }
 	    }
 	   }
-
-        //참가자별 평균 별점 계산
-        function averageRatings(ratings) {
-            const memberCount = ${memberNum};
-            const avgRatings = {};
-            
-            for (let i = 1; i <= memberCount; i++) {
-            	let sumRatings=0;
-            	for(let questionNumber in ratings){
-            		if (questionNumber.startsWith(i)) {
-            			sumRatings+=ratings[questionNumber];
-           			}
-            	}
-            	avgRatings[i]=sumRatings/Object.keys(ratings).length;
-        	}
-        return avgRatings;
-        }
-            
-        document.querySelector('form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const avgStars = averageRatings(ratings);
-            alert('평가에 참여해주셔서 감사합니다. 총점: ' + JSON.stringify(avgStars));
-            this.reset();
-            window.location.href = '../';
-        });
+	  
+      //참가자별 평균 별점 계산
+      function averageRatings(ratings) {
+          const memberCount = ${memberNum};
+          const avgRatings = {};
+          
+          for (let i = 1; i <= memberCount; i++) {
+          	let sumRatings=0;
+          	for(let questionNumber in ratings){
+          		if (questionNumber.startsWith(i)) {
+          			sumRatings+=ratings[questionNumber];
+         			}
+          	}
+          	avgRatings[i]=sumRatings;
+          	/* avgRatings[i]=(sumRatings/Object.keys(ratings).length).toFixed(2); */
+      	}
+      return avgRatings;
+      }
+          
+      document.querySelector('form').addEventListener('submit', function (e) {
+          e.preventDefault();
+          const avgStars = averageRatings(ratings);
+          alert('평가에 참여해주셔서 감사합니다. 총점: ' + avgRatings);
+          this.reset();
+          window.location.href = '../room/roomView';
+      });
     </script>
 </body>
 </html>

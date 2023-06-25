@@ -29,6 +29,10 @@ tr.explane_value{
 	function openCalendar() {
 		window.open('popupCalendar', 'CalendarPopup', 'width=770px, height=630px, left=100px, top=50px');
 	}
+	
+	function evaluation(){
+ 		window.location.href = '../eval/cafeEval';
+	}
 </script>
 
 <div class="row" style="height: 700px;">
@@ -103,6 +107,11 @@ tr.explane_value{
 				<tr>
 					<td class="explane_value" colspan="2">
 						<span style="display: inline-block;">{rstr}</span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="text-center">
+						<button type="button" id="btnEval" class="btn btn-success" onclick="evaluation()">후기 평가</button>
 					</td>
 				</tr>
 				<!-- 

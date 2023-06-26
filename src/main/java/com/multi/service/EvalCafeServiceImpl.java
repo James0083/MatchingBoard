@@ -2,16 +2,14 @@ package com.multi.service;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.multi.mapper.EvalCafeMapper;
-import com.multi.model.RoomVO;
 import com.multi.model.ShopVO;
 @Service("evalCafeService")
 public class EvalCafeServiceImpl implements EvalCafeService{
-	@Inject
+	@Autowired
 	private EvalCafeMapper evalCafeMapper;
 
 	@Override

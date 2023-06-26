@@ -47,10 +47,10 @@ public class LoginController {
 		OAuth2AccessToken oauthToken;
 		oauthToken=naverLoginBO.getAccessToken(session, code, state);
 		apiResult=naverLoginBO.getUserProfile(oauthToken);
-		log.info(oauthToken);
+		System.out.println(apiResult);
+		System.out.println(oauthToken);
 		
-		
-		return "redirect:/home";
+		return "user/callbackNaver";
 	}
 	/*
 	@RequestMapping(value="/callbackKakao", method= {RequestMethod.GET, RequestMethod.POST})

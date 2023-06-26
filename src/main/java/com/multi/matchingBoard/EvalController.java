@@ -1,5 +1,8 @@
 package com.multi.matchingBoard;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -35,10 +38,34 @@ public class EvalController {
 		int n=evalCafeSerivce.updateStars(shopVO);
 		String msg="보드게임카페 평가"; 
 		msg+=(n>0)?"성공":"실패";
-		String loc=(n>0)?"/matchingBoard":null;
-		//결과 메시지, 이동경로 처리
+		//String loc=(n>0)?"/matchingBoard":null;
+
+		Map<Integer, Integer> ratings = new HashMap<>();
+		//ratings.put(1,3);//예시
+		
+		double averageRating = averageRating(ratings);
+		
 		m.addAttribute("msg",msg);
-		m.addAttribute("loc",loc);
+		//m.addAttribute("loc",loc);
+		m.addAttribute("averageRating",averageRating);
 		return "message";
+	}
+	
+	//별점 계산
+	private double averageRating(Map<Integer, Integer> ratings) {
+	    double totalRating = 0;
+	    int questionCnt = 0;
+
+	    for(Integer rating : ratings.values()) {
+	        if(rating != null) {
+	            totalRating += rating;
+	            questionCnt++;
+	        }
+	    }
+
+	    double avgRating = questionCnt > 0 ? (totalRating / questionCnt) : 0;
+	    avgRating = Math.round(avgRating * 100.0) / 100.0; // 소수점 2째 자리까지 반올림
+
+	    return avgRating;
 	}
 }

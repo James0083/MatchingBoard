@@ -146,6 +146,9 @@ tr:first-child td span {
 			
 		});
 	});
+	function evaluation(){
+ 		window.location.href = '../eval/cafeEval';
+	}
 </script>
 
 <div class="row" style="height: 700px;">
@@ -220,6 +223,11 @@ tr:first-child td span {
 				<tr>
 					<td class="explane_value" colspan="2">
 						<span style="display: inline-block;">${room.rstr}</span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="text-center">
+						<button type="button" id="btnEval" class="btn btn-success" onclick="evaluation()">후기 평가</button>
 					</td>
 				</tr>
 				<!-- 

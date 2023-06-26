@@ -63,7 +63,7 @@ h1 {
 </head>
 <body>
 	<h1>${Room.rplace} 매장평가</h1>
-	<form>
+	<form action="/eval/cafeEval" method="post">
 		<div class="rating-container">
 			<p>질문 1: 해당 카페의 게임 종류는 다양했나요?</p>
 			<div class="stars">
@@ -131,7 +131,7 @@ h1 {
 		</div>
 
 		<br>
-
+		<!-- <p>평균 평점: ${averageRating}</p> -->
 		<button type="submit">제출</button>
 		<button type="memEval" onclick="redirectMemEval()">모임원 평가</button>
 	</form>
@@ -153,14 +153,14 @@ h1 {
       }
     }
     
-    //별점 평균
+/*     //별점 평균
     function averageRating(ratings) {
    	  const values = Object.values(ratings);
    	  const totalRating = values.reduce((sum, value) => sum + value, 0);
 	  const questionCount = Object.keys(ratings).length;
    	  const avgRating = questionCount > 0 ? (totalRating / questionCount).toFixed(2) : 0;
       return avgRating;//소수점 2째자리
-   	}
+   	} */
     
 	
     //모임원 평가로 이동
@@ -175,13 +175,11 @@ h1 {
         alert('모든 질문에 별점을 선택해주세요.');
         return;
       } */
-      const avgStar = averageRating(ratings);
-      alert('평가에 참여해주셔서 감사합니다. 총점: ' + avgStar);
+      
+      //const avgStar = averageRating(ratings);
+      //alert('평가에 참여해주셔서 감사합니다. 총점: ' + ${averageRating});
+      alert('평가에 참여해주셔서 감사합니다.');
       this.reset();
-      window.location.href = '../';
-      
-      
-      
     });
   </script>
 </body>

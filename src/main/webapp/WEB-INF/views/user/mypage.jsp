@@ -9,6 +9,7 @@
 td {
 	padding: 7px;
 	text-align: center;
+	vertical-align: middle;
 }
 
 td:last-child {
@@ -38,8 +39,17 @@ td:last-child {
 	background-color: #de352e;
 }
 
+tr:first-child td span {
+	font-size: 0.8em;
+	width: 4.5em;
+	margin-top: 0.5em;
+	display: inline-block;
+}
+
 .progress {
 	appearance: none;
+	height: 0.8em;
+	display: inline-block;
 }
 
 .progress::-webkit-progress-bar {
@@ -76,16 +86,31 @@ td:last-child {
 	<p>회원 인증 페이지 - 로그인 해야 들어올 수 있는 페이지입니다</p>
 	<div class="row">
 	<div class="col-4" style="padding: 10px;">
-		<table border="1" class="mt-3 text-center" style="width:100%;">
+		<table border="0" class="table mt-3 text-center" style="width:100%;">
 			<tr>
 				<%-- <td width="25%"><img src="${loginUser.profile_img}"></td> --%>
 				<td width="25%"><img id="profile_img" src="../images/profile_example.png"></td>
-				<%-- <td width="75%">
-					<a href=""><img src="../images/grade1.png"></a>
-					<b>${loginUser.nickname}</b>
-				</td> --%>
-				<td width="75%"><a href=""><img src="../images/grades/grade1.png" style="width:1.2em; height:1.2em;"></a>
-					<b style="color: #505050;">유저 닉네임</b></td>
+				<td width="75%">
+					<div style="margin: auto 0;">
+					<%--
+						<a href=""><img src="../images/grade1.png"></a>
+						<b>${loginUser.nickname}</b>
+					--%>
+						<a href=""><img src="../images/grades/grade1.png" style="width:1.2em; height:1.2em;"></a>
+						<b style="color: #505050;">유저 닉네임</b>
+						
+						<br>
+						<span>경험치</span>
+						<span>
+							<progress class="progress" value="${loginUser.exp}" max="${loginUser.grade *100}"></progress>
+						</span>
+						<br>
+						<span>매너점수</span>
+						<span>
+							<progress class="progress" value="${loginUser.manner}" max="100"></progress>
+						</span>
+					</div>
+				</td>
 			</tr>
 			<tr>
 				<td>지역</td>
@@ -101,23 +126,14 @@ td:last-child {
 				<%-- <td><b>${loginUser.fgame1}, ${loginUser.fgame2}, ${loginUser.fgame3}</b></td> --%>
 				<td><b>게임1, 게임2, 게임3</b></td>
 			</tr>
-			<tr>
-				<td>경험치</td>
-				<td><progress class="progress" value="${loginUser.exp}"
-						max="${loginUser.grade *100}"></progress></td>
-			</tr>
-			<tr>
-				<td>매너점수</td>
-				<td><progress class="progress" value="${loginUser.manner}"
-						max="100"></progress></td>
-			</tr>
+			
 			<tr>
 				<td colspan="2" style="text-align: center;">
-					<table border="0">
+					<table border="0" class="tb-attend table table-sm table-borderless " style="margin:0 auto;">
 						<tr>
-							<td><div class="attendance" id="attend">0${loginUser.attend}</div></td>
-							<td><div class="attendance" id="late">0${loginUser.late}</div></td>
-							<td><div class="attendance" id="absent">0${loginUser.absent}</div></td>
+							<td><div class="attendance" id="attend" style="margin:0 auto;">0${loginUser.attend}</div></td>
+							<td><div class="attendance" id="late" style="margin:0 auto;">0${loginUser.late}</div></td>
+							<td><div class="attendance" id="absent" style="margin:0 auto;">0${loginUser.absent}</div></td>
 						</tr>
 						<tr>
 							<td style="text-align: center">출석</td>
@@ -128,6 +144,7 @@ td:last-child {
 	
 				</td>
 			</tr>
+			<!-- 계정 연동 파트 -->
 			<tr>
 				<td colspan="2">
 					<div>
@@ -176,14 +193,14 @@ td:last-child {
 				<td colspan="2" style="text-align: center">
 					<form name='f' method='post' action='modify'>
 						<input type="hidden" name="idx" value="${loginUser.idx}">
-						<button class="btn btn-success">정보수정|탈퇴</button>
+						<button class="btn btn-secondary">정보수정 | 탈퇴</button>
 					</form>
 				</td>
 			</tr>
 		</table>
 	</div>
 	<div class="col-8" style="padding: 10px;">
-		<div class="container my_calendar" id="my_calendar">
+		<div class="container my_calendar mt-3" id="my_calendar">
 			<!-- Calendar 보여주기 -->
 			<%@ include file="/inc/calendar.jspf" %>
 		</div>

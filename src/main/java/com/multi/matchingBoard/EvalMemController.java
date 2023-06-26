@@ -39,7 +39,7 @@ public class EvalMemController {
 	public String submitMemEvalForm(Model m, @ModelAttribute UserVO userVO, @RequestParam("ratings") int avgRatings) {
 		userVO.setManner(avgRatings);
 		int n=evalMemService.updateManners(userVO);
-		String msg="참여 인원 평가"; 
+		String msg="참여 인원 평가";
 		msg+=(n>0)?"성공":"실패";
 		String loc=(n>0)?"/matchingBoard":null;
 		//결과 메시지, 이동경로 처리
@@ -47,5 +47,4 @@ public class EvalMemController {
 		m.addAttribute("loc",loc);
 		return "message";
 	}
-	
 }

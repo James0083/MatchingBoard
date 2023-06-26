@@ -19,4 +19,10 @@ public class RoomServiceImpl implements RoomService {
 		return rMapper.insertRoom(vo);
 	}
 
+	@Override
+	public RoomVO selectBoardByIdx(String roomid) {
+
+		return rMapper.selectBoardByIdx(roomid);
+	}
+
 }

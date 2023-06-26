@@ -54,24 +54,34 @@ public class RoomController {
 	}
 	
 	@GetMapping(value="/roomView")
-	public String roomDetail(Model m, @RequestParam(defaultValue="0") int roomId) {
-		//방번호로 해당 방 내용 가져오기
-//		RoomVO vo=this.roomService.selectBoardByIdx(roomId);
+	public String roomDetail(Model m, @RequestParam(defaultValue="0") String roomId) {
+		if(roomId.equals("0")) roomId="22f00439-08fc-4b0f-b842-a40e22c9c4ee";
+		
+		//방id로 해당 방 내용 가져오기
+		RoomVO vo=this.rService.selectBoardByIdx(roomId);
 		
 		//해당 방의 인원 내용 가져오기
-//		List<UserVO> memberArr=this.RoomService.selectMemberAll(roomId);
+//		List<UserVO> memberArr=this.rService.selectMemberAll(roomId);
 		
-//		m.addAttribute("room", vo);
+		m.addAttribute("room", vo);
 //		m.addAttribute("memberArr",memberArr);
-		
+//		m.addAttribute("curPnum", memberArr.size());
 		
 		return "matchingRoom/roomView";
 	}
 	
 	@GetMapping(value ="/popupCalendar")
-	public String popupCalendar(String roomid) {
+	public String popupCalendar(Model m, String rdatetime) {
+		
+		m.addAttribute("rstart", rdatetime);
 		
 		return "matchingRoom/calendarPopup";
+	}
+	
+	@GetMapping(value="/editRoom")
+	public String showeditRoomFrom(Model m, String roomId) {
+		
+		return "matchingRoom/editRoomForm";
 	}
 	
 }

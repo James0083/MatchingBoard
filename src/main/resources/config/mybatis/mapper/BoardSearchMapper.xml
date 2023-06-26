@@ -1,0 +1,12 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.multi.mapper.RoomMapper">
+
+<!-- 모임방 목록/ 방이름, 방설명, 장르, 장소 -->
+<select id="getList" resultType="Room" parameterType="string">
+	select rname, rstr, rgenre ,rplace 
+	from room 
+</select>
+    
+</mapper>

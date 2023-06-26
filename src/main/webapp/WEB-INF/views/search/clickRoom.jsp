@@ -11,6 +11,11 @@
 .navbar {
 		display:none;
 	}
+	
+#total_container{
+    min-width: 550px;
+}
+
 
 </style>
 </head>

@@ -13,4 +13,5 @@ public class ShopVO {
 	private int unlim_price;
 	private double stars;
 	private int reviews;
+	
 }

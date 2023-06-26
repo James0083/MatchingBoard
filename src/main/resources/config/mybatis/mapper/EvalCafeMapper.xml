@@ -4,7 +4,7 @@
     
 <mapper namespace="com.multi.mapper.EvalCafeMapper">
     
-    <update id="updateStars" parameterType="Shop">
+    <update id="updateStars" parameterType="com.multi.model.ShopVO">
         update shop
         set stars=((stars*reviews)+#{stars})/(reviews+1)<!-- 별점 평가 합산하기 -->
         <where>
@@ -12,7 +12,7 @@
         </where>
     </update>
     
-    <update id="updateReviews" parameterType="_int">
+    <update id="updateReviews" parameterType="com.multi.model.ShopVO">
 		update shop set reviews=reviews+1 where sname=#{sname}
 	</update>
     

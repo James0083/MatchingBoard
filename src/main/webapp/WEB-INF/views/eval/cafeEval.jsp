@@ -62,7 +62,7 @@ h1 {
 </style>
 </head>
 <body>
-	<h1>${room.rname} 매장평가</h1>
+	<h1>${rname} 매장평가</h1>
 	<form name="evalCafe" id="evalCafe" action="../eval/cafeEval" method="post">
 		<div class="rating-container">
 			<p>질문 1: 해당 카페의 게임 종류는 다양했나요?</p>
@@ -131,10 +131,11 @@ h1 {
 		</div>
 
 		<br>
-		<!-- <p>평균 평점: ${averageRating}</p> -->
-		<input type="hidden" name="averageRating" id="averageRating">
-		<button type="submit">제출</button>
-		<button type="button" onclick="redirectMemEval()">모임원 평가</button>
+		<input type="hidden" name="saddr" value="addr"><!-- 받아올 카페 주소 -->
+		<input type="hidden" name="userid" value="2222"><!-- 평가할 유저 id 받기 -->
+		<input type="hidden" name="stars" id="averageRating">
+		<button type="submit">다음</button>
+		<!-- <button type="button" onclick="redirectMemEval()">모임원 평가 이동</button> -->
 	</form>
 
 <script type="text/javascript">
@@ -142,16 +143,19 @@ h1 {
 $(function(){
 	$('#evalCafe').submit(function(e){
 		var sum = ratings.reduce((total, rating) => total + rating, 0);
-		var avg = sum / ratings.length.toFixed(2);
+		var avg = (sum / ratings.length).toFixed(2);
+		alert(avg);
 		$('#averageRating').val(avg);
 		
-		if($('#mode').val() === 'memEval'){
-            window.location.href = '../eval/memberEval';
-        }else{
+		//if($('#mode').val() === 'memEval'){
+			//e.preventDefault();
+			//redirectMemEval();
+			//window.location.href = '../eval/memberEval';
+        //}else{
             this.submit();
-        }
-	})
-})
+        //}
+	});
+});
 
 //별점 체크
 let ratings = [];
@@ -170,10 +174,11 @@ function setRating(value, questionNumber) {
 }
 
 //모임원 평가로 이동
-function redirectMemEval() {
-    $('#mode').val('memEval');
-    $('#evalCafe').submit();
-}
+//function redirectMemEval() {
+	//$('#mode').val('memEval');
+    //$('#evalCafe').submit();
+    //window.location.href = '../eval/memberEval';
+//}
 
 </script>
 </body>

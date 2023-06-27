@@ -1,28 +1,37 @@
 package com.multi.service;
 
-import java.util.List;
+import com.multi.mapper.EvalMemMapper;
+import com.multi.model.MemberEvalVO;
+import com.multi.model.UserVO;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.multi.mapper.EvalMemMapper;
-import com.multi.model.UserVO;
+import java.util.List;
 
 @Service("evalMemService")
 public class EvalMemServiceImpl implements EvalMemService {
-	@Inject
-	private EvalMemMapper evalMemMapper;
-	
-	
+    private final EvalMemMapper evalMemMapper;
+
+    @Inject
+    public EvalMemServiceImpl(EvalMemMapper evalMemMapper) {
+        this.evalMemMapper = evalMemMapper;
+    }
+
+    @Override
+    public List<UserVO> listUser() {
+        return evalMemMapper.listUser();
+    }
+
+    @Override
+    public int updateManners(MemberEvalVO memberEvalVO) {
+        evalMemMapper.updateManners(memberEvalVO);
+		return 0;
+    }
+
 	@Override
-	public List<UserVO> listUser() {
+	public MemberEvalVO memEvals(UserVO userVO) {
 		return null;
 	}
-
-	@Override
-	public int updateManners(UserVO user) {
-		return evalMemMapper.updateManners(user);
-	}
-
 }

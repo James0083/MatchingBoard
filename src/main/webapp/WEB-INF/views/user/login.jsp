@@ -45,7 +45,7 @@
 		<div class="button-group" style="padding:30px;">
 			<div><a class="button Naver" href="${urlNaver}"><img src="../images/naver_login.png" style="width: 180px; height: 50px; margin: 3px;"></a></div>
 			<div><a class="button Kakao" href="${urlKakao}"><img src="../images/kakao_login.png" style="width: 180px; height: 50px; margin: 3px;"></a></div> 
-			<div><a class="button Google"><img src="../images/google_login.png" style="width: 180px; height: 50px; margin: 3px;"></a></div>
+			<div><a class="button Google" href="${urlGoogle}"><img src="../images/google_login.png" style="width: 180px; height: 50px; margin: 3px;"></a></div>
 		</div>
 	  </div>
 	</div>

@@ -6,7 +6,7 @@ import com.multi.model.UserVO;
 import java.util.List;
 
 public interface EvalMemMapper {
-    List<UserVO> listUser();
-    int updateManners(MemberEvalVO memberEval);
-    MemberEvalVO memEvals(UserVO userVO);
+	List<UserVO> listUser();
+    int insertManners(MemberEvalVO memberEval);
+    MemberEvalVO memManners(UserVO userVO);
 }

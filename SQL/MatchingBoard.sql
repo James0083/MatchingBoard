@@ -6,14 +6,8 @@ DROP TABLE LikeRoom CASCADE CONSTRAINTS;
 DROP TABLE Roompeople CASCADE CONSTRAINTS;
 DROP TABLE Room CASCADE CONSTRAINTS;
 DROP TABLE Member CASCADE CONSTRAINTS;
-DROP TABLE Evaluation;
-
-CREATE TABLE Evaluation(
-    enum number Primary Key,
-    userid varchar2(100) references member(userid),
-    saddr varchar2(150) references shop(saddr),
-    stars number(3,1)
-);
+DROP TABLE Evaluation CASCADE CONSTRAINTS;
+DROP TABLE Membereval CASCADE CONSTRAINTS;
 
 CREATE TABLE Member (
     userid VARCHAR2(40) NOT NULL,
@@ -94,4 +88,17 @@ CREATE TABLE ShopGame (
     saddr VARCHAR2(150),
     FOREIGN KEY (name) REFERENCES Game(name),
     FOREIGN KEY (saddr) REFERENCES Shop(saddr)
+);
+
+CREATE TABLE Membereval(
+    enum number Primary Key,
+    userid varchar2(100) references member(userid),
+    manner number(3,1)
+);
+
+CREATE TABLE Evaluation(
+    enum number Primary Key,
+    userid varchar2(100) references member(userid),
+    saddr varchar2(150) references shop(saddr),
+    stars number(3,1)
 );

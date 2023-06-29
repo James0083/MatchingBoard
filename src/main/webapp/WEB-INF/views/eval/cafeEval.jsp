@@ -134,7 +134,8 @@ h1 {
 		<input type="hidden" name="saddr" value="addr"><!-- 받아올 카페 주소 -->
 		<input type="hidden" name="userid" value="2222"><!-- 평가할 유저 id 받기 -->
 		<input type="hidden" name="stars" id="averageRating">
-		<button type="submit">다음</button>
+		<button type="submit">제출</button>
+		<button type="button" onclick="window.location.href='/matchingBoard/room/roomView'">건너뛰기</button>
 		<!-- <button type="button" onclick="redirectMemEval()">모임원 평가 이동</button> -->
 	</form>
 
@@ -143,17 +144,11 @@ h1 {
 $(function(){
 	$('#evalCafe').submit(function(e){
 		var sum = ratings.reduce((total, rating) => total + rating, 0);
-		var avg = (sum / ratings.length).toFixed(2);
+		var avg = (sum / 6).toFixed(2);
 		alert(avg);
 		$('#averageRating').val(avg);
 		
-		//if($('#mode').val() === 'memEval'){
-			//e.preventDefault();
-			//redirectMemEval();
-			//window.location.href = '../eval/memberEval';
-        //}else{
-            this.submit();
-        //}
+        this.submit();
 	});
 });
 
@@ -173,12 +168,6 @@ function setRating(value, questionNumber) {
   }
 }
 
-//모임원 평가로 이동
-//function redirectMemEval() {
-	//$('#mode').val('memEval');
-    //$('#evalCafe').submit();
-    //window.location.href = '../eval/memberEval';
-//}
 
 </script>
 </body>

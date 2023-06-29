@@ -1,16 +1,19 @@
 package com.multi.service;
 
-import com.multi.mapper.EvalMemMapper;
-import com.multi.model.MemberEvalVO;
-import com.multi.model.UserVO;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.multi.mapper.EvalMemMapper;
+import com.multi.model.MemberEvalVO;
+import com.multi.model.UserVO;
+
+import lombok.extern.log4j.Log4j;
 
 @Service("evalMemService")
+@Log4j
 public class EvalMemServiceImpl implements EvalMemService {
     private final EvalMemMapper evalMemMapper;
 
@@ -25,13 +28,17 @@ public class EvalMemServiceImpl implements EvalMemService {
     }
 
     @Override
-    public int updateManners(MemberEvalVO memberEvalVO) {
-        evalMemMapper.updateManners(memberEvalVO);
-		return 0;
+    public int insertManners(MemberEvalVO memberEval) {
+        return evalMemMapper.insertManners(memberEval);
     }
 
-	@Override
-	public MemberEvalVO memEvals(UserVO userVO) {
-		return null;
-	}
+    @Override
+    public MemberEvalVO memManners(UserVO userVO) {
+        return evalMemMapper.memManners(userVO);
+    }
+    
+    @Override
+    public float updateUserManner(String userid) {
+        return 0.0f;
+    }
 }

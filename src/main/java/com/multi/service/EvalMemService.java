@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface EvalMemService {
     List<UserVO> listUser();
-    int updateManners(MemberEvalVO memberEvalVO);
-    MemberEvalVO memEvals(UserVO userVO);
+    int insertManners(MemberEvalVO memberEval);
+    MemberEvalVO memManners(UserVO userVO);
+	float updateUserManner(String userid);
+
 }

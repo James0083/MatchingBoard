@@ -3,18 +3,32 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="com.multi.mapper.EvalCafeMapper">
+	<insert id="insertStars" parameterType="com.multi.model.ShopVO">
+		insert into evaluation 
+		values (evaluation_seq.nextval,#{userid}, #{saddr}, #{stars})
+	</insert>
+	
+	<select id="cafeStars" parameterType="com.multi.model.ShopVO" resultType="com.multi.model.EvaluationVO">
+		select avg(stars) stars from evaluation where saddr=#{saddr}
+	</select>
     
-    <update id="updateStars" parameterType="Shop">
+<!--     <update id="updateStars" parameterType="com.multi.model.ShopVO">
         update shop
-        set stars=((stars*reviews)+#{stars})/(reviews+1)<!-- 별점 평가 합산하기 -->
+        set stars=((stars*#{reviews})+#{stars:NUMERIC})/(#{reviews}+1) 별점 평가 합산하기
         <where>
 			sname=#{sname}
         </where>
     </update>
     
-    <update id="updateReviews" parameterType="_int">
+    <update id="updateReviews" parameterType="com.multi.model.ShopVO">
 		update shop set reviews=reviews+1 where sname=#{sname}
-	</update>
+	</update> -->
+	
+<!-- 	<select id="getRoomRname" parameterType="String" resultType="String">
+        SELECT rname
+        FROM room
+        WHERE roomid = #{roomid}
+    </select> -->
     
     <!-- rating 횟수 counting 필요 // stars변수 DB컬럼 맞게 변경 -->
     <!-- 횟수=횟수+1 ; db컬럼 만들기 -->

@@ -1,5 +1,6 @@
 package com.multi.matchingBoard;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,6 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,29 +48,35 @@ public class EvalMemController {
     }
 
     @PostMapping("/memberEval")
-    public String submitMemEvalForm(Model model, @ModelAttribute UserVO userVO,
-    		@RequestParam Map<String, String> ranges) {
+    public String submitMemEvalForm(Model model, @RequestParam String whoid,
+    		 @RequestParam String[] userid,
+    		@RequestParam String ranges) {
+    	System.out.println("whoid="+whoid+"ranges: "+ranges+"userid"+Arrays.toString(userid));
         List<UserVO> userList = evalMemService.listUser();
+        String[] ratings=ranges.split(",");
+        int i=0;
         
-        for (UserVO user : userList) {
+        for (String user : userid) {
             MemberEvalVO memberEval = new MemberEvalVO();
-            memberEval.setUserid(user.getUserid());
+            memberEval.setWhoid(whoid);
+            memberEval.setUserid(user);
             
-            String evalValue = ranges.get(user.getUserid());
+            String evalValue = ratings[i];
             if (evalValue != null) {
                 Float eval = Float.parseFloat(evalValue);
                 memberEval.setEval(eval);
                 float insertManners = evalMemService.insertManners(memberEval);
-                evalMemService.updateUserManner(user.getUserid());
+                evalMemService.updateUserManner(user);
             }
+            i++;
         }
-
+/*
         String msg = "모임방 참여 인원 평가";
         RoomPeopleVO rPeople = new RoomPeopleVO();
         RoomVO roomVO = new RoomVO();
         rPeople.setRoomid(roomVO.getRoomid());
-        rPeople.setUserid(userVO.getUserid());
-        MemberEvalVO eval = evalMemService.memManners(userVO);
+        rPeople.setUserid(whoid);
+        MemberEvalVO eval = evalMemService.memManners(rPeople);
         
         System.out.println("맴버 평점: " + eval.getEval());
         
@@ -82,7 +88,7 @@ public class EvalMemController {
         } else {
             msg += " 실패";
         }
-        
+       
         String loc = (eval != null) ? "/matchingBoard/eval/cafeEval" : "javascript:history.back()";
         
         log.info("평가 결과: " + msg);
@@ -90,7 +96,7 @@ public class EvalMemController {
         model.addAttribute("msg", msg);
         model.addAttribute("loc", loc);
         model.addAttribute("averageRating", eval.getEval());
-
+*/
         return "message";
     }
 }

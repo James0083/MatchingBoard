@@ -18,8 +18,9 @@ import com.github.scribejava.core.oauth.OAuth20Service;
 @Component
 public class KaKaoLoginBO {
 
-	private static String KAKAO_CLIENT_ID = "GdBCfTeIsbnGTcF_zw_U";
-	private final static String KAKAO_REDIRECT_URI = "http://localhost:9090/matchingBoard/";
+	private static String KAKAO_CLIENT_ID = "610c34069cfc956fd14eace0ab056630";
+	private static String KAKAO_CLIENT_SECRET= "hrxqz5LmvJiHEFjA8qnoXfLDdV7DDifH";
+	private final static String KAKAO_REDIRECT_URI = "http://localhost:9090/matchingBoard/user/callbackKakao";
 	private final static String SESSION_STATE = "kakao_oauth_state";
 	/* 프로필 조회 API URL */
 	private final static String PROFILE_API_URL = "https://kapi.kakao.com/v2/user/me";
@@ -46,6 +47,7 @@ public class KaKaoLoginBO {
 		/* Scribe에서 제공하는 인증 URL 생성 기능을 이용하여 네아로 인증 URL 생성 */
 		OAuth20Service oauthService = new ServiceBuilder()
 				.apiKey(KAKAO_CLIENT_ID)
+				.apiSecret(KAKAO_CLIENT_SECRET)
 				.callback(KAKAO_REDIRECT_URI)
 				.state(state) // 앞서 생성한 난수값을 인증 URL생성시 사용함
 				.build(KaKaoLoginApi.instance());
@@ -58,9 +60,10 @@ public class KaKaoLoginBO {
 		if(StringUtils.pathEquals(sessionState, state)){
 				OAuth20Service oauthService = new ServiceBuilder()
 						.apiKey(KAKAO_CLIENT_ID)
+						.apiSecret(KAKAO_CLIENT_SECRET)
 						.callback(KAKAO_REDIRECT_URI)
 						.state(state)
-						.build(NaverLoginApi.instance());
+						.build(KaKaoLoginApi.instance());
 				/* Scribe에서 제공하는 AccessToken 획득 기능으로 네아로 Access Token을 획득 */
 				OAuth2AccessToken accessToken = oauthService.getAccessToken(code);
 				return accessToken;
@@ -73,6 +76,7 @@ public class KaKaoLoginBO {
 		 
 		OAuth20Service oauthService =new ServiceBuilder()
 				.apiKey(KAKAO_CLIENT_ID)
+				.apiSecret(KAKAO_CLIENT_SECRET)
 				.callback(KAKAO_REDIRECT_URI)
 				.build(NaverLoginApi.instance());
 

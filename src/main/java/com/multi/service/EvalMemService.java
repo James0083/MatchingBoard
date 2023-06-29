@@ -1,12 +1,14 @@
 package com.multi.service;
 
-import java.util.List;
-
+import com.multi.model.MemberEvalVO;
 import com.multi.model.UserVO;
 
-public interface EvalMemService {
-	List<UserVO> listUser();
-	int updateManners(UserVO user);//별점 가져오기
+import java.util.List;
 
-	//int updateReviews(ShopVO shop);//rating 횟수 증가하기
+public interface EvalMemService {
+    List<UserVO> listUser();
+    int insertManners(MemberEvalVO memberEval);
+    MemberEvalVO memManners(UserVO userVO);
+	float updateUserManner(String userid);
+
 }

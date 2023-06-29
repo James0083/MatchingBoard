@@ -62,8 +62,8 @@ h1 {
 </style>
 </head>
 <body>
-	<h1>${Room.rplace} 매장평가</h1>
-	<form action="/eval/cafeEval" method="post">
+	<h1>${rname} 매장평가</h1>
+	<form name="evalCafe" id="evalCafe" action="../eval/cafeEval" method="post">
 		<div class="rating-container">
 			<p>질문 1: 해당 카페의 게임 종류는 다양했나요?</p>
 			<div class="stars">
@@ -131,56 +131,44 @@ h1 {
 		</div>
 
 		<br>
-		<!-- <p>평균 평점: ${averageRating}</p> -->
+		<input type="hidden" name="saddr" value="addr"><!-- 받아올 카페 주소 -->
+		<input type="hidden" name="userid" value="2222"><!-- 평가할 유저 id 받기 -->
+		<input type="hidden" name="stars" id="averageRating">
 		<button type="submit">제출</button>
-		<button type="memEval" onclick="redirectMemEval()">모임원 평가</button>
+		<button type="button" onclick="window.location.href='/matchingBoard/room/roomView'">건너뛰기</button>
+		<!-- <button type="button" onclick="redirectMemEval()">모임원 평가 이동</button> -->
 	</form>
 
-	<script>
-    let ratings = {};
-    
-    //별점 체크
-    function setRating(value, questionNumber) {
-      ratings[questionNumber] = value;
+<script type="text/javascript">
+//평균별점 계산 및 전송
+$(function(){
+	$('#evalCafe').submit(function(e){
+		var sum = ratings.reduce((total, rating) => total + rating, 0);
+		var avg = (sum / 6).toFixed(2);
+		alert(avg);
+		$('#averageRating').val(avg);
+		
+        this.submit();
+	});
+});
 
-      const stars = document.querySelectorAll('.rating-container:nth-child(' + questionNumber + ') .star');
-      for (let i = 0; i < stars.length; i++) {
-        if (i < value) {
-          stars[i].classList.add('active');
-        } else {
-          stars[i].classList.remove('active');
-        }
-      }
+//별점 체크
+let ratings = [];
+
+function setRating(value, questionNumber) {
+  ratings[questionNumber-1] = value;
+
+  const stars = document.querySelectorAll('.rating-container:nth-child(' + questionNumber + ') .star');
+  for (let i = 0; i < stars.length; i++) {
+    if (i < value) {
+      stars[i].classList.add('active');
+    } else {
+      stars[i].classList.remove('active');
     }
-    
-/*     //별점 평균
-    function averageRating(ratings) {
-   	  const values = Object.values(ratings);
-   	  const totalRating = values.reduce((sum, value) => sum + value, 0);
-	  const questionCount = Object.keys(ratings).length;
-   	  const avgRating = questionCount > 0 ? (totalRating / questionCount).toFixed(2) : 0;
-      return avgRating;//소수점 2째자리
-   	} */
-    
-	
-    //모임원 평가로 이동
-    function redirectMemEval() {
-        window.location.href = '../eval/memberEval';
-    }
-    
-    document.querySelector('form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      /* const hasEmptyRating = Object.values(ratings).some(value => value === undefined || value === null);
-      if (hasEmptyRating) {
-        alert('모든 질문에 별점을 선택해주세요.');
-        return;
-      } */
-      
-      //const avgStar = averageRating(ratings);
-      //alert('평가에 참여해주셔서 감사합니다. 총점: ' + ${averageRating});
-      alert('평가에 참여해주셔서 감사합니다.');
-      this.reset();
-    });
-  </script>
+  }
+}
+
+
+</script>
 </body>
 </html>

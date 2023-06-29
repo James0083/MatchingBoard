@@ -45,7 +45,8 @@ public class RoomController {
 		int n=rService.insertRoom(room);
 		String msg="모임방만들기 "; 
 		msg+=(n>0)?"성공":"실패";
-		String loc=(n>0)?"/matchingBoard":"javascript:history.back()";
+		String url="/matchingBoard/room/roomView?roomId="+uid;
+		String loc=(n>0)? url:"javascript:history.back()";
 		//결과 메시지, 이동경로 처리
 		m.addAttribute("msg",msg);
 		m.addAttribute("loc",loc);

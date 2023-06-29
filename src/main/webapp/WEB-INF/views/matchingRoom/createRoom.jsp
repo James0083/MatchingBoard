@@ -32,7 +32,7 @@
 				return false;
 			}
 			$('#rdatetime').attr('value',$('#rdate').val()+"T"+$('#rtime').val());
-			//alert($('#rdate').val()+" + "+$('#rtime').val()+"==>"+$('#rdatetime').val());
+			alert($('#rdate').val()+" + "+$('#rtime').val()+"==>"+$('#rdatetime').val());
 			//alert($('#rmaxpeople').val()+" , "+$('#rgenre').val()+" , "+$('#rstr').val());
 			
 		})//submit------------------

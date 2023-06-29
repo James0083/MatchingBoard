@@ -31,24 +31,30 @@ CREATE TABLE Room (
     roomid VARCHAR2(40) NOT NULL,
     rname VARCHAR2(60) NOT NULL,
     rplace VARCHAR2(60) NOT NULL,
+    shopid VARCHAR2(40),
     rmaxpeople NUMBER(2) NOT NULL,
     rgenre VARCHAR2(15) NOT NULL,
     rgame VARCHAR2(60),
     rstr VARCHAR2(3000),
     rdatetime varchar2(20) DEFAULT to_char(SYSDATE, 'YYYY-MM-DD HH24:MI') NOT NULL,
-    PRIMARY KEY (roomid)
+    PRIMARY KEY (roomid),
+    FOREIGN KEY (shopid) REFERENCES Shop(shopid)
 );
 
 CREATE TABLE Roompeople (
-    userid VARCHAR2(40),
-    roomid VARCHAR2(40),
+    roomuserid VARCHAR2(40) NOT NULL,
+    userid VARCHAR2(40) NOT NULL,
+    roomid VARCHAR2(40) NOT NULL,
+    PRIMARY KEY (roomuserid),
     FOREIGN KEY (userid) REFERENCES Member(userid),
     FOREIGN KEY (roomid) REFERENCES Room(roomid)
 );
 
 CREATE TABLE LikeRoom (
-    userid VARCHAR2(40),
-    roomid VARCHAR2(40),
+    likeid VARCHAR2(40) NOT NULL,
+    userid VARCHAR2(40) NOT NULL,
+    roomid VARCHAR2(40) NOT NULL,
+    PRIMARY KEY (likeid),
     FOREIGN KEY (userid) REFERENCES Member(userid),
     FOREIGN KEY (roomid) REFERENCES Room(roomid)
 );
@@ -71,6 +77,7 @@ CREATE TABLE Game (
 );
 
 CREATE TABLE Shop (
+    shopid VARCHAR2(40) NOT NULL,
     sname VARCHAR2(60) NOT NULL,
     saddr VARCHAR2(150) NOT NULL,
     smenu_img VARCHAR2(500),

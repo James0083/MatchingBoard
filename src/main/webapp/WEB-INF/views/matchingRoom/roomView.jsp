@@ -326,6 +326,8 @@ tr:first-child td span {
 	<!-- ----Modal End------------------------- -->
 	
 	<div class="container col-4 chatting" id="chatting" style="background-color: lightgray; min-width:250px; margin-right: 15px">
-		<div style="margin: 20px;">Chatting</div>
+		<div>
+<%-- 			<%@ include file="./chatting.jspf" %> --%>
+		</div>
 	</div>
 </div>

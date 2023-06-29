@@ -19,6 +19,7 @@
     <mapper resource="config/mybatis/mapper/RoomMapper.xml"/>
     <mapper resource="config/mybatis/mapper/EvalCafeMapper.xml"/>
     <mapper resource="config/mybatis/mapper/GameMapper.xml"/>
+    <mapper resource="config/mybatis/mapper/EvalMemMapper.xml"/>
     
   </mappers>
 </configuration>

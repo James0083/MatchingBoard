@@ -147,7 +147,7 @@ tr:first-child td span {
 		});
 	});
 	function evaluation(){
- 		window.location.href = '../eval/cafeEval';
+ 		window.location.href = '../eval/memberEval';
 	}
 </script>
 

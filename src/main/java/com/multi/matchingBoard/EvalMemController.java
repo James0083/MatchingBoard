@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.multi.model.EvaluationVO;
 import com.multi.model.MemberEvalVO;
+import com.multi.model.RoomPeopleVO;
+import com.multi.model.RoomVO;
 import com.multi.model.UserVO;
 import com.multi.service.EvalMemService;
 
@@ -39,46 +40,57 @@ public class EvalMemController {
         qMap.put("질문2", "해당 모임원의 게임플레이 매너는 어떠했나요");
         qMap.put("질문3", "해당 모임원의 모임참여 매너는 어떠했나요");
         m.addAttribute("question", qMap);
+        
+        List<UserVO> userList = evalMemService.listUser();
+        m.addAttribute("userList", userList);
+        
         return "eval/memberEval";
     }
 
     @PostMapping("/memberEval")
-    public String submitMemEvalForm(Model model, @RequestParam Map<String, String> ratings, 
-    		@ModelAttribute MemberEvalVO MemberEvalVO) {
+    public String submitMemEvalForm(Model model, @ModelAttribute UserVO userVO,
+    		@RequestParam Map<String, String> ranges) {
         List<UserVO> userList = evalMemService.listUser();
-
+        
         for (UserVO user : userList) {
-            MemberEvalVO memberEval = calculateAverageRatings(ratings);
+            MemberEvalVO memberEval = new MemberEvalVO();
             memberEval.setUserid(user.getUserid());
-            evalMemService.updateManners(memberEval);
+            
+            String evalValue = ranges.get(user.getUserid());
+            if (evalValue != null) {
+                Float eval = Float.parseFloat(evalValue);
+                memberEval.setEval(eval);
+                float insertManners = evalMemService.insertManners(memberEval);
+                evalMemService.updateUserManner(user.getUserid());
+            }
+        }
+
+        String msg = "모임방 참여 인원 평가";
+        RoomPeopleVO rPeople = new RoomPeopleVO();
+        RoomVO roomVO = new RoomVO();
+        rPeople.setRoomid(roomVO.getRoomid());
+        rPeople.setUserid(userVO.getUserid());
+        MemberEvalVO eval = evalMemService.memManners(userVO);
+        
+        System.out.println("맴버 평점: " + eval.getEval());
+        
+        if (eval != null) {
+            log.info("맴버 평점: " + eval.getEval());
+            userVO.setManner(eval.getEval());
+            evalMemService.updateUserManner(userVO.getUserid());
+            msg += " 성공";
+        } else {
+            msg += " 실패";
         }
         
-        int n = evalMemService.updateManners(MemberEvalVO);
-        String msg = "모임방 참여 인원 평가";
-        //EvaluationVO eval=evalMemService.memEval(userVO);
-        //System.out.println("맴버 평점: "+eval.getEval());
-        String loc = (n > 0) ? "/matchingBoard/room/roomView" : "javascript:history.back()";
+        String loc = (eval != null) ? "/matchingBoard/eval/cafeEval" : "javascript:history.back()";
         
-        msg += (n > 0) ? "성공" : "실패";
         log.info("평가 결과: " + msg);
         
         model.addAttribute("msg", msg);
         model.addAttribute("loc", loc);
+        model.addAttribute("averageRating", eval.getEval());
 
         return "message";
-    }
-
-    private MemberEvalVO calculateAverageRatings(Map<String, String> ratings) {
-        MemberEvalVO memberEval = new MemberEvalVO();
-        memberEval.setRoomid("room_id_value"); // Set the actual room ID
-
-        float sumRatings = 0;
-        for (String rating : ratings.values()) {
-            sumRatings += Float.parseFloat(rating);
-        }
-        float avgRating = sumRatings / ratings.size();
-        memberEval.setEval(avgRating);
-
-        return memberEval;
     }
 }

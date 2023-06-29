@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:set var="myctx" value="${pageContext.request.contextPath}" />
@@ -54,40 +55,66 @@ h1 {
 </head>
 <body>
 	<h1>모임원 평가</h1>
-
-	<c:set var="memberNum" value="3" />
-	<!-- 참여인원 수 -->
-
-	<form action="${myctx}/eval/memberEval" method="post">
-		<c:forEach var="i" begin="1" end="${memberNum}" varStatus="stat">
-
+	<form name="evalMem" id="evalMem" action="../eval/memberEval" method="post">
+		<c:forEach var="member" items="${userList}" varStatus="stat">
 			<div class="member-rating">
-				<h4>${i}님 평가</h4>
-				<!-- 참여인원 닉네임 필요 -->
+				<h4>${member.nickname}님 평가</h4>
 				<div class="rating-container">
-					<c:forEach var="j" items="${question}" varStatus="stat2">
-						<p>${j.key}:${j.value}?</p>
-						<input type="range" class="range-slider" 
-						id="range${stat.index*3+stat2.index}" name="range${stat.index*3+stat2.index}" 
-						min="1" max="100" value="50" onchange="updateRangeValue(this)">
+					<c:forEach var="question" items="${question}" varStatus="stat2">
+						<p>${question.key}:${question.value}?</p>
+						<input type="range" class="range-slider" min="1" max="100"
+							value="50"
+							onchange="updateRangeValue(this, ${stat.index}, ${stat2.index})">
 						<p class="range-value">50</p>
 					</c:forEach>
-					<input type="text" name="avgRating${stat.index}" id="avgRating${stat.index}">
+					<input type="hidden" name="memberEvals[${stat.index}].userId"
+						value="${member.userid}" />
 				</div>
 			</div>
 		</c:forEach>
-
-		<br>
-		<input type="hidden" name="" id="">
+		<br> 
+		<input type="hidden" name="ranges" id="avgRange">
 		<button type="submit">제출</button>
 	</form>
-
 	<script>
-	  // range 값 업데이트
-	  function updateRangeValue(rangeSlider) {
-	    const rangeValue = rangeSlider.nextElementSibling;
-	    rangeValue.innerText = rangeSlider.value;
-	  }
-	</script>
+  // range 값 업데이트
+  function updateRangeValue(rangeSlider, rangePoint) {
+    const rangeValue = rangeSlider.nextElementSibling;
+    rangeValue.innerText = rangeSlider.value;
+    setRanges(rangeSlider.value, rangePoint);
+  }
+  
+  // 맴버 range 체크
+  let ranges = [];
+  
+  function setRanges(value, rangePoint) {
+    ranges[rangePoint] = value;
+  }
+  
+  
+  $(function(){
+	   $('#evalMem').submit(function(){
+	     var avgRanges = calculateAverageRanges(ranges);
+	     $('#avgRange').val(avgRanges.join(', '));
+	     return true;
+	   });
+	});
+
+
+	//맴버별 평점 구하기
+	function calculateAverageRanges(ranges) {
+		var avgRanges = [];
+    	for (var i = 0; i < ranges.length; i++) {
+      		var sum = 0;
+      		for (var j = 0; j < ranges[i].length; j++) {
+        		sum += parseInt(ranges[i][j]);
+      		}
+      		var avg = sum / ranges[i].length;
+      		avgRanges.push(avg);
+   		}
+    return avgRanges;
+  }
+</script>
+
 </body>
 </html>

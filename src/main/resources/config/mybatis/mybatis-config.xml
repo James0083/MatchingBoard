@@ -22,6 +22,7 @@
 =======
     <mapper resource="config/mybatis/mapper/GameMapper.xml"/>
 >>>>>>> d9a92641ad17caf95bc699efb455d2bbf9bb2c1a
+    <mapper resource="config/mybatis/mapper/EvalMemMapper.xml"/>
     
   </mappers>
 </configuration>

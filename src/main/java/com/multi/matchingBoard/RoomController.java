@@ -64,6 +64,7 @@ public class RoomController {
 		
 		//방id로 해당 방 내용 가져오기
 		RoomVO vo=this.rService.selectBoardByIdx(roomId);
+		//test data
 		UserVO u1=new UserVO();
 		u1.setUserid("1111");
 		u1.setNickname("micol");

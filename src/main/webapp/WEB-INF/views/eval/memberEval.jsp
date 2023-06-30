@@ -56,56 +56,77 @@ h1 {
 <body>
 	<h1>모임원 평가</h1>
 	<form name="evalMem" id="evalMem" action="../eval/memberEval" method="post">
-		<input type="hidden" name="whoid" value="1111">
-		<c:forEach var="member" items="${memberArr}" varStatus="stat">
-			
-			<div class="member-rating">
-				<h4>${member.nickname}님 평가</h4>
-				<div class="rating-container">
-					<c:forEach var="question" items="${question}" varStatus="stat2">
-						<p>${question.key}:${question.value}?</p>
-						<input type="range" name="range" class="range-slider" min="1" max="100"
-							value="50"
-							onchange="updateRangeValue(this, ${stat.index}, ${stat2.index})">
-						<p class="range-value">50</p>
-					</c:forEach>
-					<input type="hidden" name="userid" id="memberEvals[${stat.index}].userId"
-						value="${member.userid}" />
+		<!-- 중복평가 방지; 세션 -->
+<%-- 		<c:if test="${sessionScope.evalDone}">
+            <script>
+                alert("이미 평가를 완료하셨습니다");
+                window.location.href = "../room/roomView";
+            </script>
+        </c:if> --%>
+		<input type="hidden" name="whoid" value="1111"><!-- 현재 로그인한 회원 -->
+		<c:forEach var="member" items="${memberArr}" varStatus="stat"><!-- 모임방 참여 회원 -->
+			<!-- memberArr에서 userid가 whoid와 같으면 나오면 안되는데 전부 나오고 있음.. -->
+			<c:if test="${member.userid ne whoid}">
+				<div class="member-rating">
+					<h4>${member.nickname}님 평가</h4>
+					<div class="rating-container">
+						<c:forEach var="question" items="${question}" varStatus="stat2">
+							<p>${question.key}:${question.value}?</p>
+							<input type="range" name="range_${member.userid}" class="range-slider" min="1" max="100"
+								value="0"
+								onchange="updateRangeValue(this, ${stat.index}, ${stat2.index})">
+							<p class="range-value">0</p>
+						</c:forEach>
+						<input type="hidden" name="userid" id="memberEvals[${stat.index}].userId" value="${member.userid}">
+					</div>
 				</div>
-			</div>
+			</c:if>
 		</c:forEach>
 		<br> 
-		<input type="text" name="ranges" id="avgRange">
+		<input type="hidden" name="ranges" id="avgRange">
 		<button type="submit">제출</button>
 	</form>
 	<script>
-  // range 값 업데이트
+	let sliderChanged = false;//슬라이더 변경여부
+	
+  //range 값 업데이트
   function updateRangeValue(rangeSlider, userid, rangePoint) {
 	//alert(rangePoint);
     const rangeValue = rangeSlider.nextElementSibling;
     rangeValue.innerText = rangeSlider.value;
     setRanges(rangeSlider.value,userid, rangePoint);
+  //슬라이더 값 변경=비활성화
+    sliderChanged = true;
+  	rangeSlider.disabled = true;
   }
   
-  // 맴버 range 체크
+  //맴버 range 체크
   let ranges = [];
   let arr = [];
   let obj={userid:'', score:[]};
   
   function setRanges(value, userid, rangePoint) {
-	  if(rangePoint%3==0){
+	if(rangePoint%3==0){
 		  obj={userid:userid, score:[]};
-	  }
-	  obj.score.push(value);
-	  if(rangePoint%3==2){
-	         ranges.push(obj);
-     }
+	}
+	  //obj.score.push(value);
+    if (!obj.score.includes(value)) {//슬라이더 값 누적 방지
+    	obj.score.push(value);
+  	}
+	if(rangePoint%3==2){
+    	ranges.push(obj);
+    }
    	 console.log(ranges);
   }
   
   $(function(){
 	   $('#evalMem').submit(function(e){ 
-		   //e.preventDefault();
+		   var sliderDisabled = $('.range-slider:not(:disabled)').length === 0;
+		   var sliderDefault = $('.range-slider[value="0"]:not(:disabled)').length > 0;
+		   if (!(sliderDisabled || sliderDefault == 0)) {
+		      e.preventDefault();
+		      alert('모든 평가를 완료해주세요');
+		    }
 	     var avgRanges = calculateAverageRanges(ranges);
 	     $('#avgRange').val(avgRanges.join(', '));
 	     return true;

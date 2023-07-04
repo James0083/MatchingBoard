@@ -1,8 +1,11 @@
 package com.multi.matchingBoard;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.multi.model.RoomVO;
+import com.multi.model.UserVO;
 import com.multi.service.RoomService;
 
 import lombok.extern.log4j.Log4j;
@@ -55,17 +59,23 @@ public class RoomController {
 	}
 	
 	@GetMapping(value="/roomView")
-	public String roomDetail(Model m, @RequestParam(defaultValue="0") String roomId) {
+	public String roomDetail(Model m, @RequestParam(defaultValue="0") String roomId, HttpSession session) {
 		if(roomId.equals("0")) roomId="22f00439-08fc-4b0f-b842-a40e22c9c4ee";
 		
 		//방id로 해당 방 내용 가져오기
 		RoomVO vo=this.rService.selectBoardByIdx(roomId);
-		
+		//test data
+		UserVO u1=new UserVO();
+		u1.setUserid("1111");
+		u1.setNickname("micol");
+		UserVO u2=new UserVO();
+		u2.setUserid("2222");
+		u2.setNickname("cyon");
 		//해당 방의 인원 내용 가져오기
-//		List<UserVO> memberArr=this.rService.selectMemberAll(roomId);
+		List<UserVO> memberArr=Arrays.asList(u1, u2); //this.rService.selectMemberAll(roomId);
 		
 		m.addAttribute("room", vo);
-//		m.addAttribute("memberArr",memberArr);
+		session.setAttribute("memberArr",memberArr);
 //		m.addAttribute("curPnum", memberArr.size());
 		
 		return "matchingRoom/roomView";

@@ -1,15 +1,14 @@
 package com.multi.matchingBoard;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.social.oauth2.GrantType;
@@ -17,19 +16,17 @@ import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.multi.snslogin.KaKaoLoginBO;
-import com.multi.snslogin.NaverLoginBO;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+import com.multi.service.SocialService;
+import com.multi.snslogin.KaKaoLoginBO;
+import com.multi.snslogin.NaverLoginBO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -37,6 +34,9 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("user")
 @Log4j
 public class LoginController {
+	
+	@Autowired
+	private SocialService socialservice;
 	
 	private NaverLoginBO naverLoginBO;
 	private String NaverapiResult =null;
@@ -84,21 +84,29 @@ public class LoginController {
 		OAuth2AccessToken oauthToken;
 		oauthToken=naverLoginBO.getAccessToken(session, code, state);
 		NaverapiResult=naverLoginBO.getUserProfile(oauthToken);
-		System.out.println(NaverapiResult);
-		System.out.println(oauthToken);
+		//System.out.println(NaverapiResult);
+		//System.out.println(oauthToken);
 		
-		// Naver API ∞·∞˙ ∆ƒΩÃ
+		 
+		
+		// Naver API JSON Ï†ïÎ≥¥ ÌååÏã±
 	    JsonElement jsonElement = JsonParser.parseString(NaverapiResult);
 	    JsonObject jsonObject = jsonElement.getAsJsonObject();
 	    JsonObject response = jsonObject.getAsJsonObject("response");
 	    
-	    // « ø‰«— ¡§∫∏ √ﬂ√‚
+	   
 	    String id = response.get("id").getAsString();
 	    String accessToken = oauthToken.getAccessToken();
 	    String refreshToken = oauthToken.getRefreshToken();
 	    
-	    // ¡§∫∏ √‚∑¬ (∂«¥¬ DBø° ¿˙¿Â)
-	    System.out.println("ID: " + id);
+	    //UUID ÏÉùÏÑ±
+	    String uuid= UUID.randomUUID().toString();
+	    String type = "Naver";
+	    
+	    // DBÏó∞Îèô
+	    socialservice.saveSnsLogin(uuid, type, id, refreshToken);
+	    System.out.println("uuid: "+uuid);
+	    System.out.println("nID: " + id);
 	    System.out.println("Access Token: " + accessToken);
 	    System.out.println("Refresh Token: " + refreshToken);
 		
@@ -118,12 +126,16 @@ public class LoginController {
 		JsonElement jsonElement = JsonParser.parseString(KakaoapiResult);
 	    JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-	    // « ø‰«— ¡§∫∏ √ﬂ√‚
-	    long id = jsonObject.get("id").getAsLong();
+	   
+	    String id = jsonObject.get("id").getAsString();
 	    String accessToken = oauthToken.getAccessToken();
 	    String refreshToken = oauthToken.getRefreshToken();
-
-	    // ¡§∫∏ √‚∑¬ (∂«¥¬ DBø° ¿˙¿Â)
+	    //UUID ÏÉùÏÑ±
+	    String uuid= UUID.randomUUID().toString();
+	    String type = "Kakao";
+	    // DB Ïó∞Îèô
+	    socialservice.saveSnsLogin(uuid, type, id, refreshToken);
+	    System.out.println("uuid: "+uuid);
 	    System.out.println("ID: " + id);
 	    System.out.println("Access Token: " + accessToken);
 	    System.out.println("Refresh Token: " + refreshToken);
@@ -134,23 +146,23 @@ public class LoginController {
 	@RequestMapping(value = "/callbackGoogle", method = { RequestMethod.GET, RequestMethod.POST })
 	public String googleCallback(Model model, @RequestParam String code) throws Exception {
 		AccessGrant accessGrant = googleConnectionFactory.getOAuthOperations().exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(), null);
-		// æ◊ººΩ∫ ≈‰≈´ ∞™
+		
 		String accessToken = accessGrant.getAccessToken();
-		System.out.println("æ◊ººΩ∫ ≈‰≈´: " + accessToken);
+		System.out.println("ÔøΩ◊ºÔøΩÔøΩÔøΩ ÔøΩÔøΩ≈´: " + accessToken);
 		String refreshToken = accessGrant.getRefreshToken();
-		System.out.println("∏Æ«¡∑πΩ√ ≈‰≈´: " + refreshToken);
+		System.out.println("ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ≈´: " + refreshToken);
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
-	    String googleAuthUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
-	    System.out.println("Google Authorization URL: " + googleAuthUrl);
+	    String oogleAuthUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+	    System.out.println("Google Authorization URL: " + oogleAuthUrl);
 
 		try {
-	        // Google OAuth2 API userinfo ø£µÂ∆˜¿Œ∆Æø° ø‰√ª
+	        // Google OAuth2 API
 	        URL url = new URL("https://www.googleapis.com/oauth2/v3/userinfo");
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
 	        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 	        
-	        // ¿¿¥‰ ¿–±‚
+	        // ÔøΩÔøΩÔøΩÔøΩ ÔøΩ–±ÔøΩ
 	        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 	        String inputLine;
 	        StringBuffer response = new StringBuffer();
@@ -159,23 +171,24 @@ public class LoginController {
 	        }
 	        in.close();
 	        
-	        // JSON ∆ƒΩÃ
+	        // JSON ÌååÏã±
 	        JsonElement jsonElement = JsonParser.parseString(response.toString());
 	        JsonObject jsonObject = jsonElement.getAsJsonObject();
 	        
-	        // ¿Ã∏ﬁ¿œ ¡§∫∏ √‚∑¬
-	        String email = jsonObject.get("email").getAsString();
-	        System.out.println("Email: " + email);
+	        //UUID ÏÉùÏÑ±
+		    String uuid= UUID.randomUUID().toString();
+		  
+		    String id = jsonObject.get("email").getAsString();
+		    String type="Google";
+	        
+	        // DBÏó∞Îèô
+		    socialservice.saveSnsLogin(uuid, type, id, refreshToken);
+	        
+	        
 	        
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	
-
 		return "user/callbackGoogle";
-		 
-
 	}
-	
-	
 }

@@ -31,7 +31,7 @@
 					<li class="list-group-item">기본보드게임: <c:out value="${room.rgame}" /></li>
 					<li class="list-group-item">최대인원: <c:out value="${room.rmaxpeople}" /></li>
 					<li class="list-group-item">장소: <c:out value="${room.rplace}" /></li>
-					<li class="list-group-item">모임일시: <c:out value="${room.rdatetime}" /></li>
+					<li class="list-group-item" id="rdatetime">모임일시: <c:out value="${room.rdatetime}" /></li>
 					<li class="list-group-item">방설명: <c:out value="${room.rstr}" /></li>
 				</ul>
 				
@@ -74,5 +74,8 @@
 		window.close(); // 팝업 창을 닫습니다.
 	});
 
+	var rdt = '${room.rdatetime}'.split(/-|T|:/);
+	var str = '모임일시 : ' + rdt[0] + "년 " + rdt[1] + "월 " + rdt[2] + "일 - " + rdt[3] + "시 " + rdt[4] + "분";
+	document.getElementById('rdatetime').innerHTML = str;
 </script>
 </html>

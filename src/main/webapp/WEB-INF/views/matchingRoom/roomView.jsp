@@ -112,8 +112,8 @@ tr:first-child td span {
 	
 	$(document).ready(function() {
 		
-		var rdt = '${room.rdatetime}';
-		var str = '날짜 : ' + rdt.substring(0, 10) + ' / 시간 : ' + rdt.substring(11, 16);
+		var rdt = '${room.rdatetime}'.split(/-|T|:/);
+		var str = rdt[0] + "년 " + rdt[1] + "월 " + rdt[2] + "일 - " + rdt[3] + "시 " + rdt[4] + "분";
 		document.getElementById('rdatetime').innerHTML = str;
 		
 		$(".member_profile").click(function() {

@@ -144,7 +144,7 @@ h1 {
 $(function(){
 	$('#evalCafe').submit(function(e){
 		var sum = ratings.reduce((total, rating) => total + rating, 0);
-		var avg = (sum / 6).toFixed(2);
+		var avg = (sum / 6).toFixed(1);
 		alert(avg);
 		$('#averageRating').val(avg);
 		

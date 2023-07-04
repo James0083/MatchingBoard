@@ -8,19 +8,19 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 //https://dev-gorany.tistory.com/235
 @Configuration
-@EnableWebSocketMessageBroker //WebSocket�޽���ó���� Ȱ��ȭ ��Ŵ
+@EnableWebSocketMessageBroker //WebSocket
 public class WebSocketConfig  implements WebSocketMessageBrokerConfigurer{ //extends AbstractWebSocketMessageBrokerConfigurer {
 
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
-        config.setApplicationDestinationPrefixes("/app");
-        //�޽��� ������ �ٿ����ϴ� prefix�� /app���� ������
-    }
+	@Override
+	public void configureMessageBroker(MessageBrokerRegistry config) {
+		config.enableSimpleBroker("/subscribe");
+		config.setApplicationDestinationPrefixes("/publish");
+		//prefix를 /app으로 지정함
+	}
 
-    @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-         registry.addEndpoint("/chat").setAllowedOrigins("*");
-         registry.addEndpoint("/chat").withSockJS();
-    }
+	@Override
+	public void registerStompEndpoints(StompEndpointRegistry registry) {
+		registry.addEndpoint("/ws-connection").setAllowedOrigins("*");
+		registry.addEndpoint("/ws-connection").withSockJS();
+	}
 }

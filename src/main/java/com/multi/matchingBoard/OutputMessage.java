@@ -8,9 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OutputMessage {
+	
+	String roomId;
 	String from;
 	String text;
 	String time;
-	
 
 }

@@ -2,23 +2,47 @@
     pageEncoding="UTF-8"%>
 
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
 <style>
-.alert{
-	display: inline-block;
+.msg_div{
+	width: 100%;
+	height: auto;
+	display: flex;
+	margin: 5px;
+}
+.my_name_space{
+	font-size: 0.6em;
+	margin-bottom: 0;
+	float: right;
+}
+.others_name_space{
+	font-size: 0.6em;
+	margin-bottom: 0;
+	float: left;
+}
+.msg_block{
 	width: auto;
-	min-width: 80%;
+	max-width: 80%;
+	min-height: 34px;
+	padding: 5px;
+    border-radius: 0.25rem;
+	overflow-wrap: break-word;
 }
 
 .others_message{
-	text-align: left;
+	float: left;
+	background-color: #e2e3e5;
 }
 
 .my_message{
-	text-align: right;
+	float: right;
+	background-color: #fff3cd;
+	margin-left: auto;
 }
 </style>
 
-<div>
+<div  onload="connect()">
 	<label><b>채팅방</b></label>
 	<div id="msgArea" class="">
 	
@@ -27,86 +51,106 @@
 	<div class="input-group mb-3">
 		<input type="text" id="msg" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
 		<div class="input-group-append">
-			<button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+			<button class="btn btn-outline-secondary" type="button" id="button-send" onclick="sendMessage()">전송</button>
 		</div>
 	</div>
 	</div>
 </div>
 
+
 <script type="text/javascript">
 
-//전송 버튼 누르는 이벤트
-$("#button-send").on("click", function(e) {
-	sendMessage();
-	$('#msg').val('')
-});
+window.addEventListener('DOMContentLoaded', connect);
+window.addEventListener('beforeunload', disconnect);
 
-var sock = new SockJS('http://localhost:9090/matchingBoard/echo');
-sock.onmessage = onMessage;
-sock.onclose = onClose;
-sock.onopen = onOpen;
+var from = '${userid}';
+var stompClient = null;
+
+//채팅창에서 나갔을 때
+function disconnect() {
+	stompClient.send("/publish/chat/quit", {}, //prefix를 /app으로 지정함=>WebSocketConfigure에서 
+		      JSON.stringify({'roomId':${roomId}, 'from':from}));
+	
+	if(stompClient != null) {
+	    stompClient.disconnect();
+	}
+	setConnected(false);
+	console.log("Disconnected");
+}
+//채팅창에 들어왔을 때
+function connect() {
+	var socket = new SockJS('${pageContext.request.contextPath}/ws-connection');
+	stompClient = Stomp.over(socket);
+	stompClient.connect({}, function(frame) {
+		console.log("frame==="+frame)
+	    setConnected(true);
+		stompClient.send("/publish/chat/join", {}, //prefix를 /app으로 지정함=>WebSocketConfigure에서 
+			      JSON.stringify({'roomId':${roomId}, 'from':from}));
+	    console.log('Connected: ' + frame);
+	    stompClient.subscribe('/subscribe/room/'+'${roomId}', function(messageOutput) {
+	        showMessageOutput(JSON.parse(messageOutput.body));
+	    });
+	});
+}
+
+function setConnected(connected) {
+ 	var str = '${userid}';
+ 	str += connected? '님이 입장하였습니다.':'님이 퇴장하였습니다.';
+ 	str += '<br>';
+	$("#msgArea").append(str);
+}
 
 //메시지 전송
+//https://tecoble.techcourse.co.kr/post/2021-09-05-web-socket-practice/ ==>참고하여 방만들기도 적용해보기
 function sendMessage() {
-	var msg_val = $("#msg").val().trim();
-//	if(msg_val==""){
-	sock.send(msg_val);
-//	}
+    var text = document.getElementById('msg').value;
+	if(text){
+	    stompClient.send("/publish/chat/message", {}, //prefix를 /app으로 지정합=>WebSocketConfigure에서 
+	      JSON.stringify({'roomId':${roomId}, 'from':from, 'text':text}));
+	    $('#msg').val('');
+	}else{
+		alert('보낼 메세지를 입력해주세요.');
+	}
+    $('#msg').focus();
 }
 
 //서버에서 메시지를 받을 때
-function onMessage(msg){
+function showMessageOutput(messageOutput) {
 	
-	var data = msg.data;
-	var sessionId = null; //보낸사람
-	var message = null;
+	var msgId = messageOutput.from; //보낸사람
+	var message = messageOutput.text;
+	var msgtime = messageOutput.time
 	
-	var arr = data.split(":");
+	var arr = msgId.concat(":", message, "(", msgtime, ")");
 	
-	for(var i=0;i<arr.length;i++){
-		console.log('arr['+i+']: ' + arr[i]);
-	}
+	console.log('arr: ' + arr);
 	
-	var cur_session = '${userid}'; //현재 로그인한 사람
-	console.log("cur_session : " + cur_session);
+	var curId = '${userid}'; //현재 로그인한 사람
+	console.log("curId : " + curId);
 	
-	sessionId = arr[0];
-	message = arr[1];
 	
 	//로그인한 client와 다른 client 구분
-	if(sessionId == cur_session){
-		var str = "<div class='alert alert-secondary others_message'>";
-		str += "<b>" + sessionId + " : " + message + "</b>";
-		str += "</div>";
+	if(msgId != curId){
+		var str = "<div class='msg_div'>";
+		str += "<p class='my_name_space'>";
+		str += msgId;
+		str += "</p><p class='others_message msg_block'>";
+		str += message;
+		str += "</p></div>";
 		
 		$("#msgArea").append(str);
 	}
 	else{
-		
-		var str = "<div class='alert alert-warning my_message'>";
-		str += "<b>" + sessionId + " : " + message + "</b>";
-		str += "</div>";
+		var str = "<div class='msg_div'>";
+		str += "<p class='my_message msg_block'>";
+		str += message;
+		str += "</p><p class='my_name_space'>";
+		str += msgId;
+		str += "</p></div>";
 		
 		$("#msgArea").append(str);
 	}
 	
-}
-
-//채팅창에서 나갔을 때
-function onClose(evt) {
-	
-	var user = '${pr.username}';
-	var str = user + " 님이 퇴장하셨습니다.";
-	
-	$("#msgArea").append(str);
-}
-//채팅창에 들어왔을 때
-function onOpen(evt) {
-	
-	var user = '${pr.username}';
-	var str = user + "님님이 입장하셨습니다.";
-	
-	$("#msgArea").append(str);
 }
 
 </script>

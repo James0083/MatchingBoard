@@ -9,7 +9,7 @@
     
     <insert id="insertManners" parameterType="com.multi.model.MemberEvalVO">
         insert into membereval
-        values(membereval_seq.nextval, #{userid}, #{eval})
+        values(membereval_seq.nextval, #{whoid}, #{userid}, #{eval})
     </insert>
 
     <select id="memManners" parameterType="com.multi.model.UserVO" resultType="com.multi.model.MemberEvalVO">

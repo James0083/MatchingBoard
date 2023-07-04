@@ -159,29 +159,27 @@
 </head>
 <body>
 	<h1>정보 수정</h1>
-	<form action="submitUserInfo" method="post" enctype="multipart/form-data">
-		<label for="profile_img">프로필 이미지:</label> 
+	<form id="userForm" action="submitUserInfo" method="post" enctype="multipart/form-data">
+		<label for="profile_img">프로필 이미지:</label>
 		<input type="file" id="profile_img" name="profile_img">
-		<br> <br> 
-		<label for="nickname">닉네임:</label> 
+		<br> <br>
+		<label for="nickname">닉네임:</label>
 		<input type="text" id="nickname" name="nickname">
 		<br> <br>
-	</form>
-
-
-	<form id="nsdiSearchForm" action="#" class="form_data"
-		onsubmit="return false;search();">
 		<label for="sido_code">지역:</label>
-		<select id="sido_code">
-			<option>선택</option>
-		</select> <select id="sigoon_code">
-			<option>선택</option>
-		</select> <select id="dong_code">
-			<option>선택</option>
-		</select> <select id="lee_code">
+		<select id="sido_code" name="sido_code">
 			<option>선택</option>
 		</select>
-	</form>
+		<select id="sigoon_code" name="sigoon_code">
+			<option>선택</option>
+		</select>
+		<select id="dong_code" name="dong_code">
+			<option>선택</option>
+		</select>
+		<select id="lee_code" name="lee_code">
+			<option>선택</option>
+		</select>
+		<br><br>
 
 	<label>장르:</label>
 	<input type="checkbox" id="genre1" name="genre" value="IQ"
@@ -212,7 +210,7 @@
 
 	<label>게임: </label>
 	<div id="selectedGames"></div>
-	<button onclick="openGameModal()">게임 찾기</button>
+	<button type="button" onclick="openGameModal()">게임 찾기</button>
 
 	<div class="modal" id="modal">
 		<div class="modal_body">
@@ -223,7 +221,7 @@
 			<div class="m_body" id="m_body">
 				<c:forEach var="game" items="${gameList}">
 					<div>
-						<input type="checkbox" name="game" value="${game}" onclick="count_check(this)">${game}
+						<input type="checkbox" name="games" value="${game}" onclick="count_check(this)">${game}
 					</div>
 				</c:forEach>
 			</div>
@@ -237,8 +235,9 @@
 
 	<br>
 	<br>
-	<button type="submit" id="usermodify">수정하기</button>
+	<button type="button" id="usermodify" onclick="submitForm()">수정하기</button>
 	<button type="button" id="testSubmit">반환값 테스트</button>
+	</form>
 
 	<script>
 	// 반환값 테스트 버튼 클릭 이벤트 처리
@@ -363,7 +362,7 @@
 									async : false,
 									dataType : 'jsonp',
 									success : function(data) {
-												let html = "<option>선택</option>";
+												let html = "<option></option>";
 												data.response.result.featureCollection.features.forEach(function(f) {
 															console.log(f.properties)
 															let regionCode = f.properties.li_cd;
@@ -381,25 +380,11 @@
 							});
 		})
 
-		function count_check(obj) {
-			var chkbox = document.getElementsByName("genre");
-			var chkcnt = 0;
 
-			for (var i = 0; i < chkbox.length; i++) {
-				if (chkbox[i].checked) {
-					chkcnt++;
-				}
-			}
-			if (chkcnt > 3) {
-				alert("장르는 3개만 선택가능합니다.");
-				obj.checked = false;
-				return false;
-			}
-
-		}
 		
 		function count_check(checkbox) {
 		    var checkboxes = document.getElementsByName('game');
+		    var checkboxes = document.getElementsByName("genre");
 		    var totalChecked = 0;
 		    for (var i = 0; i < checkboxes.length; i++) {
 		        if (checkboxes[i].checked) {
@@ -472,7 +457,60 @@
 					document.getElementById("modal").classList.remove("show");
 		});
 		
-		
+		function submitForm() {
+			  var formData = new FormData();
+
+			  // 프로필 이미지
+			  var profileImg = document.getElementById("profile_img").files[0];
+			  formData.append("profile_img", profileImg);
+
+			  // 닉네임
+			  var nickname = document.getElementById("nickname").value;
+			  formData.append("nickname", nickname);
+
+			  // 시도, 시군구, 동, 리 코드
+			  var sidoCode = document.getElementById("sido_code").value;
+			  var sigoonCode = document.getElementById("sigoon_code").value;
+			  var dongCode = document.getElementById("dong_code").value;
+			  var leeCode = document.getElementById("lee_code").value;
+			  formData.append("sido_code", sidoCode);
+			  formData.append("sigoon_code", sigoonCode);
+			  formData.append("dong_code", dongCode);
+			  formData.append("lee_code", leeCode);
+
+			  // 선택된 장르
+			  var genreCheckboxes = document.getElementsByName("genre");
+			  for (var i = 0; i < genreCheckboxes.length; i++) {
+			    if (genreCheckboxes[i].checked) {
+			      formData.append("genres", genreCheckboxes[i].value);
+			    }
+			  }
+
+			  // 선택된 게임
+			  var gameCheckboxes = document.getElementsByName("game");
+			  for (var i = 0; i < gameCheckboxes.length; i++) {
+			    if (gameCheckboxes[i].checked) {
+			      formData.append("games", gameCheckboxes[i].value);
+			    }
+			  }
+
+			  // AJAX 요청
+			  $.ajax({
+			    url: "/submitUserInfo",
+			    type: "POST",
+			    data: formData,
+			    processData: false,
+			    contentType: false,
+			    success: function(response) {
+			      // 요청 성공 시 처리 로직
+			      console.log("서버 응답: ", response);
+			    },
+			    error: function(xhr, status, error) {
+			      // 요청 실패 시 처리 로직
+			      console.error("요청 실패: ", error);
+			    }
+			  });
+			}
 	</script>
 </body>
 </html>

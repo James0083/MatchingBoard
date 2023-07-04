@@ -6,4 +6,6 @@ public interface RoomMapper {
 
 	int insertRoom(RoomVO room);
 	RoomVO selectRoomByIdx(String roomid);
+	int updateRoom(RoomVO room);
+	
 }

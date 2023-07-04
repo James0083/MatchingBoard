@@ -12,4 +12,13 @@
 		select * from room where roomid=#{value}
 	</select>
 	
+	<!-- 글 수정 -->
+    <update id="updateRoom" parameterType="Room">
+    	update room set rname=#{rname}, rplace=#{rplace}, rmaxpeople=#{rmaxpeople},
+    	rgenre=#{rgenre}, rgame=#{rgame}, rstr=#{rstr:VARCHAR}, rdatetime=#{rdatetime}
+    	<where>
+    		roomid=#{roomid}
+    	</where> 
+    </update>
+	
 </mapper>

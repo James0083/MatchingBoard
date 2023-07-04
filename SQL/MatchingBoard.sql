@@ -99,9 +99,11 @@ CREATE TABLE ShopGame (
 
 CREATE TABLE Membereval(
     enum number Primary Key,
-    userid varchar2(100) references member(userid),
+    whoid  varchar2(100) references member(userid), --평가자
+    userid varchar2(100) references member(userid), -- 평가대상자
     manner number(3,1)
 );
+create sequence membereval_seq nocache;
 
 CREATE TABLE Evaluation(
     enum number Primary Key,
@@ -109,3 +111,5 @@ CREATE TABLE Evaluation(
     saddr varchar2(150) references shop(saddr),
     stars number(3,1)
 );
+create sequence evaluation_seq nocache;
+

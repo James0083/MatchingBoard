@@ -4,9 +4,6 @@
 <mapper namespace="com.multi.mapper.ClickRoomMapper">   
 
 <!-- 모임방 상세 목록 -->
-<select id="clickList" resultType="Room" parameterType="string">
-	select * from room 
-</select>
 
 <select id="clickRoom" resultType="Room" parameterType="string">
 	select * from room where roomid=#{roomid}

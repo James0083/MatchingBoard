@@ -13,13 +13,13 @@ import com.multi.service.BoardSearchService;
 
 
 @Controller
-@RequestMapping("/search")
+@RequestMapping("/room")
 public class SearchController {
 	
 	@Inject
 	private BoardSearchService bservice;
 	
-	@GetMapping(value="/boardSearch")
+	@GetMapping(value="/roomList")
 	public String boardSearch(Model model, PagingVO pagingvo) {
 		
 		 model.addAttribute("list", bservice.getListPaging(pagingvo));

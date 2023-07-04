@@ -5,5 +5,5 @@ import com.multi.model.RoomVO;
 public interface RoomService {
 
 	int insertRoom(RoomVO vo);
-	RoomVO selectBoardByIdx(String roomid);
+	RoomVO selectRoomByIdx(String roomid);
 }

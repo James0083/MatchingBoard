@@ -479,31 +479,41 @@
 			  formData.append("lee_code", leeCode);
 
 			  // 선택된 장르
-			  var genreCheckboxes = document.getElementsByName("genre");
-			  for (var i = 0; i < genreCheckboxes.length; i++) {
-			    if (genreCheckboxes[i].checked) {
-			      formData.append("genres", genreCheckboxes[i].value);
-			    }
-			  }
+			 var genres = [];
+			 var genreCheckboxes = document.getElementsByName("genre");
+			 for (var i = 0; i < genreCheckboxes.length; i++) {
+  					if (genreCheckboxes[i].checked) {
+    					genres.push(genreCheckboxes[i].value);
+    					 formData.append("genres", genreCheckboxes[i].value);
+  					}
+			 }
 
-			  // 선택된 게임
-			  var gameCheckboxes = document.getElementsByName("game");
-			  for (var i = 0; i < gameCheckboxes.length; i++) {
-			    if (gameCheckboxes[i].checked) {
-			      formData.append("games", gameCheckboxes[i].value);
-			    }
-			  }
+			 var games = [];
+			 var gameCheckboxes = document.getElementsByName("game");
+			 for (var i = 0; i < gameCheckboxes.length; i++) {
+  					if (gameCheckboxes[i].checked) {
+    					games.push(gameCheckboxes[i].value);
+    					formData.append("games", gameCheckboxes[i].value);
+  					}
+			 }
+			 //formData.append("genres", genres);
+			 //formData.append("games", games);
+
 
 			  // AJAX 요청
 			  $.ajax({
-			    url: "/submitUserInfo",
+			    url: "submitUserInfo",
 			    type: "POST",
 			    data: formData,
 			    processData: false,
 			    contentType: false,
 			    success: function(response) {
-			      // 요청 성공 시 처리 로직
 			      console.log("서버 응답: ", response);
+			      if (response === 'success') {
+			            window.location.href = "http://localhost:9090/matchingBoard/";
+			        } else {
+			            alert(response);
+			        }
 			    },
 			    error: function(xhr, status, error) {
 			      // 요청 실패 시 처리 로직

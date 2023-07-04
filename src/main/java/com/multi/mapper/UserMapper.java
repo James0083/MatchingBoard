@@ -4,4 +4,6 @@ import com.multi.model.UserVO;
 
 public interface UserMapper {
 	void modifyUser(UserVO user);
+	
+	void updateUser(UserVO user);
 }	

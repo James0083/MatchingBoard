@@ -1,8 +1,7 @@
 package com.multi.service;
 
-import org.springframework.stereotype.Service;
+import com.multi.model.SnsLoginVO;
 
 public interface SocialService {
 	  void saveSnsLogin(String uuid, String type, String identifier, String refreshToken);
-
 }

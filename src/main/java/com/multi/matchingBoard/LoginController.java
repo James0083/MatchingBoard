@@ -24,6 +24,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.multi.model.SnsLoginVO;
 import com.multi.service.SocialService;
 import com.multi.snslogin.KaKaoLoginBO;
 import com.multi.snslogin.NaverLoginBO;
@@ -109,10 +110,9 @@ public class LoginController {
 	    System.out.println("nID: " + id);
 	    System.out.println("Access Token: " + accessToken);
 	    System.out.println("Refresh Token: " + refreshToken);
-		
-		
-		
-		return "user/callbackNaver";
+	    
+	   
+	    return "user/callbackNaver";
 	}
 	
 	@RequestMapping(value="/callbackKakao", method= {RequestMethod.GET, RequestMethod.POST})

@@ -6,4 +6,6 @@
         INSERT INTO social (uuid, type, identifier, refreshtoken)
         VALUES(#{uuid}, #{type}, #{identifier}, #{refreshToken})
     </insert>
+    
+    
 </mapper>

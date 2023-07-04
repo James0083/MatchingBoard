@@ -73,11 +73,12 @@
 	
 	
 	<!-- WebSocket Handler -->
+	<!-- 
 	<websocket:handlers>
 		<websocket:mapping handler="chattingHandler" path="/echo"/>
 		<websocket:sockjs></websocket:sockjs>
 	</websocket:handlers>
 	
 	<beans:bean id="chattingHandler" class="com.multi.chatting.ChattingHandler"/>
-	
+	 -->
 </beans:beans>

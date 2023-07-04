@@ -138,15 +138,15 @@
             }
             
             function connect() {
-                var socket = new SockJS('${pageContext.request.contextPath}/chat');
+                var socket = new SockJS('${pageContext.request.contextPath}/ws-connection');
                 stompClient = Stomp.over(socket);  
                 stompClient.connect({}, function(frame) {
                 	console.log("frame==="+frame)
                     setConnected(true);
                     console.log('Connected: ' + frame);
-                    stompClient.subscribe('/topic/messages', function(messageOutput) {
-                        showMessageOutput(JSON.parse(messageOutput.body));
-                    });
+                    stompClient.subscribe('/subscribe/room/'+'${roomId}', function(messageOutput) {
+            	        showMessageOutput(JSON.parse(messageOutput.body));
+            	    });
                 });
             }
             
@@ -168,8 +168,8 @@
             function sendMessage() {
                 var from = document.getElementById('from').value;
                 var text = document.getElementById('text').value;
-                stompClient.send("/app/chat", {}, //prefix를 /app으로 지정합=>WebSocketConfigure에서 
-                  JSON.stringify({'from':from, 'text':text}));
+                stompClient.send("/publish/chat/message", {}, //prefix를 /app으로 지정합=>WebSocketConfigure에서 
+              	      JSON.stringify({'roomId':${roomId}, 'from':from, 'text':text}));
                 $('#text').val('')
             }
             

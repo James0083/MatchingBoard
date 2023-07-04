@@ -11,9 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.multi.model.RoomVO;
 import com.multi.model.UserVO;
@@ -58,12 +58,15 @@ public class RoomController {
 //		return "matchingRoom/roomView";
 	}
 	
-	@GetMapping(value="/roomView")
-	public String roomDetail(Model m, @RequestParam(defaultValue="0") String roomId, HttpSession session) {
+	@GetMapping(value="/roomView/{roomId}")
+	public String roomDetail(Model m, @PathVariable("roomId") String roomId, HttpSession session) {
+	//public String roomDetail(Model m, @RequestParam(defaultValue="0") String roomId, HttpSession session) {
+		
 		if(roomId.equals("0")) roomId="22f00439-08fc-4b0f-b842-a40e22c9c4ee";
+		log.info("roomId: "+roomId);
 		
 		//방id로 해당 방 내용 가져오기
-		RoomVO vo=this.rService.selectBoardByIdx(roomId);
+		RoomVO vo=this.rService.selectRoomByIdx(roomId);
 		//test data
 		UserVO u1=new UserVO();
 		u1.setUserid("1111");

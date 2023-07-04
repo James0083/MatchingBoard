@@ -9,7 +9,7 @@
 <body>
 
 	<script>
-		self.location = "/matchingBoard";
+		self.location = "/matchingBoard/user/modify";
 	</script>
 
 </body>

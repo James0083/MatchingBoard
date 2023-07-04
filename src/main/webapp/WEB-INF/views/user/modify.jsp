@@ -129,25 +129,49 @@
     box-sizing: border-box;
     padding: 5px;
   }
+   #m_body {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
+  }
+
+  #m_body > div {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  #m_body input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  #selectedGames {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  #selectedGames p {
+    padding-right: 8px;
+  }
 </style>
 
 </head>
 <body>
 	<h1>정보 수정</h1>
-	<form action="submitUserInfo" method="post"
-		enctype="multipart/form-data">
-		<label for="userId">User ID:</label> <input type="text" id="userId"
-			name="userId" value="${UUID.randomUUID().toString()}" readonly><br>
-		<br> <label for="profileImg">프로필 이미지:</label> <input type="file"
-			id="profileImg" name="profileImg"><br> <br> <label
-			for="nickname">Nickname:</label> <input type="text" id="nickname"
-			name="nickname"><br> <br>
+	<form action="submitUserInfo" method="post" enctype="multipart/form-data">
+		<label for="profile_img">프로필 이미지:</label> 
+		<input type="file" id="profile_img" name="profile_img">
+		<br> <br> 
+		<label for="nickname">닉네임:</label> 
+		<input type="text" id="nickname" name="nickname">
+		<br> <br>
 	</form>
 
 
 	<form id="nsdiSearchForm" action="#" class="form_data"
 		onsubmit="return false;search();">
-
+		<label for="sido_code">지역:</label>
 		<select id="sido_code">
 			<option>선택</option>
 		</select> <select id="sigoon_code">
@@ -159,9 +183,6 @@
 		</select>
 	</form>
 
-	<br>
-
-	<br>
 	<label>장르:</label>
 	<input type="checkbox" id="genre1" name="genre" value="IQ"
 		onclick="count_check(this)">
@@ -202,12 +223,12 @@
 			<div class="m_body" id="m_body">
 				<c:forEach var="game" items="${gameList}">
 					<div>
-						<input type="checkbox" name="game" value="${game}">${game}
+						<input type="checkbox" name="game" value="${game}" onclick="count_check(this)">${game}
 					</div>
 				</c:forEach>
 			</div>
 			<div class="m_footer">
-				<div class="modal_btn cancle" id="close_btn">CANCLE</div>
+				<div class="modal_btn cancle" id="close_btn_cancle">CANCLE</div>
 				<div class="modal_btn save" id="save_btn">SAVE</div>
 			</div>
 		</div>
@@ -216,9 +237,42 @@
 
 	<br>
 	<br>
-	<input type="submit" value="Submit">
+	<button type="submit" id="usermodify">수정하기</button>
+	<button type="button" id="testSubmit">반환값 테스트</button>
 
 	<script>
+	// 반환값 테스트 버튼 클릭 이벤트 처리
+	  document.getElementById("testSubmit").addEventListener("click", function() {
+    var formData = {
+      profile_img: document.getElementById("profile_img").value,
+      nickname: document.getElementById("nickname").value,
+      sido_code: document.getElementById("sido_code").value,
+      sigoon_code: document.getElementById("sigoon_code").value,
+      dong_code: document.getElementById("dong_code").value,
+      lee_code: document.getElementById("lee_code").value,
+      games: [],
+      genres: []
+    };
+
+    // 선택된 게임 정보 가져오기
+    var gameCheckboxes = document.getElementsByName("game");
+    for (var i = 0; i < gameCheckboxes.length; i++) {
+      if (gameCheckboxes[i].checked) {
+        formData.games.push(gameCheckboxes[i].value);
+      }
+    }
+
+    // 선택된 장르 정보 가져오기
+    var genreCheckboxes = document.getElementsByName("genre");
+    for (var i = 0; i < genreCheckboxes.length; i++) {
+      if (genreCheckboxes[i].checked) {
+        formData.genres.push(genreCheckboxes[i].value);
+      }
+    }
+
+    console.log("반환값 테스트: ", formData);
+  });
+		
 		$.support.cors = true;
 
 		$(function() {
@@ -344,6 +398,20 @@
 
 		}
 		
+		function count_check(checkbox) {
+		    var checkboxes = document.getElementsByName('game');
+		    var totalChecked = 0;
+		    for (var i = 0; i < checkboxes.length; i++) {
+		        if (checkboxes[i].checked) {
+		            totalChecked++;
+		        }
+		    }
+		    if (totalChecked > 3) {
+		        alert('3개 이상 선택할 수 없습니다.');
+		        checkbox.checked = false;
+		    }
+		}
+		
 		var gameList = [
 	        <c:forEach items="${gameName}" var="game">
 	            '<c:out value="${game}" />',
@@ -362,6 +430,7 @@
 				checkBox.type = "checkbox";
 				checkBox.name = "game";
 				checkBox.value = gameList[i];
+				checkBox.onclick = function() { count_check(this); };
 				label.appendChild(document.createTextNode(gameList[i]));
 				div.appendChild(checkBox);
 				div.appendChild(label);
@@ -374,6 +443,11 @@
 
 		// 모달 닫기
 		document.getElementById("close_btn").addEventListener("click",
+				function() {
+					document.getElementById("modal").classList.remove("show");
+				});
+		
+		document.getElementById("close_btn_cancle").addEventListener("click",
 				function() {
 					document.getElementById("modal").classList.remove("show");
 				});
@@ -396,7 +470,9 @@
 
 					// 모달 닫기
 					document.getElementById("modal").classList.remove("show");
-				});
+		});
+		
+		
 	</script>
 </body>
 </html>

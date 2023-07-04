@@ -1,0 +1,13 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.multi.mapper.UserMapper">
+	
+	<insert id="modifyuser" parameterType="User">
+		insert into 
+		Member(userid,profile_img,nickname,area,fgenre1,fgenre2,fgenre3,fgame1,fgame2,fgame3)
+		values
+		(#{userid},#{profile_img},#{nickname},#{area_code},#{fgenre1},#{fgenre2},#{fgenre3},#{fgame1},#{fgame2},#{fgame3})
+	</insert>
+	
+</mapper>

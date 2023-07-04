@@ -4,10 +4,14 @@
 <mapper namespace="com.multi.mapper.UserMapper">
 	
 	<insert id="modifyuser" parameterType="User">
+		<selectKey keyProperty="userid" resultType="String"
+			order="BEFORE">
+			select uuid from social
+		</selectKey>
 		insert into 
-		Member(userid,profile_img,nickname,area,fgenre1,fgenre2,fgenre3,fgame1,fgame2,fgame3)
+		Member(userid,profile_img,nickname,area_code,grade,exp,manner,fgenre1,fgenre2,fgenre3,fgame1,fgame2,fgame3,attend,late,absent)
 		values
-		(#{userid},#{profile_img},#{nickname},#{area_code},#{fgenre1},#{fgenre2},#{fgenre3},#{fgame1},#{fgame2},#{fgame3})
+		(#{userid},#{profile_img},#{nickname},#{area_code},0,0,0,#{fgenre1},#{fgenre2},#{fgenre3},#{fgame1},#{fgame2},#{fgame3},0,0,0)
 	</insert>
 	
 </mapper>

@@ -20,9 +20,9 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public RoomVO selectBoardByIdx(String roomid) {
+	public RoomVO selectRoomByIdx(String roomid) {
 
-		return rMapper.selectBoardByIdx(roomid);
+		return rMapper.selectRoomByIdx(roomid);
 	}
 
 }

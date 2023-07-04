@@ -6,6 +6,8 @@ DROP TABLE LikeRoom CASCADE CONSTRAINTS;
 DROP TABLE Roompeople CASCADE CONSTRAINTS;
 DROP TABLE Room CASCADE CONSTRAINTS;
 DROP TABLE Member CASCADE CONSTRAINTS;
+DROP TABLE Evaluation CASCADE CONSTRAINTS;
+DROP TABLE Membereval CASCADE CONSTRAINTS;
 
 CREATE TABLE Member (
     userid VARCHAR2(40) NOT NULL,
@@ -31,24 +33,30 @@ CREATE TABLE Room (
     roomid VARCHAR2(40) NOT NULL,
     rname VARCHAR2(60) NOT NULL,
     rplace VARCHAR2(60) NOT NULL,
+    shopid VARCHAR2(40),
     rmaxpeople NUMBER(2) NOT NULL,
     rgenre VARCHAR2(15) NOT NULL,
     rgame VARCHAR2(60),
     rstr VARCHAR2(3000),
     rdatetime varchar2(20) DEFAULT to_char(SYSDATE, 'YYYY-MM-DD HH24:MI') NOT NULL,
-    PRIMARY KEY (roomid)
+    PRIMARY KEY (roomid),
+    FOREIGN KEY (shopid) REFERENCES Shop(shopid)
 );
 
 CREATE TABLE Roompeople (
-    userid VARCHAR2(40),
-    roomid VARCHAR2(40),
+    roomuserid VARCHAR2(40) NOT NULL,
+    userid VARCHAR2(40) NOT NULL,
+    roomid VARCHAR2(40) NOT NULL,
+    PRIMARY KEY (roomuserid),
     FOREIGN KEY (userid) REFERENCES Member(userid),
     FOREIGN KEY (roomid) REFERENCES Room(roomid)
 );
 
 CREATE TABLE LikeRoom (
-    userid VARCHAR2(40),
-    roomid VARCHAR2(40),
+    likeid VARCHAR2(40) NOT NULL,
+    userid VARCHAR2(40) NOT NULL,
+    roomid VARCHAR2(40) NOT NULL,
+    PRIMARY KEY (likeid),
     FOREIGN KEY (userid) REFERENCES Member(userid),
     FOREIGN KEY (roomid) REFERENCES Room(roomid)
 );
@@ -71,6 +79,7 @@ CREATE TABLE Game (
 );
 
 CREATE TABLE Shop (
+    shopid VARCHAR2(40) NOT NULL,
     sname VARCHAR2(60) NOT NULL,
     saddr VARCHAR2(150) NOT NULL,
     smenu_img VARCHAR2(500),
@@ -87,3 +96,20 @@ CREATE TABLE ShopGame (
     FOREIGN KEY (name) REFERENCES Game(name),
     FOREIGN KEY (saddr) REFERENCES Shop(saddr)
 );
+
+CREATE TABLE Membereval(
+    enum number Primary Key,
+    whoid  varchar2(100) references member(userid), --평가자
+    userid varchar2(100) references member(userid), -- 평가대상자
+    manner number(3,1)
+);
+create sequence membereval_seq nocache;
+
+CREATE TABLE Evaluation(
+    enum number Primary Key,
+    userid varchar2(100) references member(userid),
+    saddr varchar2(150) references shop(saddr),
+    stars number(3,1)
+);
+create sequence evaluation_seq nocache;
+

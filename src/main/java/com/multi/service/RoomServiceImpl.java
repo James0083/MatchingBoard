@@ -30,4 +30,10 @@ public class RoomServiceImpl implements RoomService {
 
 		return rMapper.updateRoom(vo);
 	}
+
+	@Override
+	public int deleteRoom(String roomid) {
+		
+		return rMapper.deleteRoom(roomid);
+	}
 }

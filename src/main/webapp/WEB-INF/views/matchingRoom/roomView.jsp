@@ -155,6 +155,18 @@ tr:first-child td span {
 	function evaluation(){
  		window.location.href = '../../eval/memberEval';
 	}
+	
+	const go=function(mode){
+		//alert(mode);
+		if(mode=='del'){
+			frm.method='post';
+			frm.action='../delete';
+		}else if(mode=='edit'){
+			frm.method='post';
+			frm.action='../editRoom';
+		}
+		frm.submit();
+	}
 </script>
 
 <div class="row" style="height: 700px;">
@@ -162,7 +174,13 @@ tr:first-child td span {
 		<div style="vertical-align: middle;">
 			<h3 style="display: inline-block;">${room.rname}</h3>
 			<!-- <button type="button" id="btnTitleEdit" class="float-right btn btn-sm btn-outline-secondary">편집하기</button> -->
-			<button type="button" id="btnRoomEdit" class="float-right btn btn-sm btn-outline-secondary" onclick="location.href='../editRoom/${roomId}'">편집하기</button>
+			<form name="frm" id="frm">
+				<input type="hidden" name="roomId" value="<c:out value="${roomId}"/>">
+				<button type="button" id="btnRoomEdit" class="float-right btn btn-sm btn-outline-secondary" 
+					style="margin: 0px 3px;" onclick="go('edit')">편집하기</button>
+				<button type="button" id="btnRoomDelete" class="float-right btn btn-sm btn-outline-danger" 
+					style="margin: 0px 3px;" onclick="go('del')">모임방 삭제</button>
+			</form>
 		</div>
 		<div class="members">
 			<button class="btn btn-sm btn-outline-light" id="cur_num_btn">인원 : ${curPnum} / ${room.rmaxpeople}</button>

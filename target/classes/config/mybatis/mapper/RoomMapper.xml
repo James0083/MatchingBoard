@@ -20,5 +20,9 @@
     		roomid=#{roomid}
     	</where> 
     </update>
+    
+    <delete id="deleteRoom" parameterType="string">
+    	delete from room where roomid=#{roomid}
+    </delete>
 	
 </mapper>

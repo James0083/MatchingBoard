@@ -31,6 +31,7 @@ CREATE TABLE Member (
 
 CREATE TABLE Room (
     roomid VARCHAR2(40) NOT NULL,
+    cheif VARCHAR2(40), --방장
     rname VARCHAR2(60) NOT NULL,
     rplace VARCHAR2(60) NOT NULL,
     shopid VARCHAR2(40),
@@ -53,10 +54,8 @@ CREATE TABLE Roompeople (
 );
 
 CREATE TABLE LikeRoom (
-    likeid VARCHAR2(40) NOT NULL,
-    userid VARCHAR2(40) NOT NULL,
-    roomid VARCHAR2(40) NOT NULL,
-    PRIMARY KEY (likeid),
+    userid VARCHAR2(40),
+    roomid VARCHAR2(40),
     FOREIGN KEY (userid) REFERENCES Member(userid),
     FOREIGN KEY (roomid) REFERENCES Room(roomid)
 );
@@ -82,11 +81,13 @@ CREATE TABLE Shop (
     shopid VARCHAR2(40) NOT NULL,
     sname VARCHAR2(60) NOT NULL,
     saddr VARCHAR2(150) NOT NULL,
+    mapx NUMBER(10,7),
+    mapy NUMBER(10,7),
     smenu_img VARCHAR2(500),
     price_img VARCHAR2(500),
-    hour_price NUMBER(4),
-    unlim_price NUMBER(4),
-    stars NUMBER(3,1) NOT NULL,
+    hour_price NUMBER(5),
+    unlim_price NUMBER(5),
+    stars NUMBER(2,1) DEFAULT 0.0 NOT NULL,
     PRIMARY KEY (saddr)
 );
 

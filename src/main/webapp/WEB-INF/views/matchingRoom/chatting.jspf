@@ -64,12 +64,13 @@ window.addEventListener('DOMContentLoaded', connect);
 window.addEventListener('beforeunload', disconnect);
 
 var from = '${userid}';
+var rid = '${roomId}';
 var stompClient = null;
 
 //채팅창에서 나갔을 때
 function disconnect() {
 	stompClient.send("/publish/chat/quit", {}, //prefix를 /app으로 지정함=>WebSocketConfigure에서 
-		      JSON.stringify({'roomId':${roomId}, 'from':from}));
+		      JSON.stringify({'roomId':rid, 'from':from}));
 	
 	if(stompClient != null) {
 	    stompClient.disconnect();
@@ -85,7 +86,7 @@ function connect() {
 		console.log("frame==="+frame)
 	    setConnected(true);
 		stompClient.send("/publish/chat/join", {}, //prefix를 /app으로 지정함=>WebSocketConfigure에서 
-			      JSON.stringify({'roomId':${roomId}, 'from':from}));
+			      JSON.stringify({'roomId':rid, 'from':from}));
 	    console.log('Connected: ' + frame);
 	    stompClient.subscribe('/subscribe/chatroom/'+'${roomId}', function(messageOutput) {
 	        showMessageOutput(JSON.parse(messageOutput.body));
@@ -106,7 +107,7 @@ function sendMessage() {
     var text = document.getElementById('msg').value;
 	if(text){
 	    stompClient.send("/publish/chat/message", {}, //prefix를 /app으로 지정합=>WebSocketConfigure에서 
-	      JSON.stringify({'roomId':${roomId}, 'from':from, 'text':text}));
+	      JSON.stringify({'roomId':rid, 'from':from, 'text':text}));
 	    $('#msg').val('');
 	}else{
 		alert('보낼 메세지를 입력해주세요.');

@@ -26,13 +26,13 @@
 		<div class="bd-example-snippet bd-code-snippet">
 			<div class="bd-example">
 				<ul class="list-group">
-					<li class="list-group-item">방이름: <c:out value="${list.rname}" /></li>
-					<li class="list-group-item">장르: <c:out value="${list.rgenre}" /></li>
-					<li class="list-group-item">기본보드게임: <c:out value="${list.rgame}" /></li>
-					<li class="list-group-item">최대인원: <c:out value="${list.rmaxpeople}" /></li>
-					<li class="list-group-item">장소: <c:out value="${list.rplace}" /></li>
-					<li class="list-group-item">모임일시: <c:out value="${list.rdatetime}" /></li>
-					<li class="list-group-item">방설명: <c:out value="${list.rstr}" /></li>
+					<li class="list-group-item">방이름: <c:out value="${room.rname}" /></li>
+					<li class="list-group-item">장르: <c:out value="${room.rgenre}" /></li>
+					<li class="list-group-item">기본보드게임: <c:out value="${room.rgame}" /></li>
+					<li class="list-group-item">최대인원: <c:out value="${room.rmaxpeople}" /></li>
+					<li class="list-group-item">장소: <c:out value="${room.rplace}" /></li>
+					<li class="list-group-item" id="rdatetime">모임일시: <c:out value="${room.rdatetime}" /></li>
+					<li class="list-group-item">방설명: <c:out value="${room.rstr}" /></li>
 				</ul>
 				
 				<br>
@@ -41,11 +41,11 @@
 					style="text-align: center;">
 					<div class="bd-example">
 						<button type="button" class="btn btn-secondary" id="list_room">모임방 목록</button>
-						<button type="button" class="btn btn-secondary">모임방 참가</button>
+						<button type="button" class="btn btn-secondary" id="enter_room">모임방 참가</button>
 					</div>
 					<!-- 모임방 목록으로 돌아가기 -->
 					<form id="infoForm" action="boardSearch" method="get">
-						<input type ="hidden" id="roomid" name="roomid" value='<c:out value="${list.roomid}"/>'>
+						<input type ="hidden" id="roomid" name="roomid" value='<c:out value="${room.roomid}"/>'>
 						<input type="hidden" name="pageNum" value='<c:out value="${pagingvo.pageNum}"/>'>
 						<input type="hidden" name="amount" value='<c:out value="${pagingvo.amount}"/>'>
 						<!--  
@@ -69,6 +69,13 @@
 		form.submit();
 	});
 	
+	$("#enter_room").on("click", function(e){
+		opener.location.href="./roomView/"+'${room.roomid}';
+		window.close(); // 팝업 창을 닫습니다.
+	});
 
+	var rdt = '${room.rdatetime}'.split(/-|T|:/);
+	var str = '모임일시 : ' + rdt[0] + "년 " + rdt[1] + "월 " + rdt[2] + "일 - " + rdt[3] + "시 " + rdt[4] + "분";
+	document.getElementById('rdatetime').innerHTML = str;
 </script>
 </html>

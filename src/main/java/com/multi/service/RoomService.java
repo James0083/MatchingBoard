@@ -6,4 +6,5 @@ public interface RoomService {
 
 	int insertRoom(RoomVO vo);
 	RoomVO selectRoomByIdx(String roomid);
+	int updateRoom(RoomVO vo);
 }

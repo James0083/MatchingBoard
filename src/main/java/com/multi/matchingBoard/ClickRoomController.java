@@ -11,7 +11,7 @@ import com.multi.model.PagingVO;
 import com.multi.service.ClickRoomService;
 
 @Controller
-@RequestMapping("/search")
+@RequestMapping("/room")
 public class ClickRoomController {
 	
 	@Inject	
@@ -19,7 +19,7 @@ public class ClickRoomController {
 	
 	@GetMapping(value="/clickRoom")
 	public String clickRoom(String roomid, Model model, PagingVO pagingvo) {
-		model.addAttribute("list", cservice.clickRoom(roomid));
+		model.addAttribute("room", cservice.clickRoom(roomid));
 		
 		//조회 - > 목록
 		model.addAttribute("pagingvo", pagingvo);

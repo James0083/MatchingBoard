@@ -3,6 +3,8 @@
 
 <script type="text/javascript">
 	$(function(){
+		$('#rgenre').val('${room.rgenre}').attr("selected", "selected");
+		
 		$('#croomf').submit(function(e){
 			//alert('aa');
 			//e.preventDefault();
@@ -40,7 +42,8 @@
 </script>
 
 <div id="wrap" class="container">
-	<form name="croomf" id="croomf" action="createRoom" method="post">
+	<form name="croomf" id="croomf" action="./" method="post">
+		<input type="hidden" name="roomid" value="${room.roomid}">
 		<table class="table">
 			<tr>
 				<th colspan="2" class="text-center">
@@ -50,13 +53,12 @@
 			<tr>
 				<td style="width: 20%"><b>방이름*</b></td>
 				<td style="width: 80%"><input type="text" name="rname"
-					id="rname" class="form-control"></td>
+					id="rname" class="form-control" value="${room.rname}"></td>
 			</tr>
 			<tr>
 				<td style="width: 20%"><b>장르*</b></td>
 				<td style="width: 80%">
 					<select style="width:100px; padding:4px" name="rgenre" id="rgenre">
-						<option value="">장르선택</option>
 						<option value="IQ">IQ</option>
 						<option value="strategy">전략</option>
 						<option value="psychology">심리</option>
@@ -70,17 +72,17 @@
 			</tr>
 			<tr>
 				<td style="width: 20%"><b>기본 보드게임</b></td>
-				<td style="width: 80%"><input type="text" name="rgame" id="rgame"></td>
+				<td style="width: 80%"><input type="text" name="rgame" id="rgame" value="${room.rgame}"></td>
 			</tr>
 			<tr>
 				<td style="width: 20%"><b>최대인원*</b></td>
 				<td style="width: 80%">
-					<input type="number" value="2" min="2" max="20" name="rmaxpeople" id="rmaxpeople">
+					<input type="number" value="${room.rmaxpeople}" min="${curPnum}" max="20" name="rmaxpeople" id="rmaxpeople">
 				</td>
 			</tr>
 			<tr>
 				<td style="width: 20%"><b>장소*</b></td>
-				<td style="width: 80%"><input type="text" name="rplace" id="rplace" readonly style="width:250px";>
+				<td style="width: 80%"><input type="text" name="rplace" id="rplace" readonly style="width:250px;" value="${room.rplace}">
 					<button class="btn btn-success" id="searchplace">
 						가게 찾기
 						<!-- 중복 닉네임검사 , 새 창 띄워서 지도 api페이지 -> 주소 받아서 입력 -->
@@ -91,7 +93,7 @@
 				<td style="width: 80%">
 				<input type="hidden" name="rdatetime" id="rdatetime"> 
 				<input type="date" name="rdate" id="rdate"> 
-				<input type="time" name="rtime" id="rtime" step="5">
+				<input type="time" name="rtime" id="rtime" step="60" required>
 				<!-- <input type="datetime-local" name="rdatetime" id="rdatetime"> -->
 				<p id="testp"></p>
 				</td>
@@ -99,13 +101,13 @@
 			<tr>
 				<td style="width: 20%"><b>방설명</b></td>
 				<td style="width: 80%">
-				<textarea name="rstr" id="rstr" rows="10" cols="50" class="form-control" placeholder="모임방을 소개해보세요!"></textarea>
+				<textarea name="rstr" id="rstr" rows="10" cols="50" class="form-control" placeholder="모임방을 소개해보세요!">${room.rstr}</textarea>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2" class="text-center">
 					<!-- <button type="button" onclick="formcheck()" id="btnCreate" class="btn btn-success">방만들기</button> -->
-					<button type="submit"id="btnCreate" class="btn btn-success">방만들기</button>
+					<button type="submit" id="btnCreate" class="btn btn-success">편집완료</button>
 				</td>
 			</tr>
 
@@ -116,13 +118,15 @@
 <script type="text/javascript">
 	const offset = new Date().getTimezoneOffset() * 60000;
 	const today = new Date(Date.now() - offset);
-	document.getElementById('rdate').value = today.toISOString().substring(0, 10);
 	document.getElementById('rdate').min = today.toISOString().substring(0, 10);
-	document.getElementById('rtime').value = today.toISOString().slice(11, 16);
-//	document.getElementById('rdatetime').value = today.toISOString().slice(0, 10)+today.toISOString().slice(11, 16);
-	 function openNaverMap() {
+	
+	var rdatetime= '${room.rdatetime}';
+	document.getElementById('rdate').value = rdatetime.substring(0, 10);
+	document.getElementById('rtime').value = rdatetime.substring(11, 16);
+	
+	function openNaverMap() {
       $('#croomf').unbind('submit'); // submit 이벤트 핸들러 해제
-      var popup = window.open('../naverMap', 'NaverMapPopup', 'width=1000px,height=1000px');
+      var popup = window.open('../../naverMap', 'NaverMapPopup', 'width=1000px,height=1000px');
       window.addEventListener('message', function(event) {
         var storeName = event.data;
         document.getElementById('rplace').value = storeName;

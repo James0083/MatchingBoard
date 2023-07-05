@@ -25,4 +25,9 @@ public class RoomServiceImpl implements RoomService {
 		return rMapper.selectRoomByIdx(roomid);
 	}
 
+	@Override
+	public int updateRoom(RoomVO vo) {
+
+		return rMapper.updateRoom(vo);
+	}
 }

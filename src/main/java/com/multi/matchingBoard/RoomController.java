@@ -49,7 +49,7 @@ public class RoomController {
 		int n=rService.insertRoom(room);
 		String msg="모임방만들기 "; 
 		msg+=(n>0)?"성공":"실패";
-		String url="/matchingBoard/room/roomView?roomId="+uid;
+		String url="/matchingBoard/room/roomView/"+uid;
 		String loc=(n>0)? url:"javascript:history.back()";
 		//결과 메시지, 이동경로 처리
 		m.addAttribute("msg",msg);
@@ -60,13 +60,15 @@ public class RoomController {
 	
 	@GetMapping(value="/roomView/{roomId}")
 	public String roomDetail(Model m, @PathVariable("roomId") String roomId, HttpSession session) {
-	//public String roomDetail(Model m, @RequestParam(defaultValue="0") String roomId, HttpSession session) {
+
+		//admin인지 확인
+		//현재 사용자가 해당 모임방에 속해있는지 확인 roomPeople TABLE
 		
-		if(roomId.equals("0")) roomId="22f00439-08fc-4b0f-b842-a40e22c9c4ee";
-		log.info("roomId: "+roomId);
+		//log.info("roomId: "+roomId);
 		
 		//방id로 해당 방 내용 가져오기
 		RoomVO vo=this.rService.selectRoomByIdx(roomId);
+		
 		//test data
 		UserVO u1=new UserVO();
 		u1.setUserid("1111");
@@ -74,28 +76,64 @@ public class RoomController {
 		UserVO u2=new UserVO();
 		u2.setUserid("2222");
 		u2.setNickname("cyon");
+		//////
+		
 		//해당 방의 인원 내용 가져오기
 		List<UserVO> memberArr=Arrays.asList(u1, u2); //this.rService.selectMemberAll(roomId);
 		
 		m.addAttribute("room", vo);
 		session.setAttribute("memberArr",memberArr);
-//		m.addAttribute("curPnum", memberArr.size());
+		m.addAttribute("curPnum", memberArr.size());
+		//log.info("curPnum : "+ memberArr.size());
 		
 		return "matchingRoom/roomView";
 	}
 	
 	@GetMapping(value ="/popupCalendar")
-	public String popupCalendar(Model m, String rdatetime) {
+	public String popupCalendar(Model m, String rdatetime, String rplace) {
 		
 		m.addAttribute("rstart", rdatetime);
-		
+		m.addAttribute("rplace", rplace);
+		log.info("rstart : " + rdatetime);
+		log.info("rplace : " + rplace);
 		return "matchingRoom/calendarPopup";
 	}
 	
-	@GetMapping(value="/editRoom")
-	public String showeditRoomFrom(Model m, String roomId) {
+	@GetMapping(value="/editRoom/{roomId}")
+	public String showeditRoomFrom(Model m, @PathVariable("roomId") String roomId) { //, @ModelAttribute RoomVO room, int memberNum) {
+		log.info("roomId: "+roomId);
+		
+		//////////////////
+		//방에 참여하고 있는 인원수 가져오기
+		//List<UserVO> memberArr=Arrays.asList(u1, u2); //this.rService.selectMemberAll(roomId);
+		//m.addAttribute("curPnum", memberArr.size());
+
+		m.addAttribute("curPnum", 2);
+		
+		//방id로 해당 방 내용 가져오기
+		RoomVO vo=this.rService.selectRoomByIdx(roomId);
+		m.addAttribute("room", vo);
 		
 		return "matchingRoom/editRoomForm";
+	}
+	
+	@PostMapping(value="/editRoom")
+	public String editRoomResult(Model m, @ModelAttribute RoomVO room) {//, @PathVariable("roomId") String roomId) {
+		
+		//room.setRoomid(roomId);
+		
+		log.info("room=="+room.toString());
+		
+		int n=rService.updateRoom(room);
+		String msg="모임방 편집하기 "; 
+		msg+=(n>0)?"성공":"실패";
+		String url="/matchingBoard/room/roomView/"+room.getRoomid();
+		String loc=(n>0)? url:"javascript:history.back()";
+		//결과 메시지, 이동경로 처리
+		m.addAttribute("msg",msg);
+		m.addAttribute("loc",loc);
+		return "message";
+//		return "matchingRoom/roomView";
 	}
 	
 }

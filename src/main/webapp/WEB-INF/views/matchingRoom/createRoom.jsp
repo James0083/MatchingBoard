@@ -16,11 +16,13 @@
 				$('#rgenre').focus();
 				return false;
 			}
-			/* if (!$('#rplace').val()) {
+			/*
+			if (!$('#rplace').val()) {
 				alert('장소를 입력하세요');
 				croomf.rplace.focus();
 				return false;
-			} */
+			}
+			*/
 			if (!$('#rdate').val()) {
 				alert('날짜를 입력하세요');
 				$('#rdate').focus();
@@ -58,14 +60,14 @@
 					<select style="width:100px; padding:4px" name="rgenre" id="rgenre">
 						<option value="">장르선택</option>
 						<option value="IQ">IQ</option>
-						<option value="strategy">전략</option>
-						<option value="psychology">심리</option>
-						<option value="reasoning">추리</option>
-						<option value="cooperation">협동</option>
-						<option value="negotiation">협상</option>
+						<option value="전략">전략</option>
+						<option value="심리">심리</option>
+						<option value="추리">추리</option>
+						<option value="협동">협동</option>
+						<option value="협상">협상</option>
 						<!-- <option value="speed">스피드</option> -->
-						<option value="agility">순발력</option>
-						<option value="skill">손기술</option>
+						<option value="순발력">순발력</option>
+						<option value="손기술">손기술</option>
 					</select>
 			</tr>
 			<tr>
@@ -80,7 +82,7 @@
 			</tr>
 			<tr>
 				<td style="width: 20%"><b>장소*</b></td>
-				<td style="width: 80%"><input type="text" name="rplace" id="rplace" readonly style="width:250px";>
+				<td style="width: 80%"><input type="text" name="rplace" id="rplace" readonly style="width:250px;">
 					<button class="btn btn-success" id="searchplace">
 						가게 찾기
 						<!-- 중복 닉네임검사 , 새 창 띄워서 지도 api페이지 -> 주소 받아서 입력 -->
@@ -91,9 +93,9 @@
 				<td style="width: 80%">
 				<input type="hidden" name="rdatetime" id="rdatetime"> 
 				<input type="date" name="rdate" id="rdate"> 
-				<input type="time" name="rtime" id="rtime" step="5">
+				<input type="time" name="rtime" id="rtime" step="60" required>
 				<!-- <input type="datetime-local" name="rdatetime" id="rdatetime"> -->
-				<p id="testp"></p>
+				<!-- <p id="testp"></p> -->
 				</td>
 			</tr>
 			<tr>
@@ -116,6 +118,7 @@
 <script type="text/javascript">
 	const offset = new Date().getTimezoneOffset() * 60000;
 	const today = new Date(Date.now() - offset);
+	document.getElementById('rdatetime').value = today.toISOString();
 	document.getElementById('rdate').value = today.toISOString().substring(0, 10);
 	document.getElementById('rdate').min = today.toISOString().substring(0, 10);
 	document.getElementById('rtime').value = today.toISOString().slice(11, 16);

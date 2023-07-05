@@ -27,20 +27,20 @@ public class ChatController {
 	
 	@MessageMapping("/chat/join")
     public void join(Message message) {
-        message.setText(message.getFrom() + "님이 입장하셨습니다.");
+        message.setText("[" + message.getFrom() + "]님이 입장하셨습니다.");
         message.setFrom("server");
-        template.convertAndSend("/subscribe/room/" + message.getRoomId(), message);
+        template.convertAndSend("/subscribe/chatroom/" + message.getRoomId(), message);
     }
 
 	@MessageMapping("/chat/quit")
     public void quit(Message message) {
-        message.setText(message.getFrom() + "님이 퇴장하셨습니다.");
+        message.setText("[" + message.getFrom() + "]님이 퇴장하셨습니다.");
         message.setFrom("server");
-        template.convertAndSend("/subscribe/room/" + message.getRoomId(), message);
+        template.convertAndSend("/subscribe/chatroom/" + message.getRoomId(), message);
     }
 	
     @MessageMapping("/chat/message")
     public void message(Message message) throws Exception {
-        template.convertAndSend("/subscribe/room/" + message.getRoomId(), send(message));
+        template.convertAndSend("/subscribe/chatroom/" + message.getRoomId(), send(message));
     }
 }

@@ -144,7 +144,7 @@
                 	console.log("frame==="+frame)
                     setConnected(true);
                     console.log('Connected: ' + frame);
-                    stompClient.subscribe('/subscribe/room/'+'${roomId}', function(messageOutput) {
+                    stompClient.subscribe('/subscribe/chatroom/'+'${roomId}', function(messageOutput) {
             	        showMessageOutput(JSON.parse(messageOutput.body));
             	    });
                 });

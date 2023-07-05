@@ -24,21 +24,15 @@
 <script>
 	$(function(){
 		var eventArr=[];
-		let rdatetime='';
-		//rdatetime = rdatetime + ${rstart}
-		rdatetime='2023-06-21T13:30'
+		var etitle = '${rplace}';
+		let rdatetime = '${rstart}';
 		
 		jsonData={
-			title: 'rdatetime',
-			//start: '2023-06-21T13:30:00'
+			title: etitle,
 			start: rdatetime
 		};
-		jsonData1={
-			title: 'Test Day2',
-			start: '2023-06-26T13:30:00'
-		};
+
 		eventArr.push(jsonData);
-		eventArr.push(jsonData1);
 		
 		var calendarEl = $('#calendar')[0];
 		
@@ -51,7 +45,7 @@
 			headerToolbar: {
 			  left: 'prev,next',
 			  center: 'title',
-			  right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+			  right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
 			},
 			initialView: 'listMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
 			navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크

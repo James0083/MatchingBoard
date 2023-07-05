@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.multi.mapper.SocialMapper;
+import com.multi.model.SnsLoginVO;
 
 @Service
 public class SocialServiceImpl implements SocialService {
@@ -15,5 +16,7 @@ public class SocialServiceImpl implements SocialService {
 		socialmapper.insertSnsLogin(uuid, type, identifier, refreshToken);
 
 	}
+
+	
 
 }

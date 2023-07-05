@@ -10,4 +10,7 @@ public interface UserService {
 
 	boolean modifyUser(MultipartFile profile_img, String nickname, List<String> genres, List<String> games,
 			String dongCode, String leeCode);
+	
+	/*boolean updateUser(MultipartFile profile_img, String nickname, List<String> genres, List<String> games,
+			String dongCode, String leeCode);*/
 }

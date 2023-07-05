@@ -62,7 +62,7 @@ h1 {
 </style>
 </head>
 <body>
-	<h1>${rname} 매장평가</h1>
+	<h1>${rplace} 매장평가</h1>
 	<form name="evalCafe" id="evalCafe" action="../eval/cafeEval" method="post">
 		<div class="rating-container">
 			<p>질문 1: 해당 카페의 게임 종류는 다양했나요?</p>

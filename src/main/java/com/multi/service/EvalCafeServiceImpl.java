@@ -31,5 +31,4 @@ public class EvalCafeServiceImpl implements EvalCafeService {
 	public EvaluationVO cafeStars(ShopVO shopVO) {
 		return evalCafeMapper.cafeStars(shopVO);
 	}
-	 
 }

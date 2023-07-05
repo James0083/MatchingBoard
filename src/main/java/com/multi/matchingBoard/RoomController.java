@@ -60,7 +60,7 @@ public class RoomController {
 	}
 	
 	@GetMapping(value="/roomView/{roomId}")
-	public String roomDetail(Model m, @PathVariable("roomId") String roomId, HttpSession session) {
+	public String roomDetail(Model m, @PathVariable("roomId") String roomId, String rplace, HttpSession session) {
 
 		//admin인지 확인
 		//현재 사용자가 해당 모임방에 속해있는지 확인 roomPeople TABLE
@@ -90,6 +90,7 @@ public class RoomController {
 		
 		m.addAttribute("room", vo);
 		session.setAttribute("memberArr",memberArr);
+		session.setAttribute("rplace", rplace);
 		m.addAttribute("curPnum", memberArr.size());
 		//log.info("curPnum : "+ memberArr.size());
 		

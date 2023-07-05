@@ -25,7 +25,8 @@ public class EvalController {
 	private EvalCafeService evalCafeService;
 
 	@GetMapping(value = "/cafeEval")
-	public String showCafeEvalForm() {
+	public String showCafeEvalForm(Model model) {
+		model .addAttribute("shopVO", new ShopVO());
 		return "eval/cafeEval";
 	}
 	

@@ -63,7 +63,7 @@ h1 {
                 window.location.href = "../room/roomView";
             </script>
         </c:if> --%>
-		<input type="hidden" name="whoid" value="1111"><!-- 현재 로그인한 회원 -->
+		<input type="hidden" name="whoid" value="${MemberEvalVO.whoid}"><!-- 현재 로그인한 회원 -->
 		<c:forEach var="member" items="${memberArr}" varStatus="stat"><!-- 모임방 참여 회원 -->
 			<!-- memberArr에서 userid가 whoid와 같으면 나오면 안되는데 전부 나오고 있음.. -->
 			<c:if test="${member.userid ne whoid}">
@@ -86,7 +86,7 @@ h1 {
 		<input type="hidden" name="ranges" id="avgRange">
 		<button type="submit">제출</button>
 	</form>
-	<script>
+<script>
 	let sliderChanged = false;//슬라이더 변경여부
 	
   //range 값 업데이트
@@ -105,7 +105,8 @@ h1 {
   let arr = [];
   let obj={userid:'', score:[]};
   
-  function setRanges(value, userid, rangePoint) {
+  //ranges[]에 저	장
+  function setRanges(value, userid, rangePoint) {//평점, userid, 문항번호
 	if(rangePoint%3==0){
 		  obj={userid:userid, score:[]};
 	}
@@ -119,6 +120,7 @@ h1 {
    	 console.log(ranges);
   }
   
+  //submit
   $(function(){
 	   $('#evalMem').submit(function(e){ 
 		   var sliderDisabled = $('.range-slider:not(:disabled)').length === 0;
@@ -134,21 +136,20 @@ h1 {
 	});
 	
 	//맴버별 평점 구하기
-   function calculateAverageRanges(ranges) {
-      var avgRanges = [];
-       for (var i = 0; i < ranges.length; i++) {
-             var sum = 0;
-             console.log(ranges[i].userid+"/"+ranges[i].score)
-             for (var j = 0; j < ranges[i].score.length; j++) {
-               sum += parseInt(ranges[i].score[j]);  
-               console.log('sum='+sum)             
-             }
-             var avg = sum / ranges[i].score.length;
-             avgRanges.push(avg.toFixed(1));
-          }
-   return avgRanges;   
- }
+    function calculateAverageRanges(ranges) {
+    	var avgRanges = [];
+       		for (var i = 0; i < ranges.length; i++) {
+            	var sum = 0;
+             	console.log(ranges[i].userid+"/"+ranges[i].score)
+             	for (var j = 0; j < ranges[i].score.length; j++) {
+               		sum += parseInt(ranges[i].score[j]);  
+               		console.log('sum='+sum)             
+             	}
+             	var avg = sum / ranges[i].score.length;
+             	avgRanges.push(avg.toFixed(1));
+          	}
+   		return avgRanges;   
+	}
 </script>
-
 </body>
 </html>

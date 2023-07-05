@@ -84,19 +84,18 @@ public class EvalMemController {
 //memberEval에서 member의 manner로 점수 반영시키고
 //UserVO연결 후에 작동 시키기
 //        String msg = "모임방 참여 인원 평가";
-//        //MemberEvalVO eval = evalMemService.memManners(userVO);
 //        MemberEvalVO eval = evalMemService.memManners(userVO);
 //        String loc = "javascript:history.back()";
 //        
-//        //System.out.println("맴버 평점: " + eval.getEval());
+//        System.out.println("맴버 평점: " + eval.getEval());
 //        
 //        if (eval != null) {
-//            //System.out.println("맴버 평점: " + eval.getEval());
+//            System.out.println("맴버 평점: " + eval.getEval());
 //            loc = "/matchingBoard/eval/cafeEval";
 //            msg += " 성공";
 //        } else {
 //        	msg += " 실패";
-//            System.out.println("맴버 평점 가져오기 실패");
+//          System.out.println("맴버 평점 가져오기 실패");
 //        }
 //        
 //        log.info("평가 결과: " + msg);

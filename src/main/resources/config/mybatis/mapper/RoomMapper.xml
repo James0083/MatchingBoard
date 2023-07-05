@@ -20,5 +20,10 @@
     		roomid=#{roomid}
     	</where> 
     </update>
+    
+    <!-- *****수정확인 필요***** -->
+    <select id="selectMemberAll" parameterType="java.lang.String" resultType="com.multi.model.UserVO">
+        select * from roompeople where roomid = #{roomid}
+    </select>
 	
 </mapper>

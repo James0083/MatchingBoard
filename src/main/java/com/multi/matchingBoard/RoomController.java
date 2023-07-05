@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.multi.model.RoomPeopleVO;
 import com.multi.model.RoomVO;
 import com.multi.model.UserVO;
 import com.multi.service.RoomService;
@@ -70,16 +71,22 @@ public class RoomController {
 		RoomVO vo=this.rService.selectRoomByIdx(roomId);
 		
 		//test data
-		UserVO u1=new UserVO();
-		u1.setUserid("1111");
-		u1.setNickname("micol");
-		UserVO u2=new UserVO();
-		u2.setUserid("2222");
-		u2.setNickname("cyon");
-		//////
+		//UserVO u1=new UserVO();
+		//u1.setUserid("1111");
+		//u1.setNickname("micol");
+		//UserVO u2=new UserVO();
+		//u2.setUserid("2222");
+		//u2.setNickname("cyon");
 		
 		//해당 방의 인원 내용 가져오기
-		List<UserVO> memberArr=Arrays.asList(u1, u2); //this.rService.selectMemberAll(roomId);
+		//List<UserVO> memberArr=Arrays.asList(u1, u2);
+		//*****수정확인 필요*****
+		List<UserVO> memberArr = this.rService.selectMemberAll(roomId);
+		for(UserVO user : memberArr) {
+			String userid = user.getUserid();
+			String nickname = user.getNickname();
+			//System.out.println("userid: " + userid + ", nickname: " + nickname);
+		}
 		
 		m.addAttribute("room", vo);
 		session.setAttribute("memberArr",memberArr);

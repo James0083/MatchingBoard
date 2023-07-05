@@ -15,7 +15,7 @@
 <p><a href="./room/createRoom">createRoom</a></p>
 <p><a href="./room/roomView">RoomView</a></p>
 <p><a href="./user/mypage">user-mypage</a></p>
-<p><a href="./search/boardSearch">BoardSearch</a></p>
+<p><a href="./room/roomList">RoomList</a></p>
 
 </body>
 </html>

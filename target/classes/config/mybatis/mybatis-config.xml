@@ -26,6 +26,7 @@
     <mapper resource="config/mybatis/mapper/UserMapper.xml"/>
     <mapper resource="config/mybatis/mapper/SocialMapper.xml"/>
     <mapper resource="config/mybatis/mapper/AdminMapper.xml"/>
+    <mapper resource="config/mybatis/mapper/ShopMapper.xml"/>
     
   </mappers>
 </configuration>

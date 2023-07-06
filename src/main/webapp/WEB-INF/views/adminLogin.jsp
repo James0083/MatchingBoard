@@ -10,7 +10,7 @@
 <script type="text/javascript">
 $(function(){
 	$('#aloginf').submit(function(e){
-		alert($('#admin_pw').val());
+		//alert($('#admin_pw').val());
 		//e.preventDefault();
 		if (!$('#admin_pw').val()) {
 			alert('관리자 비밀번호를 입력하세요');

@@ -1,7 +1,6 @@
 DROP TABLE ShopGame CASCADE CONSTRAINTS;
 DROP TABLE Shop CASCADE CONSTRAINTS;
 DROP TABLE Game CASCADE CONSTRAINTS;
-DROP TABLE Schedule CASCADE CONSTRAINTS;
 DROP TABLE LikeRoom CASCADE CONSTRAINTS;
 DROP TABLE Roompeople CASCADE CONSTRAINTS;
 DROP TABLE Room CASCADE CONSTRAINTS;
@@ -39,16 +38,13 @@ CREATE TABLE Room (
     rgenre VARCHAR2(15) NOT NULL,
     rgame VARCHAR2(60),
     rstr VARCHAR2(3000),
-    rdatetime varchar2(20) DEFAULT to_char(SYSDATE, 'YYYY-MM-DD HH24:MI') NOT NULL,
-    PRIMARY KEY (roomid),
-    FOREIGN KEY (shopid) REFERENCES Shop(shopid)
+    rdatetime varchar2(20),
+    PRIMARY KEY (roomid)
 );
 
 CREATE TABLE Roompeople (
-    roomuserid VARCHAR2(40) NOT NULL,
     userid VARCHAR2(40) NOT NULL,
     roomid VARCHAR2(40) NOT NULL,
-    PRIMARY KEY (roomuserid),
     FOREIGN KEY (userid) REFERENCES Member(userid),
     FOREIGN KEY (roomid) REFERENCES Room(roomid)
 );
@@ -113,4 +109,3 @@ CREATE TABLE Evaluation(
     stars number(3,1)
 );
 create sequence evaluation_seq nocache;
-

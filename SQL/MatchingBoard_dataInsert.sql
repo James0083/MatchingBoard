@@ -170,7 +170,7 @@ UPDATE SHOP set MAPX=37.4837672, MAPY=126.9275759 where SHOPID='plon001';
 UPDATE SHOP set MAPX=37.4832581, MAPY=126.9290644 where SHOPID='kdom001';
 
 INSERT INTO member(userid, nickname, area, grade, exp, manner, attend, late, absent)
-VALUES ('1a2d3m4i5n6', 'admin', 11110101, 5, 95, 98.7, 12, 12, 12);
+VALUES ('admin123456', 'admin', 11110101, 5, 95, 98.7, 12, 12, 12);
 
 INSERT INTO member(userid, nickname, area, grade, exp, manner, 
     fgenre1, fgenre2, fgenre3, fgame1, fgame2, fgame3, attend, late, absent)

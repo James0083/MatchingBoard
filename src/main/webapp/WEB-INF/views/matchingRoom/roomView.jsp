@@ -106,13 +106,15 @@ tr:first-child td span {
 </style>
 
 <script type="text/javascript">
-	function openCalendar() {
-		window.open('popupCalendar', 'CalendarPopup', 'width=770px, height=630px, left=100px, top=50px');
+	function openCalendar(rdatetime, rplace) {
+		window.open('../popupCalendar?rdatetime='+rdatetime+'&rplace='+rplace, 'CalendarPopup', 'width=770px, height=630px, left=100px, top=50px');
 	}
 	
 	$(document).ready(function() {
 		
-		
+		var rdt = '${room.rdatetime}'.split(/-|T|:/);
+		var str = rdt[0] + "년 " + rdt[1] + "월 " + rdt[2] + "일 - " + rdt[3] + "시 " + rdt[4] + "분";
+		document.getElementById('rdatetime').innerHTML = str;
 		
 		$(".member_profile").click(function() {
 			$("#member_profile_modal").modal({
@@ -121,6 +123,7 @@ tr:first-child td span {
 				// false : 배경 불변, 배경 클릭시 모달 유지
 				// "static" :  배경 어두워짐, 배경 클릭시 모달 유지
 			});
+			//////////
 			var modal_nickname='모달 유저 닉네임';
 			var modal_manner=50;
 			var modal_exp_value='70';
@@ -129,6 +132,7 @@ tr:first-child td span {
 			var modal_area='모달 유저 지역';
 			var modal_genre='모달 선호 장르1'+', '+'장르2'+', '+'장르3';
 			var modal_game='모달 선호 게임1'+', '+'게임2'+', '+'게임3';
+			///////////
 			
 			$('#modal_nickname').text(modal_nickname);
 			$('#modal_manner').val(modal_manner);
@@ -139,6 +143,7 @@ tr:first-child td span {
 			$('#modal_genre').text(modal_genre);
 			$('#modal_game').text(modal_game);
 
+			////
 			$('#modal_attend').text('5');
 			$('#modal_late').text('3');
 			//console.log($('#modal_late').text());
@@ -146,8 +151,9 @@ tr:first-child td span {
 			
 		});
 	});
+	
 	function evaluation(){
- 		window.location.href = '../eval/memberEval';
+ 		window.location.href = '../../eval/memberEval';
 	}
 </script>
 
@@ -156,10 +162,10 @@ tr:first-child td span {
 		<div style="vertical-align: middle;">
 			<h3 style="display: inline-block;">${room.rname}</h3>
 			<!-- <button type="button" id="btnTitleEdit" class="float-right btn btn-sm btn-outline-secondary">편집하기</button> -->
-			<button type="button" id="btnRoomEdit" class="float-right btn btn-sm btn-outline-secondary" onclick="location.href='./editRoom'">편집하기</button>
+			<button type="button" id="btnRoomEdit" class="float-right btn btn-sm btn-outline-secondary" onclick="location.href='../editRoom/${roomId}'">편집하기</button>
 		</div>
 		<div class="members">
-			<button class="btn btn-sm btn-outline-light" id="cur_num_btn">인원 : {memberNum} / ${room.rmaxpeople}</button>
+			<button class="btn btn-sm btn-outline-light" id="cur_num_btn">인원 : ${curPnum} / ${room.rmaxpeople}</button>
 			<br>
 			<div class="profiles" style="">
 			
@@ -174,10 +180,11 @@ tr:first-child td span {
 				</div>
 				-->
 				
-				<c:forEach var="for_profile" begin="1" end="8">	<!--end="${memberNum}">-->
+<!-- 				<c:forEach var="for_profile" begin="1" end="8"></c:forEach>-->
+ 				<c:forEach var="members" items="${memberArr}">
 					<div class="member_profile" style="display: inline-block;" data-toggle="modal" data-target="#login">
-						<img class="profile_img mt-3" src="../images/search_test.png">
-						<div class="profile_name">이름</div>
+						<img class="profile_img mt-3" src="../../images/search_test.png">
+						<div class="profile_name">${members.nickname}</div>
 					</div>
 				</c:forEach>
 				
@@ -210,18 +217,13 @@ tr:first-child td span {
 				<tr>
 					<td class="explane_title"><b>다음 모임일시</b></td>
 					<td class="explane_value">
-						<span class="btn-light" style="display: inline-block;" onclick="openCalendar('${room.rdatetime}')">${room.rdatetime}</span>
+						<span class="btn-light" id="rdatetime" style="display: inline-block;" onclick="openCalendar('${room.rdatetime}', '${room.rplace}')"></span>
 						<!-- <button type="button" id="btnEditDatetime" class="float-right btn btn-sm btn-outline-secondary">편집하기</button> -->
 					</td>
 				</tr>
 				<tr>
 					<td class="explane_title"><b>방설명</b></td>
-					<td>
-						<!-- <button type="button" id="btnEditStr" class="float-right btn btn-sm btn-outline-secondary">편집하기</button> -->
-					</td>
-				</tr>
-				<tr>
-					<td class="explane_value" colspan="2">
+					<td class="explane_value">
 						<span style="display: inline-block;">${room.rstr}</span>
 					</td>
 				</tr>
@@ -257,15 +259,14 @@ tr:first-child td span {
 	        <table class="table mt-3 text-center" style="width:100%;">
 				<tr>
 					<%-- <td width="25%"><img src="${loginUser.profile_img}"></td> --%>
-					<td width="25%"><img class="profile_img" id="profile_img" src="../images/profile_example.png"></td>
+					<td width="25%"><img class="profile_img" id="profile_img" src="../../images/profile_example.png"></td>
 					<td width="75%">
 						<div style="margin: auto 0;">
+							<a href=""><img src="../../images/grades/grade1.png" style="width:1.2em; height:1.2em;"></a>
+							<b id="modal_nickname" style="color: #505050;">유저 닉네임</b>
 						<%--
-							<a href=""><img src="../images/grade1.png"></a>
 							<b>${loginUser.nickname}</b>
 						--%>
-							<a href=""><img src="../images/grades/grade1.png" style="width:1.2em; height:1.2em;"></a>
-							<b id="modal_nickname" style="color: #505050;">유저 닉네임</b>
 							
 							<br>
 							<span>경험치</span>

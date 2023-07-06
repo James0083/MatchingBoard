@@ -10,6 +10,7 @@
   	<typeAlias type="com.multi.model.GameVO" alias="Game"/>
   	<typeAlias type="com.multi.model.ShopVO" alias="Shop"/>
   	<typeAlias type="com.multi.model.UserVO" alias="User"/>
+  	<typeAlias type="com.multi.model.SnsLoginVO" alias="Sns"/>
   </typeAliases>
   
   
@@ -22,6 +23,8 @@
     <mapper resource="config/mybatis/mapper/EvalMemMapper.xml"/>
     <mapper resource="config/mybatis/mapper/BoardSearchMapper.xml"/>
     <mapper resource="config/mybatis/mapper/ClickRoomMapper.xml"/>
+    <mapper resource="config/mybatis/mapper/UserMapper.xml"/>
+    <mapper resource="config/mybatis/mapper/SocialMapper.xml"/>
     
   </mappers>
 </configuration>

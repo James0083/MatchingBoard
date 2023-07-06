@@ -191,7 +191,7 @@ tr:first-child td span {
 			</tr>
 			<tr>
 				<td colspan="2" style="text-align: center">
-					<form name='f' method='post' action='modify'>
+					<form name='f' method='GET' action='modify'>
 						<input type="hidden" name="idx" value="${loginUser.idx}">
 						<button class="btn btn-secondary">정보수정 | 탈퇴</button>
 					</form>

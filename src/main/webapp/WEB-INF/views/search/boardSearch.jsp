@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>모임방 검색</title>
-
 <style>
 .bd-placeholder-img {
 	font-size: 1.125rem;
@@ -151,9 +145,6 @@ img {
  
 </style>
 
-</head>
-<body>
-
 	<!-- 검색바  -->
 <div class="search_wrap">
 	<div class="search_area">
@@ -169,8 +160,7 @@ img {
 	</div>
 </div>
 
-	<main>
-		<br>
+<br>
 		<div class="container">
 
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -187,17 +177,14 @@ img {
 									height="170" xmlns="http://www.w3.org/2000/svg" role="img"
 									aria-label="Placeholder: pla"
 									preserveAspectRatio="xMidYMid slice" focusable="false">        
-            <rect width="100%" height="100%" fill="#e6e8e6"
-										style="cursor:pointer;" />                        
-        
-         				 <!-- 방이름 -->         	           
-            <text x="50%" y="30%" fill="#353635" dy=".3em">
-									<c:out value="${list.rname}" /></text>
-            				<!-- 방설명  -->
-            <text x="50%" y="45%" style="font-size:15px;" fill="#353635"
-										dy=".3em">
-									<c:out value="${list.rstr}" /></text>          
-            </svg>
+	            					<rect width="100%" height="100%" fill="#e6e8e6" style="cursor:pointer;" />                        
+	        
+	         					 	<!-- 방이름 -->         	           
+	            					<text x="50%" y="30%" fill="#353635" dy=".3em"> <c:out value="${list.rname}" /></text>
+	            					<!-- 방설명  -->
+	            					<text x="50%" y="45%" style="font-size:15px;" fill="#353635" dy=".3em">
+										<c:out value="${list.rstr}" /></text>          
+            					</svg>
 							</div>
 
 							<div class="card-body">
@@ -262,13 +249,10 @@ img {
 			</div>
 		</div>
 
-	</main>
 
 	<p class="float-end mb-1">
 		<a href="#">맨 위로</a>
 	</p>
-
-</body>
 
 <!-- 좋아요 버튼 -->
 <script src="//code.jquery.com/jquery.min.js"></script>
@@ -330,9 +314,5 @@ img {
         moveForm.find("input[name='pageNum']").val(1);
         moveForm.submit();
     });
-	 
-	 
+
 </script>
-
-
-</html>

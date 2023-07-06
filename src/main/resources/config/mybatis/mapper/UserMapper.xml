@@ -2,17 +2,24 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.multi.mapper.UserMapper">
-	
-	<insert id="modifyUser" parameterType="User">
-		<selectKey keyProperty="userid" resultType="String"
-			order="BEFORE">
-			select uuid from social where ROWNUM = 1
-		</selectKey>
-		insert into 
-		Member(userid,profile_img,nickname,area,grade,exp,manner,fgenre1,fgenre2,fgenre3,fgame1,fgame2,fgame3,attend,late,absent)
+
+	<insert id="insertUser" parameterType="User">
+		insert into
+		Member(userid,nickname,grade,exp,manner,attend,late,absent)
 		values
-		(#{userid},#{profile_img},#{nickname},#{area_code},0,0,0,#{fgenre1},#{fgenre2},#{fgenre3},#{fgame1},#{fgame2},#{fgame3},0,0,0)
+		(#{userid},DBMS_RANDOM.STRING('X', 10),0,0,0,0,0,0)
 	</insert>
+	
+	<select id="getUserById" resultType="User">
+    	SELECT * FROM Member WHERE userid=#{userid}
+	</select>
+	
+	<update id="modifyUser" parameterType="User">
+		update Member
+		set Profile_img=#{profile_img}, nickname=#{nickname}, area=#{area_code}, fgenre1=#{fgenre1},fgenre2=#{fgenre2},fgenre3=#{fgenre3},
+			fgame1=#{fgame1}, fgame2=#{fgame2}, fgame3=#{fgame3}
+		where userid=#{userid}
+	</update>
 
 	
 </mapper>

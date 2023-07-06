@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.multi.model.UserVO;
 import com.multi.service.GameService;
 import com.multi.service.UserService;
 
@@ -28,11 +29,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping(value="/mypage")
-	public String mypage() {
-		
-		return "user/mypage";
-	}
 	
 	@GetMapping(value="/modify")
 	public String modify(Model model) {
@@ -49,16 +45,28 @@ public class UserController {
 			,@RequestParam("dong_code") String dongCode,@RequestParam("lee_code") String leeCode ) {
 		log.info(genres);
 		log.info(games);
+		UserVO loginUser = (UserVO)session.getAttribute("loginUser");
+	    String userid = loginUser.getUserid();
+	    log.info("User ID from session: " + userid);
 		
-		boolean isSuccess = userService.modifyUser(profile_img, nickname, genres, games, dongCode, leeCode);
+		boolean isSuccess = userService.modifyUser(userid,profile_img, nickname, genres, games, dongCode, leeCode);
         
         String message = isSuccess ? "success" : "fail";
         // String location = isSuccess ? "/matchingBoard": "javascript:history.back()";
         // model.addAttribute("msg",message);
         // model.addAttribute("loc",location);
         
-        
-        return message; // 변경된 응답 반환
+        if (isSuccess) {
+            UserVO updatedUser = userService.getUserById(userid); // 가정: getUserById는 업데이트된 UserVO 객체를 반환합니다.
+            session.setAttribute("loginUser", updatedUser);
+            System.out.println("modifyloginUser: " + updatedUser);
+        } else {
+        	 log.error("User information update failed for user ID: " + userid);        	    
+        	 String errorMessage = "정보 수정을 완료할 수 없습니다. 다시 시도해 주세요.";
+        	 model.addAttribute("errorMessage", errorMessage);
+        	 return "redirect:/modify";
+        }
+        return message; 
 	}
 	
 }

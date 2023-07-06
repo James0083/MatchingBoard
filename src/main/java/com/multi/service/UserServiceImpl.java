@@ -26,11 +26,30 @@ public class UserServiceImpl implements UserService {
 	public UserServiceImpl(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
+	
+	@Override
+	public void insertUser(String userid) {
+		userMapper.insertUser(userid);
+		
+	}
+	@Override
+	public UserVO getUserById(String userid) {
+		return userMapper.getUserById(userid);
+	}
+	
 
 	@Override
-	public boolean modifyUser(MultipartFile profile_img, String nickname, List<String> genres, List<String> games,
+	public boolean modifyUser(String userid,MultipartFile profile_img, String nickname, List<String> genres, List<String> games,
 			String dongCode, String leeCode) {
-		UserVO user = new UserVO();
+		UserVO user = userMapper.getUserById(userid);
+		
+		 if (user == null) {
+		        // 로그에 오류 메시지 기록
+			 	System.out.println("user :"+user);
+		        System.out.println("userid: "+userid);
+		        return false; // user가 null이므로 종료
+		    }
+		
 		if (!profile_img.isEmpty()) {
             String uploadDirectory = servletContext.getRealPath("/resources/profileimg_upload");
             File directory = new File(uploadDirectory);
@@ -92,5 +111,4 @@ public class UserServiceImpl implements UserService {
 
         return true;
 	}
-
 }

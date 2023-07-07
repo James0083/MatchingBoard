@@ -121,7 +121,7 @@ img {
   */
  a:link {color:black; text-decoration: none;}
  a:visited {color:black; text-decoration: none;}
- a:hover {color:black; text-decoration: underline;}
+ a:hover {color:black; text-decoration: none;}
  
  .search_wrap{
     margin-top: 30px;
@@ -151,6 +151,41 @@ img {
   	height: 35px;
   }
  
+ .blinking{
+  -webkit-animation: blink 2s ease-in-out infinite alternate;
+  -moz-animation: blink 2s ease-in-out infinite alternate;
+  animation: blink 2s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes blink{
+  60% {opacity: 0.6;}
+  100% {opacity: 1;}
+}
+
+@-moz-keyframes blink{
+  60% {opacity: 0.6;}
+  100% {opacity: 1;}
+}
+
+@keyframes blink{
+  60% {opacity: 0.6;}
+  100% {opacity: 1;}
+}
+
+#totheTop {
+	position: fixed;
+	bottom: 20px;
+	right: 5%;
+	
+	text-align: center;
+	vertical-align: middle;
+	width: 2em;
+	height: 2em;
+	background-color: #8fa2ec;
+	border-radius: 50%;
+	
+	font-size: 1.5em;
+}
 </style>
 
 	<!-- 검색바  -->
@@ -164,10 +199,10 @@ img {
 			<option value="TS" <c:out value="${pageMaker.pagingvo.type eq 'TS'?'selected':'' }"/>>제목 + 내용</option>
 		</select>
 		<input type="text" name="keyword" value="${pageMaker.pagingvo.keyword}">
-		<button>Search</button>
+		<button class="btn btn-info" style="opacity: 0.85;">Search</button>
 	</div>
 	<div class="float-right cRoom_area">
-		<button class="btn btn-success" onclick="location.href='./createRoom'">방만들기</button>
+		<button class="btn btn-secondary blinking" onclick="location.href='./createRoom'">모임방 만들기</button>
 	</div>
 </div>
 
@@ -188,12 +223,12 @@ img {
 									height="170" xmlns="http://www.w3.org/2000/svg" role="img"
 									aria-label="Placeholder: pla"
 									preserveAspectRatio="xMidYMid slice" focusable="false">        
-	            					<rect width="100%" height="100%" fill="#e6e8e6" style="cursor:pointer;" />                        
-	        
+	            					<rect width="100%" height="100%" fill="#b3c9f9" style="cursor:pointer;" />                        
+	        						
 	         					 	<!-- 방이름 -->         	           
 	            					<text x="50%" y="30%" fill="#353635" dy=".3em"> <c:out value="${list.rname}" /></text>
 	            					<!-- 방설명  -->
-	            					<text x="50%" y="45%" style="font-size:15px; overflow: auto; white-space: nowrap;" fill="#353635" dy=".3em">
+	            					<text x="50%" y="45%" style="font-size:15px; overflow: auto; white-space: nowrap; width: 100%;" fill="#353635" dy=".3em">
 										<c:out value="${list.rstr}" /></text>          
             					</svg>
 							</div>
@@ -228,7 +263,7 @@ img {
 				<!-- 페이징 처리 -->
 				<div class="pageInfo_wrap justify-content-center">
 					<div class="pageInfo_area">
-						<ul id="pageInfo" class="pageInfo pagination justify-content-center">
+						<ul id="pageInfo" class="pageInfo pagination pagination-sm justify-content-center">
 
 							<!-- 이전페이지 버튼 -->
 				<c:if test="${pageMaker.prev}">
@@ -261,8 +296,8 @@ img {
 				</form>
 
 
-	<p class="float-end mb-1">
-		<a href="#">맨 위로</a>
+	<p class="" id="totheTop">
+		<a href="#" style="color: black; margin-top:10px;">&uarr;</a>
 	</p>
 
 <!-- 좋아요 버튼 -->
@@ -286,7 +321,7 @@ img {
 		e.preventDefault();
 		
 		moveForm.append("<input type='hidden' name='roomid' value='"+ $(this).attr("href")+ "'>");
-		moveForm.attr("action", "/search/boardSearch");
+		moveForm.attr("action", "/room/roomList");
 		moveForm.submit();
 	});
 	
@@ -297,7 +332,7 @@ img {
    //<form> 태그 내부 pageNum과 관련된 <input>태그의 vlaue 속성값을 클릭한 <a> 태그의 페이지 번호를 삽입
 	        moveForm.find("input[name='pageNum']").val($(this).attr("href"));
    //<form>태그 action 속성 추가 및 '/search/boardSearch'을 속성값으로 추가
-	        moveForm.attr("action", "boardSearch");
+	        moveForm.attr("action", "roomList");
    //<form>태그 서버 전송
 	        moveForm.submit();
 	        

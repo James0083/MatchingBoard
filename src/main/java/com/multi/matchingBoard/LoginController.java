@@ -214,7 +214,8 @@ public class LoginController {
 	    }
 		return "user/callbackGoogle";
 	}
-	@RequestMapping(value = "mypage")
+	
+	@RequestMapping(value = "/mypage")
 	public String connectSns(Model model, HttpSession session) throws Exception {
 		System.out.println("mypage에서 불러오기 성공");
 		Object userObj = session.getAttribute("loginUser");
@@ -296,8 +297,9 @@ public class LoginController {
 	        return "redirect:/"; // 메인 페이지로 리다이렉션
 	    }
 	}
+	
 	//로그아웃
-	@RequestMapping("logout")
+	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 	    session.invalidate();        
 	    return "redirect:/";

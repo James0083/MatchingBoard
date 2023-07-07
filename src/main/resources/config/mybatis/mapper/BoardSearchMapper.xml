@@ -13,10 +13,12 @@
 	<select id="getListPaging" resultType="Room">   
     <![CDATA[
         
-        select rnum,roomid, rname, rplace, rmaxpeople, rgenre, rgame, rstr, rdatetime 
+        select rownum rnum, roomid, rname, rplace, rmaxpeople, rgenre, rgame, rstr, rdatetime,  wishroomid, uuid
         from(      
-                select /*+INDEX_DESC(room room_pk) */ rownum  as rnum,roomid, rname, rplace, rmaxpeople, rgenre, rgame, rstr, rdatetime                
-                from room where rownum <= #{pageNum} * #{amount} 
+                select /*+INDEX_DESC(room room_pk) */ rownum  as rnum,a.roomid, a.rname, a.rplace, a.rmaxpeople, a.rgenre, a.rgame, a.rstr, a.rdatetime , b.roomid wishroomid, b.uuid uuid               
+                from room a left outer join wishlist b 
+                on a.roomid = b.roomid
+                where rownum <= #{pageNum} * #{amount} 
       ]]>          
     	 			 <if test="keyword != null">
     	 			 		<include refid="search_type"></include>
@@ -74,17 +76,25 @@
 
 	<!-- ========================================= -->
 
-	<!-- 해당 유저의 좋아요 여부 검색하기 <select id="ltlikecount" parameterType="Integer" 
-		resultType="int"> select count(wlike) from wistlist where userid=#{userid} 
-		and roomid=#{roomid} </select> -->
-	<!-- 좋아요 누르기 <insert id="likeinsert" > insert into wistlist(userid,roomid) 
-		values (#{userid},#{roomid}) </insert> -->
-
-
-	<!-- <select id="ltlikinfo" resultType=""> select * from wistlist where 
-		userid=#{userid} and roomid=#{roomid} </select> <update id="likeupdate"> 
-		update wishlist set <include refid="cal"></include> where userid=#{userid} 
-		and roomid=#{roomid} </update> <sql id="cal"> <if test="count == 1"> wlike 
-		= 0 </if> <if test="count == 0"> wlike = wlike + 1 </if> </sql> -->
+	<!-- 해당 유저의 좋아요 여부 검색하기 -->
+	<select id="likecount" resultType="int" parameterType="WishList"> 
+	select count(*) from wishlist where uuid=#{uuid} and roomid=#{roomid} 
+	</select> 
+		
+		
+	<!--해당 유저의 좋아요가 없는 경우 insert -->
+	<insert id="likeinsert" parameterType="WishList"> 
+	insert into wishlist(uuid, roomid) 
+		values (#{uuid}, #{roomid}) 
+	</insert> 
+	
+	
+	<!--해당 유저의 좋아요가 있는 경우 delete -->
+	 <delete id="likedelete" parameterType="WishList"> 
+	 delete from wishlist where 
+		uuid=#{uuid} and roomid=#{roomid} 		
+	</delete> 
+		
+	
 
 </mapper>

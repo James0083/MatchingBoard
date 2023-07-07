@@ -42,7 +42,7 @@
 </script>
 
 <div id="wrap" class="container">
-	<form name="croomf" id="croomf" action="./" method="post">
+	<form name="croomf" id="croomf" action="./roomEditDone" method="post">
 		<input type="hidden" name="roomid" value="${room.roomid}">
 		<table class="table">
 			<tr>
@@ -126,7 +126,7 @@
 	
 	function openNaverMap() {
       $('#croomf').unbind('submit'); // submit 이벤트 핸들러 해제
-      var popup = window.open('../../naverMap', 'NaverMapPopup', 'width=1000px,height=1000px');
+      var popup = window.open('../naverMap', 'NaverMapPopup', 'width=1000px,height=1000px');
       window.addEventListener('message', function(event) {
         var storeName = event.data;
         document.getElementById('rplace').value = storeName;

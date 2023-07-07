@@ -13,4 +13,5 @@ public interface RoomService {
 	int updateRoom(RoomVO vo);
 	//*****수정확인 필요*****
 	List<UserVO> selectMemberAll(String roomid);
+	int deleteRoom(String roomid);
 }

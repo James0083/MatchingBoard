@@ -13,5 +13,6 @@ public interface RoomMapper {
 	int updateRoom(RoomVO room);
 	//*****수정확인 필요*****
 	List<UserVO> selectMemberAll(String roomid);
+	int deleteRoom(String roomid);
 	
 }

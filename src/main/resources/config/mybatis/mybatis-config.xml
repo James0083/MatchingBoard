@@ -25,6 +25,7 @@
     <mapper resource="config/mybatis/mapper/ClickRoomMapper.xml"/>
     <mapper resource="config/mybatis/mapper/UserMapper.xml"/>
     <mapper resource="config/mybatis/mapper/SocialMapper.xml"/>
+    <mapper resource="config/mybatis/mapper/AdminMapper.xml"/>
     
   </mappers>
 </configuration>

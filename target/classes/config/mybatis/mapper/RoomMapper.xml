@@ -25,5 +25,9 @@
     <select id="selectMemberAll" parameterType="java.lang.String" resultType="com.multi.model.UserVO">
         select * from roompeople where roomid = #{roomid}
     </select>
+    
+    <delete id="deleteRoom" parameterType="string">
+    	delete from room where roomid=#{roomid}
+    </delete>
 	
 </mapper>

@@ -50,7 +50,7 @@
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 			<!-- Brand -->
 			<a class="navbar-brand" href="${myctx}">
-				<img src="${myctx}/images/dice_logo.png" style="width:30px; height: 30px; filter: invert(100%);">
+				<img src="${myctx}/images/matchingBoard_logo.png" style="width:40px; height: 40px;">
 			</a>
 
 			<!-- Links -->
@@ -82,4 +82,4 @@
 		<!-- ----------------------------------- -->
 	</div>
 
-	<div class="container mt-3" id="content">
+	<div class="container mt-3" id="content" style="min-height: calc(100vh - 200px);">

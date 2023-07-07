@@ -41,4 +41,10 @@ public class RoomServiceImpl implements RoomService {
 	
 		return rMapper.selectMemberAll(roomid);
 	}
+	
+	@Override
+	public int deleteRoom(String roomid) {
+		
+		return rMapper.deleteRoom(roomid);
+	}
 }

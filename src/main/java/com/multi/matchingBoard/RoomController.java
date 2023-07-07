@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.multi.model.RoomPeopleVO;
 import com.multi.model.RoomVO;
@@ -107,8 +108,8 @@ public class RoomController {
 		return "matchingRoom/calendarPopup";
 	}
 	
-	@GetMapping(value="/editRoom/{roomId}")
-	public String showeditRoomFrom(Model m, @PathVariable("roomId") String roomId) { //, @ModelAttribute RoomVO room, int memberNum) {
+	@PostMapping(value="/editRoom")
+	public String showeditRoomFrom(Model m, @RequestParam String roomId) { //, @ModelAttribute RoomVO room, int memberNum) {
 		log.info("roomId: "+roomId);
 		
 		//////////////////
@@ -120,12 +121,20 @@ public class RoomController {
 		
 		//방id로 해당 방 내용 가져오기
 		RoomVO vo=this.rService.selectRoomByIdx(roomId);
+		if(vo==null) {
+			String msg="해당 글은 없어요";
+			String loc="javascript:history.back()";
+			m.addAttribute("msg",msg);
+			m.addAttribute("loc",loc);
+			return "message";
+		}
+		
 		m.addAttribute("room", vo);
 		
 		return "matchingRoom/editRoomForm";
 	}
 	
-	@PostMapping(value="/editRoom")
+	@PostMapping(value="/roomEditDone")
 	public String editRoomResult(Model m, @ModelAttribute RoomVO room) {//, @PathVariable("roomId") String roomId) {
 		
 		//room.setRoomid(roomId);
@@ -142,6 +151,18 @@ public class RoomController {
 		m.addAttribute("loc",loc);
 		return "message";
 //		return "matchingRoom/roomView";
+	}
+	
+	@PostMapping(value="/delete")
+	public String deleteRoom(Model m,  @RequestParam(defaultValue="0") String roomId) {
+		
+		int n=rService.deleteRoom(roomId);
+		
+		String msg=(n>0)?"삭제 성공":"삭제 실패";
+		String loc=(n>0)?"roomList":"javascript:history.back()";
+		m.addAttribute("msg",msg);
+		m.addAttribute("loc",loc);
+		return "message";
 	}
 	
 }

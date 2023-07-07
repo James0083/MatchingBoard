@@ -1,7 +1,6 @@
 DROP TABLE ShopGame CASCADE CONSTRAINTS;
 DROP TABLE Shop CASCADE CONSTRAINTS;
 DROP TABLE Game CASCADE CONSTRAINTS;
-DROP TABLE Schedule CASCADE CONSTRAINTS;
 DROP TABLE LikeRoom CASCADE CONSTRAINTS;
 DROP TABLE Roompeople CASCADE CONSTRAINTS;
 DROP TABLE Room CASCADE CONSTRAINTS;
@@ -31,6 +30,7 @@ CREATE TABLE Member (
 
 CREATE TABLE Room (
     roomid VARCHAR2(40) NOT NULL,
+    cheif VARCHAR2(40), --방장
     rname VARCHAR2(60) NOT NULL,
     rplace VARCHAR2(60) NOT NULL,
     shopid VARCHAR2(40),
@@ -38,25 +38,20 @@ CREATE TABLE Room (
     rgenre VARCHAR2(15) NOT NULL,
     rgame VARCHAR2(60),
     rstr VARCHAR2(3000),
-    rdatetime varchar2(20) DEFAULT to_char(SYSDATE, 'YYYY-MM-DD HH24:MI') NOT NULL,
-    PRIMARY KEY (roomid),
-    FOREIGN KEY (shopid) REFERENCES Shop(shopid)
+    rdatetime varchar2(20),
+    PRIMARY KEY (roomid)
 );
 
 CREATE TABLE Roompeople (
-    roomuserid VARCHAR2(40) NOT NULL,
     userid VARCHAR2(40) NOT NULL,
     roomid VARCHAR2(40) NOT NULL,
-    PRIMARY KEY (roomuserid),
     FOREIGN KEY (userid) REFERENCES Member(userid),
     FOREIGN KEY (roomid) REFERENCES Room(roomid)
 );
 
 CREATE TABLE LikeRoom (
-    likeid VARCHAR2(40) NOT NULL,
-    userid VARCHAR2(40) NOT NULL,
-    roomid VARCHAR2(40) NOT NULL,
-    PRIMARY KEY (likeid),
+    userid VARCHAR2(40),
+    roomid VARCHAR2(40),
     FOREIGN KEY (userid) REFERENCES Member(userid),
     FOREIGN KEY (roomid) REFERENCES Room(roomid)
 );
@@ -82,11 +77,13 @@ CREATE TABLE Shop (
     shopid VARCHAR2(40) NOT NULL,
     sname VARCHAR2(60) NOT NULL,
     saddr VARCHAR2(150) NOT NULL,
+    mapx NUMBER(10,7),
+    mapy NUMBER(10,7),
     smenu_img VARCHAR2(500),
     price_img VARCHAR2(500),
-    hour_price NUMBER(4),
-    unlim_price NUMBER(4),
-    stars NUMBER(3,1) NOT NULL,
+    hour_price NUMBER(5),
+    unlim_price NUMBER(5),
+    stars NUMBER(2,1) DEFAULT 0.0 NOT NULL,
     PRIMARY KEY (saddr)
 );
 
@@ -112,4 +109,3 @@ CREATE TABLE Evaluation(
     stars number(3,1)
 );
 create sequence evaluation_seq nocache;
-

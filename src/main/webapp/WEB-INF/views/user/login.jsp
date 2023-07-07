@@ -29,9 +29,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
-  padding: 5px;
+  max-height: 95vh;
   text-align: center; /* 추가 */
+/*   padding: 5px; */
  
 }
 </style>
@@ -39,7 +39,7 @@
 <body>
 	<div class="container text-center">
 	  <div style="padding-top:100px; padding-bottom: 100px; margin-top:100px; margin-bottom: 100px; border-radius: 10px;">
-	  	<img src="../images/dice_logo.png" style="width: 150px; height: 150px; margin-bottom: 30px;">
+	  	<img src="../images/matchingBoard_logo.png" style="width: 250px; height: 250px; margin-bottom: 30px;">
 		<h2 style="padding:30px;">MatchingBoard에 오신 것을 환영합니다.</h2>
 		<h4 style="padding:30px;">로그인 하기</h4>
 		<div class="button-group" style="padding:30px;">

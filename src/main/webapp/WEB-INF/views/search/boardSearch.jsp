@@ -68,7 +68,7 @@ input {
 }
 
 img {
-	position: absolute;
+/* 	position: absolute; */
 	width: 17px;
 	top: 10px;
 	right: 12px;
@@ -105,12 +105,12 @@ img {
 	margin-bottom: 15px;
 }
 
- 
   .pageInfo{
-      list-style : none;
-      display: inline-block;
-    margin: 50px 0 0 100px;      
+//      list-style : none;
+//      display: inline-block;
+//    margin: 50px 0 0 100px;      
   }
+  /*
   .pageInfo li{
       float: left;
     font-size: 20px;
@@ -118,14 +118,18 @@ img {
     padding: 7px;
     font-weight: 500;
   }
+  */
  a:link {color:black; text-decoration: none;}
  a:visited {color:black; text-decoration: none;}
  a:hover {color:black; text-decoration: underline;}
  
+ .search_wrap{
+    margin-top: 30px;
+ }
    .search_area{
     display: inline-block; 
-    margin-top: 30px;
-    margin-left: 260px;
+//    margin-left: 260px;
+    margin-left: 60px;
   }
   .search_area input{
       height: 30px;
@@ -135,6 +139,10 @@ img {
      width: 100px;
     height: 36px;
   }
+ .cRoom_area{
+ 	display: inline-block;
+ 	margin-right: 30px;
+ }
  .active{
       background-color: #cdd5ec;
   }
@@ -157,6 +165,9 @@ img {
 		</select>
 		<input type="text" name="keyword" value="${pageMaker.pagingvo.keyword}">
 		<button>Search</button>
+	</div>
+	<div class="float-right cRoom_area">
+		<button class="btn btn-success" onclick="location.href='./createRoom'">방만들기</button>
 	</div>
 </div>
 
@@ -182,7 +193,7 @@ img {
 	         					 	<!-- 방이름 -->         	           
 	            					<text x="50%" y="30%" fill="#353635" dy=".3em"> <c:out value="${list.rname}" /></text>
 	            					<!-- 방설명  -->
-	            					<text x="50%" y="45%" style="font-size:15px;" fill="#353635" dy=".3em">
+	            					<text x="50%" y="45%" style="font-size:15px; overflow: auto; white-space: nowrap;" fill="#353635" dy=".3em">
 										<c:out value="${list.rstr}" /></text>          
             					</svg>
 							</div>
@@ -210,27 +221,30 @@ img {
 					</div>
 				</c:forEach>
 				<!-- ---------------------------------------------------------------------- -->
+
+			</div>
+		</div>
 			
 				<!-- 페이징 처리 -->
-				<div class="pageInfo_wrap">
+				<div class="pageInfo_wrap justify-content-center">
 					<div class="pageInfo_area">
-						<ul id="pageInfo" class="pageInfo">
+						<ul id="pageInfo" class="pageInfo pagination justify-content-center">
 
 							<!-- 이전페이지 버튼 -->
 				<c:if test="${pageMaker.prev}">
-					<li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
+					<li class="page-item pageInfo_btn previous"><a class="page-link" href="${pageMaker.startPage-1}">Previous</a></li>
 				</c:if>
 				
 				
 
 							<!-- 각 번호 페이지 버튼 | pageMaker에 저장된 시작.끝 페이지 값을 가지고 페이지 번호를 화면에 출력| <a>태그에 번호-->
 				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-					<li class="pageInfo_btn ${pageMaker.pagingvo.pageNum == num ? "active":"" }"><a href="${num}">${num}</a></li>
+					<li class="page-item pageInfo_btn page-item ${pageMaker.pagingvo.pageNum == num ? 'active':'' }"><a class="page-link" href="${num}">${num}</a></li>
 				</c:forEach>
 
 							<!-- 다음페이지 버튼 -->
 							<c:if test="${pageMaker.next}">
-								<li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
+								<li class="pageInfo_btn next"><a class="page-link" href="${pageMaker.endPage + 1 }">Next</a></li>
 							</c:if>
 							
 
@@ -245,9 +259,6 @@ img {
 					<input type="hidden" name="keyword" value="${pageMaker.pagingvo.keyword}">
 					<input type="hidden" name="type" value="${pageMaker.pagingvo.type }">
 				</form>
-
-			</div>
-		</div>
 
 
 	<p class="float-end mb-1">

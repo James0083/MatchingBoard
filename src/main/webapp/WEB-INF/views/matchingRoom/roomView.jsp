@@ -27,10 +27,10 @@ tr.explane_value {
 	justify-content: space-between;
 }
 
-#cur_num_btn {
+#cur_num {
 	color: gray;
 	margin-top: 1em;
-	margin-bottom: 0;
+	padding: 10px;
 }
 
 td {
@@ -173,6 +173,7 @@ tr:first-child td span {
 	<div class="container col-7" id="room_info" style="margin-left: 15px">
 		<div style="vertical-align: middle;">
 			<h3 style="display: inline-block;">${room.rname}</h3>
+			<c:if test="${loginUser.userid eq room.cheif}">
 			<!-- <button type="button" id="btnTitleEdit" class="float-right btn btn-sm btn-outline-secondary">편집하기</button> -->
 			<form name="frm" id="frm">
 				<input type="hidden" name="roomId" value="<c:out value="${roomId}"/>">
@@ -181,9 +182,10 @@ tr:first-child td span {
 				<button type="button" id="btnRoomDelete" class="float-right btn btn-sm btn-outline-danger" 
 					style="margin: 0px 3px;" onclick="go('del')">모임방 삭제</button>
 			</form>
+			</c:if>
 		</div>
-		<div class="members">
-			<button class="btn btn-sm btn-outline-light" id="cur_num_btn">인원 : ${curPnum} / ${room.rmaxpeople}</button>
+		<div class="members" style="min-height: 3em;">
+			<span id="cur_num">인원 : ${curPnum} / ${room.rmaxpeople}</span>
 			<br>
 			<div class="profiles" style="">
 			

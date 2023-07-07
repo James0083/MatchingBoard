@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class RoomVO {
 
+	private String cheif; //방장. 스키마 바꿀것.
 	private String roomid;
 	private String shopid;
 	private String rname;
@@ -20,6 +21,7 @@ public class RoomVO {
 //	private Time rtime;
 	private String rdatetime;
 	
+	//스키마 바꾸지 않아도 됨. 임시저장용 변수.
 	private String wishroomid;
 	private String uuid;
 	

@@ -109,6 +109,7 @@
 			<tr>
 				<td colspan="2" class="text-center">
 					<!-- <button type="button" onclick="formcheck()" id="btnCreate" class="btn btn-success">방만들기</button> -->
+					<input type="hidden" name="cheif" id="cheif" value="${loginUser.userid}">
 					<button type="submit"id="btnCreate" class="btn btn-success">방만들기</button>
 				</td>
 			</tr>

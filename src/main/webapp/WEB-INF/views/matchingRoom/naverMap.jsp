@@ -148,13 +148,14 @@
 			}
 		})
 	}//-------------------
+
+	var markers = [];
 	
 	const showShopList=function(res){
 		$('#shopList').html('결과가 없습니다.');
 		let str='<table class=" table-sm table-bordered table-hover"><tbody>';
 		$.each(res, (i, shop)=>{
 
-			var markers = [];
 			var marker = new naver.maps.Marker({
 			    position: new naver.maps.LatLng(shop.mapx, shop.mapy),
 			    map: map
@@ -261,70 +262,7 @@
 			}
 		});
 
-<<<<<<< HEAD
-
-		// 매장 정보 배열 (DB에서 받아오는걸로 바꾸기)
-		var stores = [
-		  {name: '보드게임카페 레드버튼 안양점',lat: 37.3997964,lng: 126.9224698},
-		  {name: '히어로 보드게임카페 안양점',lat: 37.3986629,lng: 126.9226668},
-		  {name: '데블다이스 보드게임카페 안양점',lat: 37.3991845,lng: 126.9215638},
-		  {name: '홀스 안양점',lat:37.3999339,lng:126.9217337},
-		  {name: '보드게임카페 레드버튼 범계점',lat: 37.3908957,lng: 126.9527948},
-		  {name: '더홀릭 보드게임카페 범계점',lat: 37.3908343,lng: 126.9529876},
-		  {name: '데블다이스 보드게임카페 범계점',lat: 37.3911951,lng: 126.9540442},
-		  {name: '보드게임카페 홈즈앤루팡 범계점',lat: 37.3908898,lng: 126.953145},
-		  {name: '히든룸 보드 카페',lat: 37.4001723,lng: 126.9749499},
-		  {name: '홀릭 보드 카페',lat: 37.3939953,lng: 126.9609734},
-		  {name: '제임스 보드 게임',lat: 37.3935374,lng: 126.9621882},
-		  {name: '천 보드 카페',lat: 37.3941357,lng: 126.9625978},
-		  {name: '보드게임카페 홈즈앤루팡 산본점',lat: 37.3598064,lng: 126.9313381},
-		  {name: '히어로 보드게임카페 산본점',lat: 37.3593368,lng: 126.9312206},
-		  {name: '보드게임카페 레드버튼 산본점',lat: 37.3603236,lng: 126.9317372},
-		  {name: '더홀릭 보드게임카페 수원점',lat: 37.2682127,lng: 127.0027613},
-		  {name: '히어로 보드게임카페 수원점',lat: 37.2688104,lng: 127.0041966},
-		  {name: '보드게임카페 레드버튼 수원점',lat: 37.2678476,lng: 127.0011425},
-		  {name: '보드게임카페 홈즈앤루팡 수원역점',lat: 37.2684825,lng: 127.0037724},
-		  {name: '보드게임카페 레드버튼 수원인계점',lat: 37.2643685,lng: 127.0314371},
-		  {name: '보드게임카페 레드버튼 아주대점',lat: 37.2782312,lng: 127.0441373},
-		  {name: '프리스콜레',lat: 37.2928237,lng: 127.0502239},
-		  {name: '제이드플레이스',lat: 37.3284311,lng: 127.0679434},
-		  {name: '보드게임카페 레드버튼 강남점',lat: 37.5019586,lng: 127.0264693},
-		  {name: '데블다이스 보드게임카페 강남시티점',lat: 37.5011537,lng: 127.0272036},
-		  {name: '펀타임 강남점',lat: 37.4994905,lng: 127.0276549},
-		  {name: '보드게임카페 홈즈앤루팡 강남점',lat: 37.5015135,lng: 127.0271198},
-		  {name: '달무티 교대점',lat: 37.4940656,lng: 127.0177735},
-		  {name: '곰곰이 보드게임',lat: 37.4818115,lng: 126.9836628},
-		  {name: '게임 아카이브',lat: 37.4823864,lng: 126.9929379},
-		  {name: '보드게임카페 레드버튼 이수역점',lat: 37.4872971,lng: 126.9813609},
-		  {name: '보드 게임 하자',lat: 37.5120497,lng: 126.9454622},
-		  {name: '미르 보드카페',lat: 37.5073374,lng: 126.958694},
-		  {name: '이수 보드게임카페',lat: 37.4869152,lng: 126.9809591},
-		  {name: '보드게임카페 레드버튼 신림점',lat: 37.4832269,lng: 126.9296075},
-		  {name: '플레이온 보드게임카페',lat: 37.4837672,lng: 126.9275759},
-		  {name: '킹덤 보드게임카페 신림점',lat: 37.4832581,lng: 126.9290644}
-		];
-		var markers = [];
-
-		stores.forEach(function(store) {
-			  var marker = new naver.maps.Marker({
-			    position: new naver.maps.LatLng(store.lat, store.lng),
-			    map: map
-			  });
-			  naver.maps.Event.addListener(marker, 'click', function() {
-				  	var content = '<div style="padding:10px;">' +
-				  		'<h4>' + store.name + '</h4>' +
-				  		'<button onclick="selectStore()">선택하기</button>' +
-				  		'</div>';
-				  	infowindow.setContent(content);
-				  	infowindow.open(map, marker);
-				  });
-			markers.push(marker);
-		});
-		
-		function selectStore() {
-=======
 		function selectStore(sname, shopid) {
->>>>>>> You
 			   alert("매장이 선택되었습니다.");
 			   opener.document.getElementById("rplace").value = sname;
 			   opener.document.getElementById("shopid").value = shopid;

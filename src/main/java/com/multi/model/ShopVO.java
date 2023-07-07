@@ -8,8 +8,6 @@ public class ShopVO {
 	private String shopid;
 	private String sname;
 	private String saddr;
-	private Long mapx;
-	private Long mapy;
 	private String smenu_img;
 	private String price_img;
 	private int hour_price;

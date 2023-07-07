@@ -1,18 +1,17 @@
 DROP TABLE ShopGame CASCADE CONSTRAINTS;
 DROP TABLE Shop CASCADE CONSTRAINTS;
 DROP TABLE Game CASCADE CONSTRAINTS;
-DROP TABLE LikeRoom CASCADE CONSTRAINTS;
+DROP TABLE wishlist CASCADE CONSTRAINTS;
 DROP TABLE Roompeople CASCADE CONSTRAINTS;
 DROP TABLE Room CASCADE CONSTRAINTS;
 DROP TABLE Member CASCADE CONSTRAINTS;
-DROP TABLE Evaluation CASCADE CONSTRAINTS;
-DROP TABLE Membereval CASCADE CONSTRAINTS;
+
 
 CREATE TABLE Member (
     userid VARCHAR2(40) NOT NULL,
     profile_img VARCHAR2(500),
     nickname VARCHAR2(30) NOT NULL,
-    area NUMBER(10),
+    area_code NUMBER(10),
     grade NUMBER(3) DEFAULT 0 NOT NULL,
     exp NUMBER(5) DEFAULT 0 NOT NULL,
     manner NUMBER(3,1) DEFAULT 30 NOT NULL,
@@ -28,6 +27,14 @@ CREATE TABLE Member (
     PRIMARY KEY (userid)
 );
 
+CREATE TABLE Social (
+    userid VARCHAR2(40),
+    Type VARCHAR2(10),
+    refreshtoken VARCHAR2(150),
+    identifier VARCHAR2(100),
+    CONSTRAINT fk_social_member FOREIGN KEY (userid) REFERENCES Member(userid)
+);
+
 CREATE TABLE Room (
     roomid VARCHAR2(40) NOT NULL,
     cheif VARCHAR2(40), --방장
@@ -38,7 +45,6 @@ CREATE TABLE Room (
     rgenre VARCHAR2(15) NOT NULL,
     rgame VARCHAR2(60),
     rstr VARCHAR2(3000),
-    rdatetime varchar2(20),
     PRIMARY KEY (roomid)
 );
 
@@ -49,7 +55,7 @@ CREATE TABLE Roompeople (
     FOREIGN KEY (roomid) REFERENCES Room(roomid)
 );
 
-CREATE TABLE LikeRoom (
+CREATE TABLE wishlist (
     userid VARCHAR2(40),
     roomid VARCHAR2(40),
     FOREIGN KEY (userid) REFERENCES Member(userid),

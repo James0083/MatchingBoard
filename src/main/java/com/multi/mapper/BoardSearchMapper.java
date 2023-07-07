@@ -2,6 +2,8 @@ package com.multi.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.multi.model.PagingVO;
 import com.multi.model.RoomVO;
 import com.multi.model.WishListVO;
@@ -18,8 +20,11 @@ public interface BoardSearchMapper {
 	public int getTotal(PagingVO paingvo);
 	
 	//좋아요
-//	int ltlikecount(WishListVO wishlistvo);
-//	int likeinsert(WishListVO wishlistvo);
-//	int ltlikeinfo(WishListVO wishlistvo);
-//	int likeupdate(WishListVO wishlistvo);
+	public int updateLike(WishListVO vo);
+
+	public int likecount(WishListVO vo);
+
+	public int likeinsert(WishListVO vo);
+	
+	public int likedelete(WishListVO vo);
 }

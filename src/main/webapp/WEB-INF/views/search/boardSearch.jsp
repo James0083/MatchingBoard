@@ -248,7 +248,13 @@ img {
 									style="float: right;">
 									<div class="btn-group">
 										<!-- 좋아요 버튼 -->
-										<button class="btn-like">❤️</button>
+								<!--  		${list.wishroomid} / ${list.roomid }/${list.uuid} /${loginUser.userid} -->
+										<c:if test="${list.wishroomid eq list.roomid and list.uuid eq loginUser.userid }">
+										 <button class="btn-like done" data-id="${list.roomid}">❤️</button>
+										</c:if>
+										<c:if test="${list.wishroomid ne list.roomid or list.uuid ne loginUser.userid }">
+										<button class="btn-like" data-id="${list.roomid}">❤️</button>
+										</c:if>
 									</div>
 								</div>
 							</div>
@@ -303,8 +309,27 @@ img {
 <!-- 좋아요 버튼 -->
 <script src="//code.jquery.com/jquery.min.js"></script>
 <script>
+
 	$(".btn-like").click(function() {
 		$(this).toggleClass("done");
+		
+		roomid = $(this).attr('data-id');
+	
+		
+		$.ajax({
+			type: 'put',
+			url: 'like/' + roomid,
+			dataType: 'json',
+			cache: false
+		})
+		.done((res) =>{
+			if(res.result == '-2'){
+				alert(res.msg);
+			}
+		})
+		.fail((err) =>{
+			alert(err.status);
+		})
 	})
 
 	//팝업창 - 모임방 목록 상세조회

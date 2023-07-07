@@ -8,6 +8,7 @@ import lombok.Data;
 public class RoomVO {
 
 	private String roomid;
+	private String shopid;
 	private String rname;
 	private String rplace;
 	private int rmaxpeople;

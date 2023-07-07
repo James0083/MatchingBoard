@@ -4,11 +4,6 @@
 
 <c:set var="myctx" value="${pageContext.request.contextPath}" />
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 <title>간단한 지도 표시하기</title>
@@ -20,8 +15,18 @@
 }
 
 .navbar {
-		display:none;
-	}
+	display:none;
+}
+
+.container{
+	margin:0px;
+	max-width: none;
+}
+
+#total_container{
+	margin:0px;
+	min-width: 100px;
+}
 
 #wrap .buttons {
 	position: absolute;
@@ -35,36 +40,168 @@
 	margin: 0 5px 5px 0;
 }
 #search-container {
-		position: absolute;
-		top: 0;
-		left: 50%;
-		transform: translateX(-50%);
-		z-index: 1000;
-	}
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 1000;
+}
 
-	#search-container input[type="text"] {
-		width: 250px;
-	}
+#search-container input[type="text"] {
+	width: 250px;
+}
 
-	#search-container input[type="submit"] {
-		padding: 5px 10px;
-		background-color: #337ab7;
-		color: #fff;
-		border: none;
-		cursor: pointer;
-	}
+#search-container input[type="submit"] {
+	padding: 5px 10px;
+	background-color: #337ab7;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+}
+#map{
+//	position: absolute; 
+//	top: 40px; 
+//	left: 0; 
+//	right: 0; 
+//	bottom: 0;
+}
+
+.shopList{
+	overflow:auto;
+	height: 85vh;
+}
+
+.shopList_detail{
+	font-size: 0.9em;
+}
+
+#shopList_name{
+	font-weight: bold;
+	font-size: 1.15em;
+}
+
 </style>	
-</head>
-<body>
-	<!--<div id="map" style="width:100%;height:400px;"></div>-->
-	<div id="map" style="position: absolute; top: 40px; left: 0; right: 0; bottom: 0;""></div>
-	
+
+<!--<div id="map" style="width:100%;height:400px;"></div>-->
+<div class="row ml-1 mr-1" style="height:95vh;">
+	<div class="col-4">
+		<div class="mt-3 mb-2 text-center" id="shopSearchDiv">
+			<input type="text" name="keyword" id="keyword">
+			<button type="button" onclick="searchShop()" class="btn btn-sm btn-outline-primary">Search</button>
+		</div>
+		<div class="shopList" id="shopList">
+		<!-- Shop List -->
+		</div>
+	</div>
+	<div class="col-8" id="map" ></div>
+	<!-- 
 	<div id="search-container">
 		<input type="text" id="address" placeholder="지역을 검색하세요.">
 		<input type="submit" id="submit" value="검색">
 	</div>
+	 -->
+</div>
 
-	<script>
+<script type="text/javascript">
+
+	const searchShop=function(){
+		var keyword=$('#keyword').val();//키워드 입력값 가져오기
+		if(!keyword){
+			alert('검색어를 입력하세요');
+			$('#keyword').focus();
+			return;
+		}
+		console.log('keyword: '+keyword);
+		//alert(encodeURIComponent(keyword));
+		
+		$.ajax({
+			type:'get',
+			url:'shops?keyword=' + encodeURIComponent(keyword),
+			dataType:'json',
+			cache:false
+		})
+		.done((res)=>{
+			//alert(JSON.stringify(res))
+			showShopList(res);
+		})
+		.fail((err)=>{
+			alert(err.status)
+		})
+	}//--------------------------------
+
+	$(function(){
+		//모든 게임 목록 가져오기
+		getAllShop();
+	});
+	
+	const getAllShop=function(){
+		$.ajax({
+			type:'get',
+			url:'shops',
+			dataType:'json',
+			success:function(res){
+				//alert(JSON.stringify(res))
+				showShopList(res);
+			},
+			error:function(err){
+				alert(err.status);
+			}
+		})
+	}//-------------------
+	
+	const showShopList=function(res){
+		$('#shopList').html('결과가 없습니다.');
+		let str='<table class=" table-sm table-bordered table-hover"><tbody>';
+		$.each(res, (i, shop)=>{
+
+			var markers = [];
+			var marker = new naver.maps.Marker({
+			    position: new naver.maps.LatLng(shop.mapx, shop.mapy),
+			    map: map
+		  	});
+		  	naver.maps.Event.addListener(marker, 'click', function() {
+			  	var content = '<div style="padding:10px;">'
+			  		+ '<h5>' + shop.sname + '</h5>'
+			  		+ '<button class="btn btn-sm btn-outline-secondary" onclick="selectStore(&#39;' + shop.sname + '&#39; , &#39;' + shop.shopid + '&#39;)">선택하기</button>'	// &#34; => 따옴표(")
+			  		+ '</div>';
+			  	infowindow.setContent(content);
+			  	infowindow.open(map, marker);
+		  	});
+			markers.push(marker);
+			
+			
+			str+='<tr>';
+			str+='<td onclick="setMapCenterShop(' + shop.mapx + ',' + shop.mapy + ')">';
+			
+			str+='<button class="btn btn-light font-weight-bold" onclick="selectStore(&#39;' 
+				+ shop.sname + '&#39; , &#39;' + shop.shopid + '&#39;)">' + shop.sname + '</button>'
+			str+='<span class="float-right" style="color: #32CD32;">&bigstar;' + shop.stars + '</span>';
+			str+='<br><p style="font-size:0.8em;">' + shop.saddr + '</p>';
+			
+			str+='<a class="shopList_detail" href="#" onclick="">메뉴판 보기 </a>';
+			if(shop.hour_price > 0)
+				str+='<span class="shopList_detail float-right">' + shop.hour_price + ' / 1시간</span>';
+			str+='<br><a class="shopList_detail" href="#" onclick="">가격표 보기 </a>';
+			if(shop.unlim_price > 0)
+				str+='<span class="shopList_detail float-right">' + shop.unlim_price + ' / 무제한</span>';
+			
+			str+='</td>';
+			str+='</tr>';
+			
+		});
+		str+='</tbody></table>';
+		$('#shopList').html(str);
+	}//------------------------
+	
+	function setMapCenterShop(shop_mapx, shop_mapy){
+		var location = new naver.maps.LatLng(shop_mapx, shop_mapy);
+	    map.setCenter(location); // 얻은 좌표를 지도의 중심으로 설정.
+	    
+    }
+	
+</script>
+
+<script>
 		//현재 위치 얻어오기
 		var infowindow = new naver.maps.InfoWindow();
 		//지도 생성 시에 옵션을 지정할 수 있습니다.
@@ -124,6 +261,7 @@
 			}
 		});
 
+<<<<<<< HEAD
 
 		// 매장 정보 배열 (DB에서 받아오는걸로 바꾸기)
 		var stores = [
@@ -184,9 +322,12 @@
 		});
 		
 		function selectStore() {
+=======
+		function selectStore(sname, shopid) {
+>>>>>>> You
 			   alert("매장이 선택되었습니다.");
-			   var selectedStoreName = event.target.parentNode.querySelector('h4').innerText;
-			   opener.document.getElementById("rplace").value = selectedStoreName;
+			   opener.document.getElementById("rplace").value = sname;
+			   opener.document.getElementById("shopid").value = shopid;
 			   window.close(); // 팝업 창을 닫습니다.
 			}
 		
@@ -240,44 +381,43 @@
 			});
 		});
 		
-		function searchAddressToCoordinate(address) {
-		    naver.maps.Service.geocode({
-		        query: address
-		    }, function(status, response) {
-		        if (status === naver.maps.Service.Status.ERROR) {
-		            return alert('Something Wrong!');
-		        }
-		        if (response.v2.meta.totalCount === 0) {
-		            return alert('올바른 주소를 입력해주세요.');
-		        }
-		        var htmlAddresses = [],
-		            item = response.v2.addresses[0],
-		            point = new naver.maps.Point(item.x, item.y);
-		        if (item.roadAddress) {
-		            htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
-		        }
-		        if (item.jibunAddress) {
-		            htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
-		        }
-		        if (item.englishAddress) {
-		            htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
-		        }
-		        map.setCenter(point);
-		        insertAddress(item.roadAddress, item.x, item.y);
-		    });
-		}
+// 		function searchAddressToCoordinate(address) {
+// 		    naver.maps.Service.geocode({
+// 		        query: address
+// 		    }, function(status, response) {
+// 		        if (status === naver.maps.Service.Status.ERROR) {
+// 		            return alert('Something Wrong!');
+// 		        }
+// 		        if (response.v2.meta.totalCount === 0) {
+// 		            return alert('올바른 주소를 입력해주세요.');
+// 		        }
+// 		        var htmlAddresses = [],
+// 		            item = response.v2.addresses[0],
+// 		            point = new naver.maps.Point(item.x, item.y);
+// 		        if (item.roadAddress) {
+// 		            htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
+// 		        }
+// 		        if (item.jibunAddress) {
+// 		            htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
+// 		        }
+// 		        if (item.englishAddress) {
+// 		            htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
+// 		        }
+// 		        map.setCenter(point);
+// 		        insertAddress(item.roadAddress, item.x, item.y);
+// 		    });
+// 		}
 
 		// 주소 검색 이벤트 처리
-		$('#address').on('keydown', function(e) {
-		    var keyCode = e.which;
-		    if (keyCode === 13) { // Enter Key
-		        searchAddressToCoordinate($('#address').val());
-		    }
-		});
-		$('#submit').on('click', function(e) {
-		    e.preventDefault();
-		    searchAddressToCoordinate($('#address').val());
-		});
-	</script>
-</body>
-</html>
+// 		$('#address').on('keydown', function(e) {
+// 		    var keyCode = e.which;
+// 		    if (keyCode === 13) { // Enter Key
+// 		        searchAddressToCoordinate($('#address').val());
+// 		    }
+// 		});
+		
+// 		$('#submit').on('click', function(e) {
+// 		    e.preventDefault();
+// 		    searchAddressToCoordinate($('#address').val());
+// 		});
+</script>

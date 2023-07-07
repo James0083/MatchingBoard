@@ -17,6 +17,14 @@ public class SocialServiceImpl implements SocialService {
 
 	}
 
+	@Override
+	public SnsLoginVO findSnsLoginByidentifier(String identifier) {
+		// TODO Auto-generated method stub
+		return socialmapper.findSnsLoginByidentifier(identifier);
+	}
+
+	
+
 	
 
 }

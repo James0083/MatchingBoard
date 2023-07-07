@@ -10,7 +10,7 @@
   	<typeAlias type="com.multi.model.GameVO" alias="Game"/>
   	<typeAlias type="com.multi.model.ShopVO" alias="Shop"/>
   	<typeAlias type="com.multi.model.UserVO" alias="User"/>
-  	<typeAlias type="com.multi.model.SnsLoginVO" alias="Sns"/>
+  	<typeAlias type="com.multi.model.SnsLoginVO" alias="SnsLogin"/>
   </typeAliases>
   
   

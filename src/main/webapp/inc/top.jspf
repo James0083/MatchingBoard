@@ -83,10 +83,10 @@
 				</c:if>
 				<c:if test="${loginUser ne null }">
 					<li class="nav-item bg-secondary">
-						<a class="nav-link text-white" href="#">${loginUser.userid}님 로그인 중...</a>
+						<a class="nav-link text-white" href="#">${loginUser.nickname}님 로그인 중...</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="${myctx}/logout">Logout</a>
+						<a class="nav-link" href="${myctx}/user/logout">Logout</a>
 					</li>
 				</c:if>
 			</ul>

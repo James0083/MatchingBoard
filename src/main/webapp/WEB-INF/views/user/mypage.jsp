@@ -118,22 +118,22 @@ tr:first-child td span {
 			</tr>
 			<tr>
 				<td>선호 장르</td>
-				<%-- <td><b>${loginUser.fgenre1}, ${loginUser.fgenre2}, ${loginUser.fgenre3}</b></td> --%>
-				<td><b>장르1, 장르2, 장르3</b></td>
+				<td><b>${loginUser.fgenre1}, ${loginUser.fgenre2}, ${loginUser.fgenre3}</b></td>
+				<!-- <td><b>장르1, 장르2, 장르3</b></td> -->
 			</tr>
 			<tr>
 				<td>선호 게임 Top3</td>
-				<%-- <td><b>${loginUser.fgame1}, ${loginUser.fgame2}, ${loginUser.fgame3}</b></td> --%>
-				<td><b>게임1, 게임2, 게임3</b></td>
+				<td><b>${loginUser.fgame1}, ${loginUser.fgame2}, ${loginUser.fgame3}</b></td>
+				<!-- <td><b>게임1, 게임2, 게임3</b></td> -->
 			</tr>
 			
 			<tr>
 				<td colspan="2" style="text-align: center;">
 					<table border="0" class="tb-attend table table-sm table-borderless " style="margin:0 auto;">
 						<tr>
-							<td><div class="attendance" id="attend" style="margin:0 auto;">0${loginUser.attend}</div></td>
-							<td><div class="attendance" id="late" style="margin:0 auto;">0${loginUser.late}</div></td>
-							<td><div class="attendance" id="absent" style="margin:0 auto;">0${loginUser.absent}</div></td>
+							<td><div class="attendance" id="attend" style="margin:0 auto;">${loginUser.attend}</div></td>
+							<td><div class="attendance" id="late" style="margin:0 auto;">${loginUser.late}</div></td>
+							<td><div class="attendance" id="absent" style="margin:0 auto;">${loginUser.absent}</div></td>
 						</tr>
 						<tr>
 							<td style="text-align: center">출석</td>
@@ -192,7 +192,7 @@ tr:first-child td span {
 			<tr>
 				<td colspan="2" style="text-align: center">
 					<form name='f' method='GET' action='modify'>
-						<input type="hidden" name="idx" value="${loginUser.idx}">
+						<input type="hidden" name="idx" value="${loginUser.userid}">
 						<button class="btn btn-secondary">정보수정 | 탈퇴</button>
 					</form>
 				</td>

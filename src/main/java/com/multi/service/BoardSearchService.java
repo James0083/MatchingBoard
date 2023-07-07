@@ -17,7 +17,11 @@ public interface BoardSearchService {
 	//모임방 총 갯수
 	public int getTotal(PagingVO pagingvo);
 	
-//	public int ltlikecount(WishListVO wishlistvo);
-//	public int likeinsert(WishListVO wishlistvo);
+	//좋아요
+	public int updateLike(String uuid, String roomid);
+	
+	
+	
+	
 
 }

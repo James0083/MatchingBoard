@@ -38,22 +38,21 @@ public class BoardSearchServiceImpl implements BoardSearchService{
 	}
 
 	
-	
-	
-	
-	
-	/**
+	//좋아요
 	@Override
-	public int ltlikecount(WishListVO wishlistvo) {
-		return mapper.ltlikecount(wishlistvo);
+	public int updateLike(String uuid, String roomid) {
+		WishListVO vo = new WishListVO(uuid, roomid);
+		System.out.println("WishListVO = " + vo);
+		
+		int count = mapper.likecount(vo);
+		System.out.println("likeCount = " + count);
+		
+		if(count <= 0) {
+			return mapper.likeinsert(vo);
+		} else {
+			return mapper.likedelete(vo);
+		}
 	}
-
-	@Override
-	public int likeinsert(WishListVO wishlistvo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-*/
-
+	
+	
 }

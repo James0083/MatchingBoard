@@ -40,14 +40,16 @@
 				<div class="bd-example-snippet bd-code-snippet"
 					style="text-align: center;">
 					<div class="bd-example">
-						<button type="button" class="btn btn-secondary" id="list_room">모임방 목록</button>
+						<button onclick="closeTabClick()" class="btn btn-secondary" id="list_room">닫기</button>
 						<button type="button" class="btn btn-secondary" id="enter_room">모임방 참가</button>
 					</div>
-					<!-- 모임방 목록으로 돌아가기 -->
+					<!-- 모임방 목록으로 돌아가기 
 					<form id="infoForm" action="boardSearch" method="get">
 						<input type ="hidden" id="roomid" name="roomid" value='<c:out value="${room.roomid}"/>'>
 						<input type="hidden" name="pageNum" value='<c:out value="${pagingvo.pageNum}"/>'>
 						<input type="hidden" name="amount" value='<c:out value="${pagingvo.amount}"/>'>
+						
+						-->
 						<!--  
 						<input type="hidden" name="keyword" value="${pagingvo.keyword}">
 						<input type="hidden" name="type" value="${pagingvo.type }">
@@ -61,8 +63,9 @@
 
 <script>
 
-// 모임방 목록으로 돌아가기 - 팝업으로 만들어서 팝업창에 다시 돌아감.. 수정해야됨!
-	let form = $("#infoForm");
+// 모임방 목록으로 돌아가기
+/**
+let form = $("#infoForm");
 	$("#list_room").on("click", function(e){
 		form.find("#roomid").remove();
 		form.attr("action", "boardSearch");
@@ -73,7 +76,13 @@
 		opener.location.href="./roomView/"+'${room.roomid}';
 		window.close(); // 팝업 창을 닫습니다.
 	});
-
+*/	
+	
+	//팝업창 닫기 
+	 function closeTabClick() {
+     window.close();
+   }
+	
 	var rdt = '${room.rdatetime}'.split(/-|T|:/);
 	var str = '모임일시 : ' + rdt[0] + "년 " + rdt[1] + "월 " + rdt[2] + "일 - " + rdt[3] + "시 " + rdt[4] + "분";
 	document.getElementById('rdatetime').innerHTML = str;

@@ -47,4 +47,34 @@ public class RoomServiceImpl implements RoomService {
 		
 		return rMapper.deleteRoom(roomid);
 	}
+
+	@Override
+	public int insertIntoRoomPeople(String roomid, String userid) {
+		// TODO Auto-generated method stub
+		return rMapper.insertIntoRoomPeople(roomid, userid);
+	}
+
+	@Override
+	public int removeFromRoomPeople(String roomid, String userid) {
+		// TODO Auto-generated method stub
+		return rMapper.removeFromRoomPeople(roomid, userid);
+	}
+
+	@Override
+	public boolean isUserInRoom(String roomId, String userId) {
+		// TODO Auto-generated method stub
+		return rMapper.countUserInRoom(roomId, userId) > 0;
+	}
+
+	@Override
+	public List<String> selectUserIdsInRoom(String roomId) {
+		// TODO Auto-generated method stub
+		return rMapper.selectUserIdsInRoom(roomId);
+	}
+
+	@Override
+	public UserVO selectMemberByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return rMapper.selectMemberByUserId(userId);
+	}
 }

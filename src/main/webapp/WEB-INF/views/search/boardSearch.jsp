@@ -202,12 +202,12 @@ img {
 									style="float: right;">
 									<div class="btn-group">
 										<!-- 좋아요 버튼 -->
-										${list.wishroomid} / ${list.roomid }/${list.uuid} /${loginUser.userid}
+									<!--	${list.wishroomid} / ${list.roomid }/${list.uuid} /${loginUser.userid}   -->
 										<c:if test="${list.wishroomid eq list.roomid and list.uuid eq loginUser.userid }">
-										<button class="btn-like done" data-id="${list.roomid}">❤️%%%</button>
+										<button class="btn-like done" data-id="${list.roomid}">❤️</button>
 										</c:if>
 										<c:if test="${list.wishroomid ne list.roomid or list.uuid ne loginUser.userid }">
-										<button class="btn-like" data-id="${list.roomid}">❤️$$$</button>
+										<button class="btn-like" data-id="${list.roomid}">❤️</button>
 										</c:if>
 									</div>
 								</div>

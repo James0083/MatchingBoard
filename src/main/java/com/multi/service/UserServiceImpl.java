@@ -111,4 +111,10 @@ public class UserServiceImpl implements UserService {
 
         return true;
 	}
+
+	@Override
+	public List<String> getUserSocialConnections(String userid) {
+		// TODO Auto-generated method stub
+		return userMapper.getUserSocialConnections(userid);
+	}
 }

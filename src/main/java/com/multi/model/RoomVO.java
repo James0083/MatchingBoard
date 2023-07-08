@@ -1,12 +1,11 @@
 package com.multi.model;
 
-import java.sql.Timestamp;
-
 import lombok.Data;
 
 @Data
 public class RoomVO {
 
+	private String cheif; //방장. 스키마 바꿀것.
 	private String roomid;
 	private String shopid;
 	private String rname;

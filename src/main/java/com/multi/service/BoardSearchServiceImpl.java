@@ -53,6 +53,12 @@ public class BoardSearchServiceImpl implements BoardSearchService{
 			return mapper.likedelete(vo);
 		}
 	}
+
+	@Override
+	public List<String> getUserWishList(String userid) {
+
+		return mapper.getUserWishList(userid);
+	}
 	
 	
 }

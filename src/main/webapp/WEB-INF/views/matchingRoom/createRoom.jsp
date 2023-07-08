@@ -16,13 +16,11 @@
 				$('#rgenre').focus();
 				return false;
 			}
-			/*
 			if (!$('#rplace').val()) {
 				alert('장소를 입력하세요');
 				croomf.rplace.focus();
 				return false;
 			}
-			*/
 			if (!$('#rdate').val()) {
 				alert('날짜를 입력하세요');
 				$('#rdate').focus();
@@ -34,7 +32,7 @@
 				return false;
 			}
 			$('#rdatetime').attr('value',$('#rdate').val()+"T"+$('#rtime').val());
-			alert($('#rdate').val()+" + "+$('#rtime').val()+"==>"+$('#rdatetime').val());
+// 			alert($('#rdate').val()+" + "+$('#rtime').val()+"==>"+$('#rdatetime').val());
 			//alert($('#rmaxpeople').val()+" , "+$('#rgenre').val()+" , "+$('#rstr').val());
 			
 		})//submit------------------
@@ -109,6 +107,7 @@
 			<tr>
 				<td colspan="2" class="text-center">
 					<!-- <button type="button" onclick="formcheck()" id="btnCreate" class="btn btn-success">방만들기</button> -->
+					<input type="hidden" name="cheif" id="cheif" value="${loginUser.userid}">
 					<button type="submit"id="btnCreate" class="btn btn-success">방만들기</button>
 				</td>
 			</tr>

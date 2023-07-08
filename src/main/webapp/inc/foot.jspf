@@ -59,6 +59,7 @@
 }
 #foot-container{
 	background-color: #f4f4f4;
+	background-clip: content-box;
 }
 </style>
     </div> <!-- .container end------- -->

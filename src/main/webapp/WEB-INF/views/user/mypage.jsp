@@ -39,9 +39,9 @@ td:last-child {
 	background-color: #de352e;
 }
 
-tr:first-child td span {
+tr:first-child td span.prograss-text {
 	font-size: 0.8em;
-	width: 4.5em;
+	width: 4em;
 	margin-top: 0.5em;
 	display: inline-block;
 }
@@ -50,6 +50,7 @@ tr:first-child td span {
 	appearance: none;
 	height: 0.8em;
 	display: inline-block;
+	width: 60%;
 }
 
 .progress::-webkit-progress-bar {
@@ -86,27 +87,33 @@ tr:first-child td span {
 	<p>회원 인증 페이지 - 로그인 해야 들어올 수 있는 페이지입니다</p>
 	<div class="row">
 	<div class="col-4" style="padding: 10px;">
-		<table border="0" class="table mt-3 text-center" style="width:100%;">
+		<table class="table mt-3 text-center" style="width:100%;">
 			<tr>
-				<%-- <td width="25%"><img src="${loginUser.profile_img}"></td> --%>
-				<td width="25%"><img id="profile_img" src="../images/profile_example.png"></td>
+				<td width="25%">
+				<c:if test="${loginUser.profile_img ne null}">
+					<img id="profile_img" src="../images/${loginUser.profile_img}">
+				</c:if>
+				<c:if test="${loginUser.profile_img eq null}">
+					<img id="profile_img" src="../images/profile_example.png">
+				</c:if>
+				</td>
 				<td width="75%">
 					<div style="margin: auto 0;">
-					<%--
-						<a href=""><img src="../images/grade1.png"></a>
-						<b>${loginUser.nickname}</b>
-					--%>
+					
+						<a href=""><img src="../images/grades/grade${loginUser.grade}.png" style="width:1.2em; height:1.2em;"></a>
+						<b style="color: #505050;">${loginUser.nickname}</b>
+						<%--
 						<a href=""><img src="../images/grades/grade1.png" style="width:1.2em; height:1.2em;"></a>
 						<b style="color: #505050;">유저 닉네임</b>
-						
+						--%>
 						<br>
-						<span>경험치</span>
-						<span>
+						<span class="prograss-text">경험치</span>
+						<span class="prograss-span">
 							<progress class="progress" value="${loginUser.exp}" max="${loginUser.grade *100}"></progress>
 						</span>
 						<br>
-						<span>매너점수</span>
-						<span>
+						<span class="prograss-text">매너점수</span>
+						<span class="prograss-span">
 							<progress class="progress" value="${loginUser.manner}" max="100"></progress>
 						</span>
 					</div>
@@ -114,26 +121,26 @@ tr:first-child td span {
 			</tr>
 			<tr>
 				<td>지역</td>
-				<td><b>${loginUser.area}</b></td>
+				<td><b>${loginUser.area_code}</b></td>
 			</tr>
 			<tr>
 				<td>선호 장르</td>
-				<%-- <td><b>${loginUser.fgenre1}, ${loginUser.fgenre2}, ${loginUser.fgenre3}</b></td> --%>
-				<td><b>장르1, 장르2, 장르3</b></td>
+				<td><b>${loginUser.fgenre1}, ${loginUser.fgenre2}, ${loginUser.fgenre3}</b></td>
+				<!-- <td><b>장르1, 장르2, 장르3</b></td> -->
 			</tr>
 			<tr>
 				<td>선호 게임 Top3</td>
-				<%-- <td><b>${loginUser.fgame1}, ${loginUser.fgame2}, ${loginUser.fgame3}</b></td> --%>
-				<td><b>게임1, 게임2, 게임3</b></td>
+				<td><b>${loginUser.fgame1}, ${loginUser.fgame2}, ${loginUser.fgame3}</b></td>
+				<!-- <td><b>게임1, 게임2, 게임3</b></td> -->
 			</tr>
 			
 			<tr>
 				<td colspan="2" style="text-align: center;">
 					<table border="0" class="tb-attend table table-sm table-borderless " style="margin:0 auto;">
 						<tr>
-							<td><div class="attendance" id="attend" style="margin:0 auto;">0${loginUser.attend}</div></td>
-							<td><div class="attendance" id="late" style="margin:0 auto;">0${loginUser.late}</div></td>
-							<td><div class="attendance" id="absent" style="margin:0 auto;">0${loginUser.absent}</div></td>
+							<td><div class="attendance" id="attend" style="margin:0 auto;">${loginUser.attend}</div></td>
+							<td><div class="attendance" id="late" style="margin:0 auto;">${loginUser.late}</div></td>
+							<td><div class="attendance" id="absent" style="margin:0 auto;">${loginUser.absent}</div></td>
 						</tr>
 						<tr>
 							<td style="text-align: center">출석</td>
@@ -167,7 +174,14 @@ tr:first-child td span {
 				<td colspan="2">
 					<div>
 						<img class="ac_link_logo_img" src="../images/naver_icon.png">
-						<span> 연동정보 / 연동하기 </span>
+						    <c:choose>
+						        <c:when test="${connectedNaver}">
+						            연동 완료
+						        </c:when>
+						        <c:otherwise>
+						            <a href="${connecturlNaver}">연동하기</a>
+						        </c:otherwise>
+						    </c:choose>
 					</div>
 			 	</td>
 			</tr>
@@ -185,14 +199,21 @@ tr:first-child td span {
 							</svg> -->
 <!-- 						</div> -->
 						<img class="ac_link_logo_img" src="../images/kakaoicon1.png">
-						<span> 연동정보 / 연동하기 </span>
+						    <c:choose>
+						        <c:when test="${connectedKakao}">
+						            연동 완료
+						        </c:when>
+						        <c:otherwise>
+						            <a href="${connecturlKakao}">연동하기</a>
+						        </c:otherwise>
+						    </c:choose>
 					</div>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2" style="text-align: center">
 					<form name='f' method='GET' action='modify'>
-						<input type="hidden" name="idx" value="${loginUser.idx}">
+						<input type="hidden" name="idx" value="${loginUser.userid}">
 						<button class="btn btn-secondary">정보수정 | 탈퇴</button>
 					</form>
 				</td>

@@ -21,6 +21,7 @@ public interface BoardSearchService {
 	public int updateLike(String uuid, String roomid);
 	
 	
+	public List<String> getUserWishList(String userid);
 	
 	
 

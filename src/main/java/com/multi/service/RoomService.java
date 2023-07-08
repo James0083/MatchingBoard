@@ -14,4 +14,9 @@ public interface RoomService {
 	//*****수정확인 필요*****
 	List<UserVO> selectMemberAll(String roomid);
 	int deleteRoom(String roomid);
+	int insertIntoRoomPeople(String roomid,String userid);
+	int removeFromRoomPeople(String roomid,String userid);
+	boolean isUserInRoom(String roomId, String userId);
+	List<String> selectUserIdsInRoom(String roomId);
+	UserVO selectMemberByUserId(String userId);
 }

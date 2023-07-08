@@ -14,6 +14,7 @@
 	<title>Matching Board</title>
 	<!-- jQuery library -->
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-latest.min.js" type="application/javascript"></script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 	<!-- Popper JS -->
@@ -26,6 +27,9 @@
 		overflow-y: scroll;
 		-ms-overflow-style: none; /* 인터넷 익스플로러 */
 		scrollbar-width: none; /* 파이어폭스 */
+		
+		background-color: #e3f2fd;
+		background-clip: content-box;
 	}
 	#content::-webkit-scrollbar {
 		display: none; /* 크롬, 사파리, 오페라, 엣지 */
@@ -33,6 +37,12 @@
 	#total_container{
 		min-width: 900px;
 	}
+	.navbar .nav-link {
+	  font-weight: 850;
+	  font-size: 1.2em;
+	}
+	
+
 </style>
 <script>
 	/* $(document).ready(function() {
@@ -43,11 +53,8 @@
 <body>
 <div id="total_container">
 	<div class="container container-fluid">
-<!-- 		<div class="jumbotron text-center" style="margin-bottom: 0">
-			<h1>Matching Board</h1>
-		</div> -->
 		<!-- navbar----------------------------- -->
-		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #A0D3F8; opacity:0.9;">
 			<!-- Brand -->
 			<a class="navbar-brand" href="${myctx}">
 				<img src="${myctx}/images/matchingBoard_logo.png" style="width:40px; height: 40px;">
@@ -56,34 +63,38 @@
 			<!-- Links -->
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" href="${myctx}/room/roomList">모임방 게시판</a>
+					<a class="nav-link" href="${myctx}/room/roomList" style="color: #6d72f4;">모임방 게시판</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="${myctx}/gameList">보드게임목록</a>
+					<a class="nav-link" href="${myctx}/gameList" style="color: #6d72f4;">보드게임목록</a>
 				</li>
 				
 				<!-- Dropdown -->
 				<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> Auth Page </a>
+					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: #6d72f4;">Auth Page</a>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="${myctx}/adminLogin">AdminPage</a> 
 						<a class="dropdown-item" href="${myctx}/user/mypage">MyPage</a>
 					</div>
 				</li>
-
+				
 				<c:if test="${loginUser eq null }">
 					<!-- 로그인 하지 않은 경우라면 ----------------------- -->
+					<!-- 
 					<li class="nav-item"><a class="nav-link" href="${myctx}/join">Signup</a>
 					</li>
+					 -->
 					<li class="nav-item"><a class="nav-link" href="${myctx}/user/login">Login</a>
 					</li>
+					<li class="nav-item"><a class="nav-link" href="${myctx}/join" style="color: #6d72f4;">Signup</a></li>
+					<li class="nav-item"><a class="nav-link" href="${myctx}/user/login" style="color: #6d72f4;">Login</a></li>
 				</c:if>
 				<c:if test="${loginUser ne null }">
-					<li class="nav-item bg-secondary">
-						<a class="nav-link text-white" href="#">${loginUser.userid}님 로그인 중...</a>
+					<li class="nav-item">
+						<a class="nav-link disabled float-left" href="${myctx}/user/mypage">${loginUser.nickname}</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="${myctx}/logout">Logout</a>
+						<a class="nav-link" href="${myctx}/user/logout" style="color: #6d72f4;">Logout</a>
 					</li>
 				</c:if>
 			</ul>

@@ -1,5 +1,6 @@
 package com.multi.matchingBoard;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -78,16 +79,42 @@ public class RoomController {
 		//UserVO u2=new UserVO();
 		//u2.setUserid("2222");
 		//u2.setNickname("cyon");
-		
+		UserVO loginUser =(UserVO) session.getAttribute("loginUser");
+		if(loginUser==null) {
+			return "redirect:/user/login";
+		}
+		String userid=loginUser.getUserid();
 		//해당 방의 인원 내용 가져오기
+		// roompeople 테이블에서 roomid에 해당하는 userid 목록 가져오기
+		List<String> userIds = rService.selectUserIdsInRoom(roomId);
+		boolean userinroom=rService.isUserInRoom(roomId, userid);
+		
+		if(!userinroom) {
+			if(userIds.size()<vo.getRmaxpeople()) {
+				 rService.insertIntoRoomPeople(roomId, userid);
+				 //유저 아이디 넣기
+				 userIds.add(userid);
+			}else {
+				m.addAttribute("msg","방이 가득 찼습니다.");
+				m.addAttribute("loc","javascript:history.back()");
+				return "message";
+			}
+		}
+	 
+	    // userIds를 이용해 Member 테이블의 정보를 가져와 UserVO에 저장하고, List<UserVO>에 추가
+	    List<UserVO> memberArr = new ArrayList<>();
+	    for (String userId : userIds) {
+	        UserVO user = rService.selectMemberByUserId(userId);
+	        memberArr.add(user);
+	    }
 		//List<UserVO> memberArr=Arrays.asList(u1, u2);
 		//*****수정확인 필요*****
-		List<UserVO> memberArr = this.rService.selectMemberAll(roomId);
-		for(UserVO user : memberArr) {
-			String userid = user.getUserid();
-			String nickname = user.getNickname();
-			//System.out.println("userid: " + userid + ", nickname: " + nickname);
-		}
+		//List<UserVO> memberArr = this.rService.selectMemberAll(roomId);
+		/*
+		 * for(UserVO user : memberArr) { String userid = user.getUserid(); String
+		 * nickname = user.getNickname(); //System.out.println("userid: " + userid +
+		 * ", nickname: " + nickname); }
+		 */
 		
 		m.addAttribute("room", vo);
 		session.setAttribute("memberArr",memberArr);
@@ -97,6 +124,36 @@ public class RoomController {
 		
 		return "matchingRoom/roomView";
 	}
+	
+	@PostMapping("/exitRoom/{roomId}")
+    public String exitRoom(@PathVariable("roomId") String roomId, HttpSession session, Model m) {
+    
+        // 로그인한 사용자 정보 가져오기
+        UserVO loginUser = (UserVO) session.getAttribute("loginUser");
+    
+        // 로그인한 사용자가 없으면 처리하지 않음.
+        if (loginUser == null) {
+            m.addAttribute("msg", "로그인한 사용자가 아닙니다.");
+            m.addAttribute("loc", "javascript:history.back()");
+            return "message";
+        }
+    
+        // 로그인한 사용자의 userId 가져오기
+        String userId = loginUser.getUserid();
+    
+        // roompeople 테이블에서 해당 사용자 삭제
+        try {
+            rService.removeFromRoomPeople(roomId, userId);
+            m.addAttribute("msg", "모임방 나가기 성공");
+            m.addAttribute("loc", "/matchingBoard/room/roomList");
+            return "message";
+        } catch (Exception e) {
+            m.addAttribute("msg", "모임방 나가기 실패");
+            m.addAttribute("loc", "javascript:history.back()");
+            return "message";
+        }
+    }
+	
 	
 	@GetMapping(value ="/popupCalendar")
 	public String popupCalendar(Model m, String rdatetime, String rplace) {

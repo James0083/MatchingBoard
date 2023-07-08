@@ -105,26 +105,45 @@ public class LoginController {
 	    
 	    SnsLoginVO snsLogin = socialservice.findSnsLoginByidentifier(identifier);
 	    System.out.println("snsLogin: " + snsLogin);
-	    
-	    // DB 연동
+	    UserVO user=(UserVO) session.getAttribute("loginUser");
+	    System.out.println("user : "+user);
+	   
 	    if(snsLogin == null){
-	        // 신규 사용자
-	        String userid = UUID.randomUUID().toString(); // UUID 생성은 신규 사용자일 때만 수행
-	        userservice.insertUser(userid);
-	        socialservice.saveSnsLogin(userid, type, identifier, refreshToken);
-	        UserVO loginUser = userservice.getUserById(userid); // 여기서 loginUser 가져오기
-	        System.out.println("New user created with userid: " + userid);
-	        session.setAttribute("loginUser", loginUser);
-	        System.out.println("New loginUser set in session: " + loginUser);
-	        return "user/callbackNaver";
+	    	if(user != null && user.getUserid() !=null) {
+	    		String userid=user.getUserid();
+	    		socialservice.saveSnsLogin(userid, type, identifier, refreshToken);
+	    		UserVO loginUser = userservice.getUserById(userid);
+	    		session.setAttribute("loginUser", loginUser);
+	    		System.out.println("현재 세션에 로그인되어있는 아이디: "+loginUser);
+	    		session.setAttribute("loginSnsType", type);
+	    		System.out.println("현재 연결된 SNS타입 : "+type);
+	    		System.out.println("네이버 연동에 성공하였습니다.");
+	    		
+	    		return "user/mypage";
+	    	}else{
+	    		String userid = UUID.randomUUID().toString(); 
+		        userservice.insertUser(userid);
+		        socialservice.saveSnsLogin(userid, type, identifier, refreshToken);
+		        UserVO loginUser = userservice.getUserById(userid);
+		        System.out.println("New user created with userid: " + userid);
+		        session.setAttribute("loginUser", loginUser);
+	    		System.out.println("현재 세션에 로그인되어있는 아이디: "+loginUser);
+	    		session.setAttribute("loginSnsType", type);
+	    		System.out.println("현재 연결된 SNS타입 : "+type);
+		        
+		        return "user/callbackNaver";
+	    	}
 	    } else {
-	        // 기존 사용자
-	        String userid = snsLogin.getUserid(); // 기존 사용자의 userid 가져오기
-	        UserVO loginUser = userservice.getUserById(userid); // 여기서 기존 사용자 정보 가져오기
+	        String userid = snsLogin.getUserid();
+	        UserVO loginUser = userservice.getUserById(userid);
 	        session.setAttribute("loginUser", loginUser);
-	        System.out.println("Existing loginUser set in session: " + session.getAttribute("loginUser"));
-	        return "redirect:/"; // 메인 페이지로 리다이렉션
+	        session.setAttribute("loginSnsType", snsLogin.getType());
+	        System.out.println("현재 세션에 로그인되어있는 아이디: "+loginUser);
+	        session.setAttribute("loginSnsType", type);
+    		System.out.println("현재 연결된 SNS타입 : "+type);
+	        return "redirect:/";
 	    }
+		
 	}
 	
 	@RequestMapping(value="/callbackKakao", method= {RequestMethod.GET, RequestMethod.POST})
@@ -145,23 +164,38 @@ public class LoginController {
 	    
 	    String type = "Kakao";
 	    SnsLoginVO snsLogin = socialservice.findSnsLoginByidentifier(identifier);
-	    // DB 연동
+	    UserVO user=(UserVO) session.getAttribute("loginUser");
 	    if(snsLogin == null){
-	    	String userid = UUID.randomUUID().toString(); // UUID 생성은 신규 사용자일 때만 수행
-	        userservice.insertUser(userid);
-	        socialservice.saveSnsLogin(userid, type, identifier, refreshToken);
-	        UserVO loginUser = userservice.getUserById(userid); // 여기서 loginUser 가져오기
-	        System.out.println("New user created with userid: " + userid);
-	        session.setAttribute("loginUser", loginUser);
-	        System.out.println("New loginUser set in session: " + loginUser);
-			return "user/callbackKakao";
+	    	if(user != null && user.getUserid() !=null) {
+	    		String userid=user.getUserid();
+	    		socialservice.saveSnsLogin(userid, type, identifier, refreshToken);
+	    		UserVO loginUser = userservice.getUserById(userid);
+	    		session.setAttribute("loginUser", loginUser);
+	    		System.out.println("현재 세션에 로그인되어있는 아이디: "+loginUser);
+	    		session.setAttribute("loginSnsType", type);
+	    		System.out.println("현재 연결된 SNS타입 : "+type);
+	    		System.out.println("카카오 연동에 성공하였습니다.");
+	    		return "user/mypage";
+	    	}else{
+	    		String userid = UUID.randomUUID().toString(); 
+		        userservice.insertUser(userid);
+		        socialservice.saveSnsLogin(userid, type, identifier, refreshToken);
+		        UserVO loginUser = userservice.getUserById(userid);
+		        System.out.println("New user created with userid: " + userid);
+		        session.setAttribute("loginUser", loginUser);
+		        System.out.println("현재 세션에 로그인되어있는 아이디: "+loginUser);
+		        session.setAttribute("loginSnsType", type);
+	    		System.out.println("현재 연결된 SNS타입 : "+type);
+		        return "user/callbackKakao";
+	    	}
 	    } else {
-	        // 기존 사용자
-	    	String userid = snsLogin.getUserid(); // 기존 사용자의 userid 가져오기
-	        UserVO loginUser = userservice.getUserById(userid); // 여기서 기존 사용자 정보 가져오기
+	        String userid = snsLogin.getUserid();
+	        UserVO loginUser = userservice.getUserById(userid);
 	        session.setAttribute("loginUser", loginUser);
-	        System.out.println("Existing loginUser set in session: " + session.getAttribute("loginUser"));
-	        return "redirect:/"; // 메인 페이지로 리다이렉션
+	        System.out.println("현재 세션에 로그인되어있는 아이디: "+loginUser);
+	        session.setAttribute("loginSnsType", type);
+    		System.out.println("현재 연결된 SNS타입 : "+type);
+	        return "redirect:/";
 	    }
 	}
 	
@@ -184,7 +218,6 @@ public class LoginController {
 	        conn.setRequestMethod("GET");
 	        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 	        
-	        // ���� �б�
 	        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 	        String inputLine;
 	        StringBuffer response = new StringBuffer();
@@ -217,7 +250,7 @@ public class LoginController {
 	
 	@RequestMapping(value = "/mypage")
 	public String connectSns(Model model, HttpSession session) throws Exception {
-		System.out.println("mypage에서 불러오기 성공");
+		System.out.println("mypage 로딩 성공");
 		Object userObj = session.getAttribute("loginUser");
 	    if (userObj == null) {
 	        // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉션
@@ -225,77 +258,23 @@ public class LoginController {
 	    }
 	    System.out.println("userObj :"+userObj);
 	    
-	    String authUrl = "";
-	    String identifier = "";
-	    String refreshToken = "";
-	    String type="";
-	    OAuth2AccessToken oauthToken;
-	    JsonElement jsonElement;
-	    JsonObject jsonObject;
-	    switch (type) {
-	        case "naver":
-	            authUrl = naverLoginBO.getAuthorizationUrl(session);
-	            model.addAttribute("connecturlNaver", authUrl);
-	            System.out.println("connecturlNaver: "+authUrl);
-	            // Naver 연동 처리 (이후에 identifier와 refreshToken 설정)
-	    	    //oauthToken = naverLoginBO.getAccessToken(session, code, state);
-	    	    //String NaverapiResult = naverLoginBO.getUserProfile(oauthToken);
-	    	    System.out.println(NaverapiResult);
-	    	    // Naver API JSON 정보 파싱
-	    	    jsonElement = JsonParser.parseString(NaverapiResult);
-	    	    jsonObject = jsonElement.getAsJsonObject();
-	    	    JsonObject response = jsonObject.getAsJsonObject("response");
-	    	    
-	    	    identifier = response.get("id").getAsString();
-	    	    //refreshToken = oauthToken.getRefreshToken();
-	    	    type = "Naver";
-	    	    System.out.println("버튼 입력성공: "+NaverapiResult);
-	            break;
-	        case "kakao":
-	            authUrl = kakaoLoginBO.getAuthorizationUrl(session);
-	            model.addAttribute("connecturlKakao", authUrl);
-	            System.out.println("connecturlKakao: "+authUrl);
-	            // Kakao 연동 처리 (이후에 identifier와 refreshToken 설정)
-	    		//oauthToken=kakaoLoginBO.getAccessToken(session, code, state);
-	    		//KakaoapiResult=kakaoLoginBO.getUserProfile(oauthToken);
-	    		System.out.println(KakaoapiResult);
-	    		//System.out.println(oauthToken);
-	    		
-	    		jsonElement = JsonParser.parseString(KakaoapiResult);
-	    	    jsonObject = jsonElement.getAsJsonObject();
-	    	    identifier = jsonObject.get("id").getAsString();
-	    	    //refreshToken = oauthToken.getRefreshToken();
-	    	    
-	    	    type = "Kakao";
-	    	    System.out.println("버튼 입력성공: "+KakaoapiResult);
-	            break;
-	        case "google":
-	        	googleOAuth2Parameters.set("access_type", "offline");
-	            googleOAuth2Parameters.set("approval_prompt", "force");
-	    		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
-	    		authUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
-	    		model.addAttribute("urlConnectSns", authUrl);
-	            // Google 연동 처리 (이후에 identifier와 refreshToken 설정)
-	            break;
-	    }
+	    String naverAuthUrl= naverLoginBO.getAuthorizationUrl(session);
+		model.addAttribute("connecturlNaver", naverAuthUrl);
+		
+		
+		String kakaoAuthUrl= kakaoLoginBO.getAuthorizationUrl(session);
+		model.addAttribute("connecturlKakao", kakaoAuthUrl);
+		
+		
+		googleOAuth2Parameters.set("access_type", "offline");
+        googleOAuth2Parameters.set("approval_prompt", "force");
+		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+		String googleAuthUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+		model.addAttribute("connecturlGoogle",googleAuthUrl);
+		
+		return "user/mypage";
 	    
 	    
-	    SnsLoginVO snsLogin = socialservice.findSnsLoginByidentifier(identifier);
-
-	    
-	    if (snsLogin == null) {
-	        // 신규 연동인 경우 DB에 연동 정보를 저장
-	        String userid = ((UserVO) userObj).getUserid(); // 현재 로그인된 사용자의 ID
-	        socialservice.saveSnsLogin(userid, type, identifier, refreshToken);
-	        System.out.println("연동 성공: "+userid);
-	        return "user/modify"; // 연동 성공 페이지로 리다이렉션
-	    } else {
-	        // 이미 연동되어 있는 경우, 로그인 상태 설정 후 메인 페이지로 리다이렉션
-	        String userid = snsLogin.getUserid(); // 기존 연동 사용자의 userid 가져오기
-	        UserVO loginUser = userservice.getUserById(userid); // 여기서 기존 사용자 정보 가져오기
-	        session.setAttribute("loginUser", loginUser);
-	        return "redirect:/"; // 메인 페이지로 리다이렉션
-	    }
 	}
 	
 	//로그아웃

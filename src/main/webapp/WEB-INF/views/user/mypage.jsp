@@ -114,7 +114,7 @@ tr:first-child td span {
 			</tr>
 			<tr>
 				<td>지역</td>
-				<td><b>${loginUser.area}</b></td>
+				<td><b>${loginUser.area_code}</b></td>
 			</tr>
 			<tr>
 				<td>선호 장르</td>
@@ -167,7 +167,7 @@ tr:first-child td span {
 				<td colspan="2">
 					<div>
 						<img class="ac_link_logo_img" src="../images/naver_icon.png">
-						<span> 연동정보 / 연동하기 </span>
+						<span> 연동정보 / <a href="${connecturlNaver}">연동하기</a> </span>
 					</div>
 			 	</td>
 			</tr>
@@ -185,7 +185,7 @@ tr:first-child td span {
 							</svg> -->
 <!-- 						</div> -->
 						<img class="ac_link_logo_img" src="../images/kakaoicon1.png">
-						<span> 연동정보 / 연동하기 </span>
+						<span> 연동정보 /<a href="${connecturlKakao}">연동하기</a> </span>
 					</div>
 				</td>
 			</tr>

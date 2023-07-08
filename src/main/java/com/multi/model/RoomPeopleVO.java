@@ -6,6 +6,5 @@ import lombok.Data;
 public class RoomPeopleVO {
 	private String userid;
 	private String roomid;
-	private String ratings;
 	
 }

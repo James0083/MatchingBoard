@@ -103,6 +103,9 @@ tr:first-child td span {
 .modal-backdrop {
     opacity:0.4 !important;
 }
+.table {
+	margin-top:20px;
+}
 </style>
 
 <script type="text/javascript">
@@ -156,6 +159,24 @@ tr:first-child td span {
  		window.location.href = '../../eval/memberEval';
 	}
 	
+	function exit(){
+		 var roomId = document.getElementById("roomId").value;
+
+		    // AJAX 요청
+		    $.ajax({
+		    	 url: '/matchingBoard/room/exitRoom/' + roomId,
+		    	    type: 'POST',
+		    	    success: function(response) {
+		    	        // 성공 시 처리
+		    	        window.location.href = '../../room/roomList';
+		    	    },
+		    	    error: function(error) {
+		    	        console.log(error);
+		    	        alert("방에서 나가는데 실패했습니다.");
+		    	    }
+		    });
+	}
+	
 	const go=function(mode){
 		//alert(mode);
 		if(mode=='del'){
@@ -167,6 +188,7 @@ tr:first-child td span {
 		}
 		frm.submit();
 	}
+ 
 </script>
 
 <div class="row" style="height: 700px;">
@@ -176,7 +198,7 @@ tr:first-child td span {
 			<c:if test="${loginUser.userid eq room.cheif}">
 			<!-- <button type="button" id="btnTitleEdit" class="float-right btn btn-sm btn-outline-secondary">편집하기</button> -->
 			<form name="frm" id="frm">
-				<input type="hidden" name="roomId" value="<c:out value="${roomId}"/>">
+				<input type="hidden" id="roomId" name="roomId" value="<c:out value="${roomId}"/>">
 				<button type="button" id="btnRoomEdit" class="float-right btn btn-sm btn-outline-secondary" 
 					style="margin: 0px 3px;" onclick="go('edit')">편집하기</button>
 				<button type="button" id="btnRoomDelete" class="float-right btn btn-sm btn-outline-danger" 
@@ -204,7 +226,7 @@ tr:first-child td span {
  				<c:forEach var="members" items="${memberArr}">
 					<div class="member_profile" style="display: inline-block;" data-toggle="modal" data-target="#login">
 						<img class="profile_img mt-3" src="../../images/search_test.png">
-						<div class="profile_name">${members.nickname}</div>
+						<!--<div class="profile_name">${members.nickname}</div>  -->
 					</div>
 				</c:forEach>
 				
@@ -249,6 +271,7 @@ tr:first-child td span {
 				</tr>
 				<tr>
 					<td colspan="3" class="text-center">
+						<button type="button" class="btn btn-success" onclick="exit()">모임방 나가기</button>
 						<button type="button" id="btnEval" class="btn btn-success" onclick="evaluation()">후기 평가</button>
 					</td>
 				</tr>
@@ -303,7 +326,7 @@ tr:first-child td span {
 				</tr>
 				<tr>
 					<td>지역</td>
-					<td><b id="modal_area">${loginUser.area}</b></td>
+					<td><b id="modal_area">${loginUser.area_code}</b></td>
 				</tr>
 				<tr>
 					<td>선호 장르</td>
@@ -320,9 +343,9 @@ tr:first-child td span {
 					<td colspan="2" style="text-align: center;">
 						<table class="tb-attend table table-sm table-borderless " style="margin:0 auto;">
 							<tr>
-								<td><div class="attendance" id="modal_attend" style="margin:0 auto;">0${loginUser.attend}</div></td>
-								<td><div class="attendance" id="modal_late" style="margin:0 auto;">0${loginUser.late}</div></td>
-								<td><div class="attendance" id="modal_absent" style="margin:0 auto;">0${loginUser.absent}</div></td>
+								<td><div class="attendance" id="modal_attend" style="margin:0 auto;">${loginUser.attend}</div></td>
+								<td><div class="attendance" id="modal_late" style="margin:0 auto;">${loginUser.late}</div></td>
+								<td><div class="attendance" id="modal_absent" style="margin:0 auto;">${loginUser.absent}</div></td>
 							</tr>
 							<tr>
 								<td style="text-align: center">출석</td>

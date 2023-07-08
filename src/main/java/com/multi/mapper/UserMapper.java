@@ -1,5 +1,7 @@
 package com.multi.mapper;
 
+import java.util.List;
+
 import com.multi.model.UserVO;
 
 public interface UserMapper {
@@ -8,4 +10,6 @@ public interface UserMapper {
 	void modifyUser(UserVO user);
 	
 	UserVO getUserById(String userid);
+	
+	List<String> getUserSocialConnections(String userid);
 }	

@@ -1,15 +1,16 @@
 package com.multi.matchingBoard;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.social.oauth2.GrantType;
@@ -271,6 +272,14 @@ public class LoginController {
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
 		String googleAuthUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
 		model.addAttribute("connecturlGoogle",googleAuthUrl);
+		
+		String userid = ((UserVO) userObj).getUserid();
+		System.out.println("userid 잘 들어 왔는지? :"+userid);
+	    List<String> userConnections = userservice.getUserSocialConnections(userid);
+	    System.out.println("잘 연결 되었는지?: "+userConnections);
+	    
+	    model.addAttribute("connectedNaver", userConnections.contains("Naver"));
+	    model.addAttribute("connectedKakao", userConnections.contains("Kakao"));
 		
 		return "user/mypage";
 	    

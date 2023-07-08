@@ -20,7 +20,7 @@ public interface BoardSearchService {
 	//좋아요
 	public int updateLike(String uuid, String roomid);
 	
-	
+	public List<String> getUserWishList(String userid);
 	
 	
 

@@ -27,4 +27,6 @@ public interface BoardSearchMapper {
 	public int likeinsert(WishListVO vo);
 	
 	public int likedelete(WishListVO vo);
+	
+	public List<String> getUserWishList(String userid);
 }

@@ -1,5 +1,7 @@
 package com.multi.matchingBoard;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -11,10 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.multi.model.PageMakerVO;
 import com.multi.model.PagingVO;
+import com.multi.model.RoomVO;
 import com.multi.model.UserVO;
 import com.multi.service.BoardSearchService;
 
@@ -30,14 +32,21 @@ public class SearchController {
 	private BoardSearchService bservice;
 	
 	@GetMapping(value="/roomList")
-	public String boardSearch(Model model, PagingVO pagingvo) {
+	public String boardSearch(Model model, HttpSession session, PagingVO pagingvo) {
 		
-		 model.addAttribute("list", bservice.getListPaging(pagingvo));
-		 
-		 int total = bservice.getTotal(pagingvo);
-		 PageMakerVO pageMake = new PageMakerVO(pagingvo, total);
-		 model.addAttribute("pageMaker", pageMake);
+//		List<RoomVO> roomlist = bservice.getListPaging(pagingvo);
+		model.addAttribute("list", bservice.getListPaging(pagingvo));
+//		log.info("roomlist : "+ roomlist.toString());
 		
+		int total = bservice.getTotal(pagingvo);
+		PageMakerVO pageMake = new PageMakerVO(pagingvo, total);
+		model.addAttribute("pageMaker", pageMake);
+		
+		UserVO user = (UserVO)session.getAttribute("loginUser");
+		if(user!=null) {
+			List<String> likeRoomIds = bservice.getUserWishList(user.getUserid());
+			model.addAttribute("likeRoomIds", likeRoomIds);
+		}
 		return "search/boardSearch";
 	}
 

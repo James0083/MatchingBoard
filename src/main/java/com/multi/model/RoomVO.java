@@ -1,7 +1,5 @@
 package com.multi.model;
 
-import java.sql.Timestamp;
-
 import lombok.Data;
 
 @Data
@@ -20,10 +18,6 @@ public class RoomVO {
 //	private Date rdate;
 //	private Time rtime;
 	private String rdatetime;
-	
-	//스키마 바꾸지 않아도 됨. 임시저장용 변수.
-	private String wishroomid;
-	private String uuid;
 	
 	
 	public RoomVO(String roomid, String rname, String rplace, int rmaxpeople, String rgenre, String rgame, String rstr,

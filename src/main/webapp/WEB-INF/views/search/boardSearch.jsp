@@ -194,7 +194,7 @@ img {
 		<select name="type">
 			<option value="" <c:out value="${pageMaker.pagingvo.type == null?'selected':'' }"/>>--</option>
 			<option value="T" <c:out value="${pageMaker.pagingvo.type eq 'T'?'selected':'' }"/>>제목</option>
-			<option value="C" <c:out value="${pageMaker.pagingvo.type eq 'C'?'selected':'' }"/>>지역</option>
+			<option value="P" <c:out value="${pageMaker.pagingvo.type eq 'P'?'selected':'' }"/>>지역</option>
 			<option value="S" <c:out value="${pageMaker.pagingvo.type eq 'S'?'selected':'' }"/>>내용</option>
 			<option value="TS" <c:out value="${pageMaker.pagingvo.type eq 'TS'?'selected':'' }"/>>제목 + 내용</option>
 		</select>
@@ -248,13 +248,22 @@ img {
 									style="float: right;">
 									<div class="btn-group">
 										<!-- 좋아요 버튼 -->
-								<!--  		${list.wishroomid} / ${list.roomid }/${list.uuid} /${loginUser.userid} -->
-										<c:if test="${list.wishroomid eq list.roomid and list.uuid eq loginUser.userid }">
-										 <button class="btn-like done" data-id="${list.roomid}">❤️</button>
+<%-- 								 		${list.wishroomid} / ${list.roomid }/${list.uuid} /${loginUser.userid} --%>
+								 		<button class="btn-like 
+											<c:forEach var="likeRoomId" items="${likeRoomIds}">
+												<c:if test="${list.roomid eq likeRoomId}">
+													done
+												</c:if>
+											</c:forEach>
+										" data-id="${list.roomid}">❤️</button>
+								<!--
+										<c:if test="${list.roomid eq likeRoomId}">
+										<button class="btn-like done" data-id="${list.roomid}">❤️</button>
 										</c:if>
-										<c:if test="${list.wishroomid ne list.roomid or list.uuid ne loginUser.userid }">
+										<c:if test="${list.roomid ne likeRoomIds}">
 										<button class="btn-like" data-id="${list.roomid}">❤️</button>
 										</c:if>
+								 -->
 									</div>
 								</div>
 							</div>
@@ -375,10 +384,10 @@ img {
             return false;
         }
         
-        if(!keyword){
-            alert("키워드를 입력하세요.");
-            return false;
-        }        
+//         if(!keyword){
+//             alert("키워드를 입력하세요.");
+//             return false;
+//         }        
         
         moveForm.find("input[name='type']").val(type);
         moveForm.find("input[name='keyword']").val(keyword);

@@ -39,9 +39,9 @@ td:last-child {
 	background-color: #de352e;
 }
 
-tr:first-child td span {
+tr:first-child td span.prograss-text {
 	font-size: 0.8em;
-	width: 4.5em;
+	width: 4em;
 	margin-top: 0.5em;
 	display: inline-block;
 }
@@ -50,6 +50,7 @@ tr:first-child td span {
 	appearance: none;
 	height: 0.8em;
 	display: inline-block;
+	width: 60%;
 }
 
 .progress::-webkit-progress-bar {
@@ -86,27 +87,33 @@ tr:first-child td span {
 	<p>회원 인증 페이지 - 로그인 해야 들어올 수 있는 페이지입니다</p>
 	<div class="row">
 	<div class="col-4" style="padding: 10px;">
-		<table border="0" class="table mt-3 text-center" style="width:100%;">
+		<table class="table mt-3 text-center" style="width:100%;">
 			<tr>
-				<%-- <td width="25%"><img src="${loginUser.profile_img}"></td> --%>
-				<td width="25%"><img id="profile_img" src="../images/profile_example.png"></td>
+				<td width="25%">
+				<c:if test="${loginUser.profile_img ne null}">
+					<img id="profile_img" src="../images/${loginUser.profile_img}">
+				</c:if>
+				<c:if test="${loginUser.profile_img eq null}">
+					<img id="profile_img" src="../images/profile_example.png">
+				</c:if>
+				</td>
 				<td width="75%">
 					<div style="margin: auto 0;">
-					<%--
-						<a href=""><img src="../images/grade1.png"></a>
-						<b>${loginUser.nickname}</b>
-					--%>
+					
+						<a href=""><img src="../images/grades/grade${loginUser.grade}.png" style="width:1.2em; height:1.2em;"></a>
+						<b style="color: #505050;">${loginUser.nickname}</b>
+						<%--
 						<a href=""><img src="../images/grades/grade1.png" style="width:1.2em; height:1.2em;"></a>
 						<b style="color: #505050;">유저 닉네임</b>
-						
+						--%>
 						<br>
-						<span>경험치</span>
-						<span>
+						<span class="prograss-text">경험치</span>
+						<span class="prograss-span">
 							<progress class="progress" value="${loginUser.exp}" max="${loginUser.grade *100}"></progress>
 						</span>
 						<br>
-						<span>매너점수</span>
-						<span>
+						<span class="prograss-text">매너점수</span>
+						<span class="prograss-span">
 							<progress class="progress" value="${loginUser.manner}" max="100"></progress>
 						</span>
 					</div>

@@ -40,8 +40,8 @@ public class BoardSearchServiceImpl implements BoardSearchService{
 	
 	//좋아요
 	@Override
-	public int updateLike(String uuid, String roomid) {
-		WishListVO vo = new WishListVO(uuid, roomid);
+	public int updateLike(String userid, String roomid) {
+		WishListVO vo = new WishListVO(userid, roomid);
 		System.out.println("WishListVO = " + vo);
 		
 		int count = mapper.likecount(vo);

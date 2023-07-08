@@ -194,7 +194,7 @@ tr:first-child td span {
 <div class="row" style="height: 700px;">
 	<div class="container col-7" id="room_info" style="margin-left: 15px">
 		<div style="vertical-align: middle;">
-			<h3 style="display: inline-block;">${room.rname}</h3>
+			<h3 class="mt-3" style="display: inline-block;">${room.rname}</h3>
 			<c:if test="${loginUser.userid eq room.cheif}">
 			<!-- <button type="button" id="btnTitleEdit" class="float-right btn btn-sm btn-outline-secondary">편집하기</button> -->
 			<form name="frm" id="frm">

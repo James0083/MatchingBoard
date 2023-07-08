@@ -16,13 +16,11 @@
 				$('#rgenre').focus();
 				return false;
 			}
-			/*
 			if (!$('#rplace').val()) {
 				alert('장소를 입력하세요');
 				croomf.rplace.focus();
 				return false;
 			}
-			*/
 			if (!$('#rdate').val()) {
 				alert('날짜를 입력하세요');
 				$('#rdate').focus();
@@ -34,7 +32,7 @@
 				return false;
 			}
 			$('#rdatetime').attr('value',$('#rdate').val()+"T"+$('#rtime').val());
-			alert($('#rdate').val()+" + "+$('#rtime').val()+"==>"+$('#rdatetime').val());
+// 			alert($('#rdate').val()+" + "+$('#rtime').val()+"==>"+$('#rdatetime').val());
 			//alert($('#rmaxpeople').val()+" , "+$('#rgenre').val()+" , "+$('#rstr').val());
 			
 		})//submit------------------

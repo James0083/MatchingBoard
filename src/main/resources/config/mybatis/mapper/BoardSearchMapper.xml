@@ -12,17 +12,7 @@
 	<!-- 모임방 목록 - 페이징 구현 / -->
 		<select id="getListPaging" resultType="Room">   
     <![CDATA[
-        
-        select rownum rnum, roomid, rname, rplace, rmaxpeople, rgenre, rgame, rstr, rdatetime,  wishroomid, uuid
-        from(      
-                select /*+INDEX_DESC(room room_pk) */ rownum  as rnum,a.roomid, a.rname, a.rplace, a.rmaxpeople, a.rgenre, a.rgame, a.rstr, a.rdatetime , b.roomid wishroomid, b.uuid uuid               
-                from room a left outer join wishlist b 
-                on a.roomid = b.roomid
-                where rownum <= #{pageNum} * #{amount} 
-      ]]>          
-    	 			 <if test="keyword != null">
-    	 			 		<include refid="search_type"></include>
-      			  	</if>   
+          
         select rownum rnum, roomid, rname, rplace, rmaxpeople, rgenre, rgame, rstr, rdatetime
         from(      
                 select /*+INDEX_DESC(room room_pk) */ rownum  as rnum,roomid, rname, rplace, rmaxpeople, rgenre, rgame, rstr, rdatetime             

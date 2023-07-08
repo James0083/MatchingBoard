@@ -20,6 +20,11 @@
 			fgame1=#{fgame1}, fgame2=#{fgame2}, fgame3=#{fgame3}
 		where userid=#{userid}
 	</update>
-
+	
+	<select id="getUserSocialConnections" resultType="string">
+        SELECT type 
+        FROM social 
+        WHERE userid = #{userId}
+    </select>
 	
 </mapper>

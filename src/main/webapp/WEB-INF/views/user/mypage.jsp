@@ -167,7 +167,14 @@ tr:first-child td span {
 				<td colspan="2">
 					<div>
 						<img class="ac_link_logo_img" src="../images/naver_icon.png">
-						<span> 연동정보 / <a href="${connecturlNaver}">연동하기</a> </span>
+						    <c:choose>
+						        <c:when test="${connectedNaver}">
+						            연동 완료
+						        </c:when>
+						        <c:otherwise>
+						            <a href="${connecturlNaver}">연동하기</a>
+						        </c:otherwise>
+						    </c:choose>
 					</div>
 			 	</td>
 			</tr>
@@ -185,7 +192,14 @@ tr:first-child td span {
 							</svg> -->
 <!-- 						</div> -->
 						<img class="ac_link_logo_img" src="../images/kakaoicon1.png">
-						<span> 연동정보 /<a href="${connecturlKakao}">연동하기</a> </span>
+						    <c:choose>
+						        <c:when test="${connectedKakao}">
+						            연동 완료
+						        </c:when>
+						        <c:otherwise>
+						            <a href="${connecturlKakao}">연동하기</a>
+						        </c:otherwise>
+						    </c:choose>
 					</div>
 				</td>
 			</tr>

@@ -15,4 +15,6 @@ public interface UserService {
 	/*boolean updateUser(MultipartFile profile_img, String nickname, List<String> genres, List<String> games,
 			String dongCode, String leeCode);*/
 	UserVO getUserById(String userid);
+	
+	List<String> getUserSocialConnections(String userid);
 }

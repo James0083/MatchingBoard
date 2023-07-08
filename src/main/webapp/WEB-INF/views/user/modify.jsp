@@ -207,7 +207,7 @@ td:last-child {
 			<tr>
 				<td><label for="sido_code">지역</label></td>
 				<td>
-					<b id="area_text">[---]</b>
+					<b id="area_text">[--]</b>
 					<input type="text" readonly value="${loginUser.area_code}">
 					<select id="sido_code" name="sido_code">
 						<option>선택</option>

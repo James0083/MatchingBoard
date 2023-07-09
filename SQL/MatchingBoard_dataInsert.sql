@@ -169,25 +169,25 @@ UPDATE SHOP set MAPX=37.4832269, MAPY=126.9296075 where SHOPID='red009';
 UPDATE SHOP set MAPX=37.4837672, MAPY=126.9275759 where SHOPID='plon001';
 UPDATE SHOP set MAPX=37.4832581, MAPY=126.9290644 where SHOPID='kdom001';
 
-INSERT INTO member(userid, nickname, area, grade, exp, manner, attend, late, absent)
+INSERT INTO member(userid, nickname, area_code, grade, exp, manner, attend, late, absent)
 VALUES ('admin123456', 'admin', 11110101, 5, 95, 98.7, 12, 12, 12);
 
-INSERT INTO member(userid, nickname, area, grade, exp, manner, 
+INSERT INTO member(userid, nickname, area_code, grade, exp, manner, 
     fgenre1, fgenre2, fgenre3, fgame1, fgame2, fgame3, attend, late, absent)
 VALUES ('6f112194-8ba7-4e6d-be9c-f03f77a74c13', 'micky', 11680101, 1, 30, 78.6,
     'IQ', 'stratgy', 'reasoning', '레지스탕스:아발론', '뱅', '달무티', 3, 1, 0);
 
-INSERT INTO member(userid, nickname, area, grade, exp, manner, 
+INSERT INTO member(userid, nickname, area_code, grade, exp, manner, 
     fgenre1, fgenre2, fgame1, fgame2, attend, late, absent)
 VALUES ('4c6c7f1e-4f14-48fa-81ec-3eac09daba3a', 'lizy', 11680107, 2, 45, 83.4,
     'cooperation', 'negotiation', '보난자', '하나비', 8, 2, 0);
     
-INSERT INTO member(userid, nickname, area, grade, exp, manner, 
+INSERT INTO member(userid, nickname, area_code, grade, exp, manner, 
     fgenre1, fgenre2, fgame1, fgame2, attend, late, absent)
 VALUES ('7f565919-bf30-41c6-b0c4-4d11d7edee53', 'scott', 41171101, 1, 55, 91.6,
     'agility', 'skill', '우노', '할리갈리', 4, 1, 1);
 
-INSERT INTO member(userid, nickname, area, grade, exp, manner, 
+INSERT INTO member(userid, nickname, area_code, grade, exp, manner, 
     fgenre1, fgenre2, fgenre3, fgame1, fgame2, fgame3, attend, late, absent)
 VALUES ('22212851-7840-4b28-9b88-7d05a1daa876', 'james', 41171101, 1, 70, 81.2,
     'IQ', 'psychology', 'reasoning', '레지스탕스:아발론', '뱅', '달무티', 2, 1, 0);

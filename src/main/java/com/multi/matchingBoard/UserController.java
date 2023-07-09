@@ -40,16 +40,16 @@ public class UserController {
 	}
 	@PostMapping(value="/submitUserInfo")
 	@ResponseBody
-	public String modifyuser(Model model, HttpSession session,@RequestParam("profile_img") MultipartFile profile_img, 
+	public String modifyuser(Model model, HttpSession session,@RequestParam(value="profile_img", required=false) MultipartFile profile_img, 
 			@RequestParam("nickname")String nickname,@RequestParam("genres") List<String> genres,@RequestParam("games") List<String> games 
-			,@RequestParam("dong_code") String dongCode,@RequestParam("lee_code") String leeCode ) {
+			,@RequestParam("dong_code") String dongCode, @RequestParam("area_text") String area_text) {
 		log.info(genres);
 		log.info(games);
 		UserVO loginUser = (UserVO)session.getAttribute("loginUser");
 	    String userid = loginUser.getUserid();
 	    log.info("User ID from session: " + userid);
 		
-		boolean isSuccess = userService.modifyUser(userid,profile_img, nickname, genres, games, dongCode, leeCode);
+		boolean isSuccess = userService.modifyUser(userid, profile_img, nickname, genres, games, dongCode, area_text);
         
         String message = isSuccess ? "success" : "fail";
         // String location = isSuccess ? "/matchingBoard": "javascript:history.back()";

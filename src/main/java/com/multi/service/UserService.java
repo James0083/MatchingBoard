@@ -10,7 +10,7 @@ public interface UserService {
 	void insertUser(String uuid);
 
 	boolean modifyUser(String userid,MultipartFile profile_img, String nickname, List<String> genres, List<String> games,
-			String dongCode, String leeCode);
+			String dongCode, String area_text);
 	
 	/*boolean updateUser(MultipartFile profile_img, String nickname, List<String> genres, List<String> games,
 			String dongCode, String leeCode);*/

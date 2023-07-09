@@ -16,7 +16,7 @@
 	
 	<update id="modifyUser" parameterType="User">
 		update Member
-		set Profile_img=#{profile_img}, nickname=#{nickname}, area=#{area_code}, fgenre1=#{fgenre1},fgenre2=#{fgenre2},fgenre3=#{fgenre3},
+		set Profile_img=#{profile_img}, nickname=#{nickname}, area_code=#{area_code}, area_text=#{area_text}, fgenre1=#{fgenre1},fgenre2=#{fgenre2},fgenre3=#{fgenre3},
 			fgame1=#{fgame1}, fgame2=#{fgame2}, fgame3=#{fgame3}
 		where userid=#{userid}
 	</update>

@@ -39,8 +39,8 @@ public class UserServiceImpl implements UserService {
 	
 
 	@Override
-	public boolean modifyUser(String userid,MultipartFile profile_img, String nickname, List<String> genres, List<String> games,
-			String dongCode, String leeCode) {
+	public boolean modifyUser(String userid, MultipartFile profile_img, String nickname, List<String> genres, List<String> games,
+			String dongCode, String area_text) {
 		UserVO user = userMapper.getUserById(userid);
 		
 		 if (user == null) {
@@ -50,14 +50,14 @@ public class UserServiceImpl implements UserService {
 		        return false; // user가 null이므로 종료
 		    }
 		
-		if (!profile_img.isEmpty()) {
+		if (profile_img!=null && !profile_img.isEmpty()) {
             String uploadDirectory = servletContext.getRealPath("/resources/profileimg_upload");
             File directory = new File(uploadDirectory);
             if (!directory.exists()) {
                 directory.mkdirs();
             }
             UUID uid = UUID.randomUUID();
-            String fname = uid.toString() + profile_img.getOriginalFilename();
+            String fname = uid.toString() + "_" + profile_img.getOriginalFilename();
             user.setProfile_img(fname);
             try {
             	profile_img.transferTo(new File(uploadDirectory, fname));
@@ -71,9 +71,9 @@ public class UserServiceImpl implements UserService {
         user.setNickname(nickname);
         
         // 지역 코드 설정
-        String area = (!"선택".equals(leeCode)) ? leeCode : dongCode;
-        int area_code = Integer.parseInt(area);
+        int area_code = Integer.parseInt(dongCode);
         user.setArea_code(area_code);
+        user.setArea_text(area_text);
 
         // 장르 및 게임 설정
         for (int i = 0; i < 3; i++) {

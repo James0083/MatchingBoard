@@ -113,15 +113,8 @@
 	color: white;
 }
 
-.modal-content {
-	display: flex;
-	flex-wrap: wrap;
-}
-
-.modal-content .game-item {
-	flex-basis: 33%;
-	box-sizing: border-box;
-	padding: 5px;
+label{
+	margin: 0;
 }
 
 #m_body {
@@ -175,7 +168,7 @@ td:last-child {
 </style>
 
 
-<div class="user_modify_page">
+<div class="user_modify_page mt-3 mb-3">
 	<h1>정보 수정</h1>
 	<form id="userForm" action="submitUserInfo" method="post" enctype="multipart/form-data">
 		<table class="table mt-3" style="width:80%; margin:auto;">
@@ -185,12 +178,12 @@ td:last-child {
 				</td>
 				<td width="75%">
 					<c:if test="${loginUser.profile_img ne null}">
-						<img class="profile_img_preview" id="preview" src="../images/${loginUser.profile_img}">
+						<img class="profile_img_preview" id="preview" src="../resources/profileimg_upload/${loginUser.profile_img}">
 					</c:if>
 					<c:if test="${loginUser.profile_img eq null}">
 						<img class="profile_img_preview" id="preview" src="../images/profile_example.png">
 					</c:if>
-					<input type="file" id="profile_img" name="profile_img" onchange="readImg(this);">
+					<input type="file" id="profile_img" name="profile_img" onchange="readImg(this);" accept="image/*">
 				</td>
 			</tr>
 			<tr>
@@ -207,17 +200,23 @@ td:last-child {
 			<tr>
 				<td><label for="sido_code">지역</label></td>
 				<td>
-					<b id="area_text">[--]</b>
-					<input type="text" readonly value="${loginUser.area_code}">
-					<select id="sido_code" name="sido_code">
-						<option>선택</option>
-					</select>
-					<select id="sigoon_code" name="sigoon_code">
-						<option>선택</option>
-					</select>
-					<select id="dong_code" name="dong_code">
-						<option>선택</option>
-					</select>
+					<b id="area_text_bold">${loginUser.area_text}</b>
+					<input type="hidden" name="area_text" id="area_text" readonly value="${loginUser.area_text}">
+					<input type="hidden" name="area_code" id="area_code" readonly value="${loginUser.area_code}">
+					<button type="button" class="btn btn-sm btn-secondary" onclick="openAreaSelect()" style="margin:0em 1em;">지역 재설정</button>
+					
+					<div id="select_area" style="display: none; margin: 1em;">
+						<select id="sido_code" name="sido_code">
+							<option>선택</option>
+						</select>
+						<select id="sigoon_code" name="sigoon_code">
+							<option>선택</option>
+						</select>
+						<select id="dong_code" name="dong_code">
+							<option>선택</option>
+						</select>
+						<button type="button" class="btn btn-sm btn-secondary" onclick="doneAreaSelect()" style="margin:0em 1em;">완료</button>
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -268,7 +267,7 @@ td:last-child {
 			<div class="m_body" id="m_body">
 				<c:forEach var="game" items="${gameList}">
 					<div>
-						<input type="checkbox" name="games" value="${game}" onclick="count_check_game(this)">${game}
+<%-- 						<input type="checkbox" name="games" value="${game}" onclick="count_check_game(this)">${game} --%>
 					</div>
 				</c:forEach>
 			</div>
@@ -281,9 +280,8 @@ td:last-child {
 
 
 	<br>
-	<br>
 	<button class="btn btn-success" type="button" id="usermodify" onclick="submitForm()">수정하기</button>
-	<button class="btn btn-dark" type="button" id="testSubmit">반환값 테스트</button>
+	<button class="btn btn-dark" type="button" id="testSubmit" style="display: none;">반환값 테스트</button>
 	</form>
 </div>
 
@@ -334,7 +332,29 @@ td:last-child {
 		
 	$.support.cors = true;
 
+	var area_kor_full_name = new Array(3);
+	
 	$(function() {
+		//기존 설정 띄우기
+		
+// 		$('#area_text_bold').text(area_kor_full_name.join(" "));
+		
+		for(let ge=1 ; ge<9 ; ge++){
+			let geid='#genre'+ge;
+			let geid_value=$(geid).val();
+			if('${loginUser.fgenre1}' == geid_value || '${loginUser.fgenre2}' == geid_value || '${loginUser.fgenre3}' == geid_value){
+				console.log(geid_value);
+				$(geid).prop("checked", true);
+			}
+		}
+
+		const fav_games = [];
+		if(${loginUser.fgame1 ne null}) fav_games.push("${loginUser.fgame1}");
+		if(${loginUser.fgame2 ne null}) fav_games.push("${loginUser.fgame2}");
+		if(${loginUser.fgame3 ne null}) fav_games.push("${loginUser.fgame3}");
+		$("#selectedGames").text(fav_games.join(", "));
+//-----------------------
+		
 		$.ajax({
 			type : "get",
 			url : "https://api.vworld.kr/req/data?key=E4041AA7-D585-39C3-9DC7-A5B6EA4C7B00&domain=http://localhost:9090/matchingboard/user/modify.jsp&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADSIDO_INFO",
@@ -350,11 +370,13 @@ td:last-child {
 							let regionName = f.properties.ctp_kor_nm;
 							console.log(regionCode)
 							console.log(regionName)
-							// html += '<option value="' + regionCode + '">' + regionName + '</option>'
-							html += `<option value="\${regionCode}">\${regionName}</option>`
+							html += '<option value="' + regionCode + '">' + regionName + '</option>'
+							//html += `<option value="\${regionCode}">\${regionName}</option>`
 						})
 
 				$('#sido_code').html(html);
+				$('#sigoon_code').html('<option>선택</option>');
+				$('#dong_code').html('<option>선택</option>');
 
 			},
 			error : function(xhr, stat, err) {
@@ -363,6 +385,13 @@ td:last-child {
 
 		$(document).on("change","#sido_code",function() {
 			let thisVal = $(this).val();
+			$('#area_code').val(thisVal);
+			area_kor_full_name[0]=$("#sido_code option:checked").text();
+			area_kor_full_name[1]=null;
+			area_kor_full_name[2]=null;
+// 			$('#area_text_bold').text(area_kor_full_name.join(" "));
+// 			$('#area_text').val(area_kor_full_name.join(" "));
+			
 			$.ajax({
 				type : "get",
 				url : "https://api.vworld.kr/req/data?key=E4041AA7-D585-39C3-9DC7-A5B6EA4C7B00&domain=http://localhost:9090/matchingboard/user/modify.jsp&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADSIGG_INFO",
@@ -376,9 +405,11 @@ td:last-child {
 								console.log(f.properties)
 								let regionCode = f.properties.sig_cd;
 								let regionName = f.properties.sig_kor_nm;
-								html += `<option value="\${regionCode}">\${regionName}</option>`
+								html += '<option value="' + regionCode + '">' + regionName + '</option>'
+								//html += `<option value="\${regionCode}">\${regionName}</option>`
 							})
 					$('#sigoon_code').html(html);
+					$('#dong_code').html('<option>선택</option>');
 				},
 				error : function(xhr, stat, err) {
 				}
@@ -387,7 +418,12 @@ td:last-child {
 
 		$(document).on("change","#sigoon_code",function() {
 			let thisVal = $(this).val();
-
+			$('#area_code').val(thisVal);
+			area_kor_full_name[1]=$("#sigoon_code option:checked").text();
+			area_kor_full_name[2]=null;
+// 			$('#area_text_bold').text(area_kor_full_name.join(" "));
+// 			$('#area_text').val(area_kor_full_name.join(" "));
+			
 			$.ajax({
 				type : "get",
 				url : "https://api.vworld.kr/req/data?key=E4041AA7-D585-39C3-9DC7-A5B6EA4C7B00&domain=http://localhost:9090/matchingboard/user/modify.jsp&service=data&version=2.0&request=getfeature&format=json&size=1000&page=1&geometry=false&attribute=true&crs=EPSG:3857&geomfilter=BOX(13663271.680031825,3894007.9689600193,14817776.555251127,4688953.0631258525)&data=LT_C_ADEMD_INFO",
@@ -400,14 +436,22 @@ td:last-child {
 								console.log(f.properties)
 								let regionCode = f.properties.emd_cd;
 								let regionName = f.properties.emd_kor_nm;
-								html += `<option value="\${regionCode}">\${regionName}</option>`
+								html += '<option value="' + regionCode + '">' + regionName + '</option>'
+								//html += `<option value="\${regionCode}">\${regionName}</option>`
 							})
 					$('#dong_code').html(html);
-
 				},
 				error : function(xhr, stat, err) {
 				}
 			});
+		});
+		
+		$(document).on("change","#dong_code",function() {
+			let thisVal = $(this).val();
+			$('#area_code').val(thisVal);
+			area_kor_full_name[2]=$("#dong_code option:checked").text();
+// 			$('#area_text_bold').text(area_kor_full_name.join(" "));
+// 			$('#area_text').val(area_kor_full_name.join(" "));
 		});
 
 	});
@@ -458,10 +502,19 @@ td:last-child {
 			var div = document.createElement("div");
 			checkBox.type = "checkbox";
 			checkBox.name = "game";
+			checkBox.id=gameList[i];
 			checkBox.value = gameList[i];
 			checkBox.onclick = function() { count_check_game(this); };
 			label.appendChild(document.createTextNode(gameList[i]));
+			label.htmlFor = gameList[i];
 			div.appendChild(checkBox);
+// 			if(${loginUser.fgame1 ne null} && ${loginUser.fgame1 eq gameList[i]}){
+// 				checkBox.setAttribute("checked", true);
+// 			}else if(${loginUser.fgame2 ne null} && ${loginUser.fgame2 eq gameList[i]}) {
+// 				checkBox.setAttribute("checked", true);
+// 			}else if(${loginUser.fgame3 ne null} && ${loginUser.fgame3 eq gameList[i]}) {
+// 				checkBox.setAttribute("checked", true);
+// 			}
 			div.appendChild(label);
 			document.getElementById("m_body").appendChild(div);
 		}
@@ -489,14 +542,27 @@ td:last-child {
 		// 선택한 게임을 '#selectedGames' 요소에 표시
 		$("#selectedGames").empty();
 		for (var i = 0; i < checkedGames.length; i++) {
-			$("#selectedGames").append(
-					'<p>' + checkedGames[i] + '</p>');
+			if(i>0) $("#selectedGames").append(', ');
+			$("#selectedGames").append('<span>' + checkedGames[i] + '</span>');
 		}
 
 		// 모달 닫기
 		document.getElementById("modal").classList.remove("show");
 	});
 		
+// 지역선택===========================
+	function openAreaSelect() {
+		// 숨겨진 선택 오픈
+		$('#select_area').css("display", "block");
+	}
+
+	function doneAreaSelect(){
+		$('#area_text').val(area_kor_full_name.join(" "));
+		$('#area_text_bold').text(area_kor_full_name.join(" "));
+		$('#select_area').css("display", "none");
+	}
+	
+	
 	function submitForm() {
 		var formData = new FormData();
 		
@@ -509,12 +575,14 @@ td:last-child {
 		formData.append("nickname", nickname);
 		
 		// 시도, 시군구, 동, 리 코드
-		var sidoCode = document.getElementById("sido_code").value;
-		var sigoonCode = document.getElementById("sigoon_code").value;
-		var dongCode = document.getElementById("dong_code").value;
-		formData.append("sido_code", sidoCode);
-		formData.append("sigoon_code", sigoonCode);
+// 		var sidoCode = document.getElementById("sido_code").value;
+// 		var sigoonCode = document.getElementById("sigoon_code").value;
+		var dongCode = document.getElementById("area_code").value;
+		var areaText = document.getElementById("area_text").value;
+// 		formData.append("sido_code", sidoCode);
+// 		formData.append("sigoon_code", sigoonCode);
 		formData.append("dong_code", dongCode);
+		formData.append("area_text", areaText);
 
 	 	 // 선택된 장르
 		 var genres = [];

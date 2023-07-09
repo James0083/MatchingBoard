@@ -12,6 +12,7 @@ CREATE TABLE Member (
     profile_img VARCHAR2(500),
     nickname VARCHAR2(30) NOT NULL,
     area_code NUMBER(10),
+    area_text VARCHAR2(40),
     grade NUMBER(3) DEFAULT 0 NOT NULL,
     exp NUMBER(5) DEFAULT 0 NOT NULL,
     manner NUMBER(3,1) DEFAULT 30 NOT NULL,

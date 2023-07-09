@@ -12,6 +12,7 @@ public class UserVO {
 	private String userid;
 	private String profile_img;
 	private String nickname;
+	private String area_text;
 	private int area_code;
 	
 	private int grade;

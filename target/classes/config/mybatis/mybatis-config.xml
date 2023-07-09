@@ -4,6 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
   
+  <settings>
+	<setting name="jdbcTypeForNull" value="NULL" />
+  </settings>
+  
   <!-- typeAlias 타입 별칭 설정 ========================== -->
   <typeAliases>
   	<typeAlias type="com.multi.model.RoomVO" alias="Room"/>
@@ -30,4 +34,5 @@
     <mapper resource="config/mybatis/mapper/ShopMapper.xml"/>
     
   </mappers>
+  
 </configuration>

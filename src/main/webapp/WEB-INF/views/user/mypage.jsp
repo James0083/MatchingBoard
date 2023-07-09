@@ -91,7 +91,7 @@ tr:first-child td span.prograss-text {
 			<tr>
 				<td width="25%">
 				<c:if test="${loginUser.profile_img ne null}">
-					<img id="profile_img" src="../images/${loginUser.profile_img}">
+					<img id="profile_img" src="../resources/profileimg_upload/${loginUser.profile_img}">
 				</c:if>
 				<c:if test="${loginUser.profile_img eq null}">
 					<img id="profile_img" src="../images/profile_example.png">
@@ -121,16 +121,36 @@ tr:first-child td span.prograss-text {
 			</tr>
 			<tr>
 				<td>지역</td>
-				<td><b>${loginUser.area_code}</b></td>
+				<td><b>${loginUser.area_text}</b></td>
 			</tr>
 			<tr>
 				<td>선호 장르</td>
-				<td><b>${loginUser.fgenre1}, ${loginUser.fgenre2}, ${loginUser.fgenre3}</b></td>
+				<td><b>
+					<c:if test="${loginUser.fgenre1 ne null}">
+					${loginUser.fgenre1}
+					</c:if>
+					<c:if test="${loginUser.fgenre2 ne null}">
+					, ${loginUser.fgenre2}
+					</c:if>
+					<c:if test="${loginUser.fgenre3 ne null}">
+					, ${loginUser.fgenre3}
+					</c:if>
+				</b></td>
 				<!-- <td><b>장르1, 장르2, 장르3</b></td> -->
 			</tr>
 			<tr>
 				<td>선호 게임 Top3</td>
-				<td><b>${loginUser.fgame1}, ${loginUser.fgame2}, ${loginUser.fgame3}</b></td>
+				<td><b>
+					<c:if test="${loginUser.fgame1 ne null}">
+					${loginUser.fgame1}
+					</c:if>
+					<c:if test="${loginUser.fgame2 ne null}">
+					, ${loginUser.fgame2}
+					</c:if>
+					<c:if test="${loginUser.fgame3 ne null}">
+					, ${loginUser.fgame3}
+					</c:if>
+				</b></td>
 				<!-- <td><b>게임1, 게임2, 게임3</b></td> -->
 			</tr>
 			
@@ -166,7 +186,9 @@ tr:first-child td span.prograss-text {
 							<path fill="#EB4335"
 								d="M9.175 3.468c1.684 0 2.82.728 3.468 1.335l2.531-2.471C13.62.887 11.598 0 9.175 0 5.667 0 2.638 2.013 1.163 4.943l2.9 2.252c.727-2.162 2.74-3.727 5.112-3.727z"></path>
 						</svg> -->
+					    <div class="float-right">
 						<span> 연동정보 / 연동하기 </span>
+						</div>
 					</div>
 				</td>
 			</tr>
@@ -174,6 +196,7 @@ tr:first-child td span.prograss-text {
 				<td colspan="2">
 					<div>
 						<img class="ac_link_logo_img" src="../images/naver_icon.png">
+						<div class="float-right">
 						    <c:choose>
 						        <c:when test="${connectedNaver}">
 						            연동 완료
@@ -182,6 +205,7 @@ tr:first-child td span.prograss-text {
 						            <a href="${connecturlNaver}">연동하기</a>
 						        </c:otherwise>
 						    </c:choose>
+					    </div>
 					</div>
 			 	</td>
 			</tr>
@@ -199,6 +223,7 @@ tr:first-child td span.prograss-text {
 							</svg> -->
 <!-- 						</div> -->
 						<img class="ac_link_logo_img" src="../images/kakaoicon1.png">
+					    <div class="float-right">
 						    <c:choose>
 						        <c:when test="${connectedKakao}">
 						            연동 완료
@@ -207,6 +232,7 @@ tr:first-child td span.prograss-text {
 						            <a href="${connecturlKakao}">연동하기</a>
 						        </c:otherwise>
 						    </c:choose>
+					    </div>
 					</div>
 				</td>
 			</tr>

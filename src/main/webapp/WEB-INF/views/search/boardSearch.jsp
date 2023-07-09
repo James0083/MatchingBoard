@@ -68,7 +68,7 @@ input {
 }
 
 img {
-	position: absolute;
+/* 	position: absolute; */
 	width: 17px;
 	top: 10px;
 	right: 12px;
@@ -106,62 +106,69 @@ img {
 }
 
  
-  .pageInfo{
-      list-style : none;
-      display: inline-block;
-    margin: 50px 0 0 100px;      
-  }
-  .pageInfo li{
-      float: left;
+.pageInfo{
+//	list-style : none;
+//	display: inline-block;
+//	margin: 50px 0 0 100px;      
+}
+/*
+.pageInfo li{
+    float: left;
     font-size: 20px;
     margin-left: 18px;
     padding: 7px;
     font-weight: 500;
-  }
+}
+*/
  a:link {color:black; text-decoration: none;}
  a:visited {color:black; text-decoration: none;}
  a:hover {color:black; text-decoration: none;}
  
-   .search_area{
-    display: inline-block; 
+.search_wrap{
     margin-top: 30px;
-    margin-left: 260px;
-  }
-  .search_area input{
-      height: 30px;
+    height: 3em;
+ }
+ 
+.search_area{
+    display: inline-block; 
+    margin-right: 60px;
+}
+.search_area input{
+	height: 30px;
     width: 250px;
-  }
-  .search_area button{
-     width: 100px;
+}
+.search_area button{
+    width: 100px;
     height: 36px;
-  }
- .active{
-      background-color: #cdd5ec;
-  }
+}
 
 .search_area select{
   	height: 35px;
-  }
+}
+
+.active{
+      background-color: #cdd5ec;
+}
  
- .blinking{
-  -webkit-animation: blink 2s ease-in-out infinite alternate;
-  -moz-animation: blink 2s ease-in-out infinite alternate;
-  animation: blink 2s ease-in-out infinite alternate;
+.blinking{
+	-webkit-animation: blink 2s ease-in-out infinite alternate;
+	-moz-animation: blink 2s ease-in-out infinite alternate;
+	animation: blink 2s ease-in-out infinite alternate;
 }
 
 @-webkit-keyframes blink{
-  60% {opacity: 0.6;}
-  100% {opacity: 1;}
+	60% {opacity: 0.6;}
+	100% {opacity: 1;}
 }
 
 @-moz-keyframes blink{
-  60% {opacity: 0.6;}
-  100% {opacity: 1;}
+  	60% {opacity: 0.6;}
+  	100% {opacity: 1;}
 }
 
 @keyframes blink{
-  60% {opacity: 0.6;}
-  100% {opacity: 1;}
+ 	60% {opacity: 0.6;}
+	100% {opacity: 1;}
 }
 
 #totheTop {
@@ -178,11 +185,20 @@ img {
 	
 	font-size: 1.5em;
 }
+
+.cRoom_area{
+	display: inline-block;
+	margin-left: 30px;
+}
+
 </style>
 
 	<!-- 검색바  -->
 <div class="search_wrap">
-	<div class="search_area">
+	<div class="cRoom_area float-left ">
+		<button class="btn blinking" style="background-color:#6d72f4; color: #fff;" onclick="location.href='./createRoom'">모임방 만들기</button>
+	</div>
+	<div class="search_area float-right">
 		<select name="type">
 			<option value="" <c:out value="${pageMaker.pagingvo.type == null?'selected':'' }"/>>--</option>
 			<option value="T" <c:out value="${pageMaker.pagingvo.type eq 'T'?'selected':'' }"/>>제목</option>
@@ -193,114 +209,109 @@ img {
 		<input type="text" name="keyword" value="${pageMaker.pagingvo.keyword}">
 		<button class="btn btn-info" style="opacity: 0.85;">Search</button>
 	</div>
-	<div class="float-right cRoom_area">
-		<button class="btn btn-secondary blinking" onclick="location.href='./createRoom'">모임방 만들기</button>
-	</div>
 </div>
 
 <br>
-		<div class="container">
+<div class="container">
 
-			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-				<!-- 보드게임 모임방 목록 -->
-				<!-- ---------------------------------------------------------------------- -->
-				<c:forEach var="list" items="${list}">
-					<div class="col">
-						<div class="card shadow-sm">
+	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+		<!-- 보드게임 모임방 목록 -->
+		<!-- ---------------------------------------------------------------------- -->
+		<c:forEach var="list" items="${list}">
+			<div class="col">
+				<div class="card shadow-sm">
 
-							<div class='my-div'
-								onclick="openPopup('${list.roomid}')('clickRoom', 'width=200, height=250, left=0,top=0, location=no, status=no, scrollbars=yes');">
+					<div class='my-div'
+						onclick="openPopup('${list.roomid}')">
 
-								<svg class="bd-placeholder-img card-img-top" width="100%"
-									height="170" xmlns="http://www.w3.org/2000/svg" role="img"
-									aria-label="Placeholder: pla"
-									preserveAspectRatio="xMidYMid slice" focusable="false">        
-	            					<rect width="100%" height="100%" fill="#b3c9f9" style="cursor:pointer;" />                        
-	        						
-	         					 	<!-- 방이름 -->         	           
-	            					<text x="50%" y="30%" fill="#353635" dy=".3em"> <c:out value="${list.rname}" /></text>
-	            					<!-- 방설명  -->
-	            					<text x="50%" y="45%" style="font-size:15px; overflow: auto; white-space: nowrap; width: 100%;" fill="#353635" dy=".3em">
-										<c:out value="${list.rstr}" /></text>          
-            					</svg>
-							</div>
+						<svg class="bd-placeholder-img card-img-top" width="100%"
+							height="170" xmlns="http://www.w3.org/2000/svg" role="img"
+							aria-label="Placeholder: pla"
+							preserveAspectRatio="xMidYMid slice" focusable="false">        
+           					<rect width="100%" height="100%" fill="#b3c9f9" style="cursor:pointer;" />                        
+       						
+        					 	<!-- 방이름 -->         	           
+           					<text x="50%" y="30%" fill="#353635" dy=".3em"> <c:out value="${list.rname}" /></text>
+           					<!-- 방설명  -->
+           					<text x="50%" y="45%" style="font-size:15px; overflow: auto; white-space: nowrap; width: 90%;" fill="#353635" dy=".3em">
+								<c:out value="${list.rstr}" /></text>          
+          					</svg>
+					</div>
 
-							<div class="card-body">
-								<!-- 글자 앞에 이미지 넣기 가 안됨!-->
+					<div class="card-body">
+						<!-- 글자 앞에 이미지 넣기 가 안됨!-->
 
-								<!-- 장르 -->
-								<p class="card-text" style="font-size: 12px;">
-									<c:out value="${list.rgenre}" />
-								</p>
-								<!-- 위치 -->
-								<p class="card-text" style="font-size: 12px;">
-									<c:out value="${list.rplace}" />
-								</p>
-								<div class="d-flex justify-content-between align-items-center"
-									style="float: right;">
-									<div class="btn-group">
-										<!-- 좋아요 버튼 -->
+						<!-- 장르 -->
+						<p class="card-text" style="font-size: 12px;">
+							<c:out value="${list.rgenre}" />
+						</p>
+						<!-- 위치 -->
+						<p class="card-text" style="font-size: 12px;">
+							<c:out value="${list.rplace}" />
+						</p>
+						<div class="d-flex justify-content-between align-items-center"
+							style="float: right;">
+							<c:if test="${loginUser ne null}">
+							<div class="btn-group">
+								<!-- 좋아요 버튼 -->
 <%-- 								 		${list.wishroomid} / ${list.roomid }/${list.uuid} /${loginUser.userid} --%>
-								 		<button class="btn-like 
-											<c:forEach var="likeRoomId" items="${likeRoomIds}">
-												<c:if test="${list.roomid eq likeRoomId}">
-													done
-												</c:if>
-											</c:forEach>
-										" data-id="${list.roomid}">❤️</button>
-								<!--
+						 		<button class="btn-like 
+									<c:forEach var="likeRoomId" items="${likeRoomIds}">
 										<c:if test="${list.roomid eq likeRoomId}">
-										<button class="btn-like done" data-id="${list.roomid}">❤️</button>
+											done
 										</c:if>
-										<c:if test="${list.roomid ne likeRoomIds}">
-										<button class="btn-like" data-id="${list.roomid}">❤️</button>
-										</c:if>
-								 -->
-									</div>
-								</div>
+									</c:forEach>
+								" data-id="${list.roomid}">❤️</button>
+						<!--
+								<c:if test="${list.roomid eq likeRoomId}">
+								<button class="btn-like done" data-id="${list.roomid}">❤️</button>
+								</c:if>
+								<c:if test="${list.roomid ne likeRoomIds}">
+								<button class="btn-like" data-id="${list.roomid}">❤️</button>
+								</c:if>
+						 -->
 							</div>
+							</c:if>
 						</div>
 					</div>
-				</c:forEach>
-				<!-- ---------------------------------------------------------------------- -->
-			
-				<!-- 페이징 처리 -->
-				<div class="pageInfo_wrap">
-					<div class="pageInfo_area">
-						<ul id="pageInfo" class="pageInfo pagination pagination-sm justify-content-center">
-
-							<!-- 이전페이지 버튼 -->
-				<c:if test="${pageMaker.prev}">
-					<li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
-				</c:if>
-				
-				
-
-							<!-- 각 번호 페이지 버튼 | pageMaker에 저장된 시작.끝 페이지 값을 가지고 페이지 번호를 화면에 출력| <a>태그에 번호-->
-				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-					<li class="pageInfo_btn ${pageMaker.pagingvo.pageNum == num ? "active":"" }"><a href="${num}">${num}</a></li>
-				</c:forEach>
-
-							<!-- 다음페이지 버튼 -->
-							<c:if test="${pageMaker.next}">
-								<li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
-							</c:if>
-							
-
-						</ul>
-					</div>
 				</div>
-
-
-				<form id="moveForm" method="get">
-					<input type="hidden" name="pageNum" value="${pageMaker.pagingvo.pageNum}"> 
-					<input type="hidden" name="amount" value="${pageMaker.pagingvo.amount}">
-					<input type="hidden" name="keyword" value="${pageMaker.pagingvo.keyword}">
-					<input type="hidden" name="type" value="${pageMaker.pagingvo.type }">
-				</form>
-
+			</div>
+		</c:forEach>
+		<!-- ---------------------------------------------------------------------- -->
+	
+	</div>
+</div>
+		<!-- 페이징 처리 -->
+		<div class="pageInfo_wrap justify-content-center">
+			<div class="pageInfo_area">
+				<ul id="pageInfo" class="pageInfo pagination pagination-sm justify-content-center">
+		
+					<!-- 이전페이지 버튼 -->
+					<c:if test="${pageMaker.prev}">
+					<li class="page-item pageInfo_btn previous"><a class="page-link" href="${pageMaker.startPage-1}">Previous</a></li>
+					</c:if>
+		
+					<!-- 각 번호 페이지 버튼 | pageMaker에 저장된 시작.끝 페이지 값을 가지고 페이지 번호를 화면에 출력| <a>태그에 번호-->
+					<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+					<li class="page-item pageInfo_btn ${pageMaker.pagingvo.pageNum == num ? "active":"" }"><a class="page-link" href="${num}">${num}</a></li>
+					</c:forEach>
+					
+					<!-- 다음페이지 버튼 -->
+					<c:if test="${pageMaker.next}">
+					<li class=" page-itempageInfo_btn next"><a class="page-link" href="${pageMaker.endPage + 1 }">Next</a></li>
+					</c:if>
+		
+				</ul>
 			</div>
 		</div>
+		
+		<form id="moveForm" method="get">
+			<input type="hidden" name="pageNum" value="${pageMaker.pagingvo.pageNum}"> 
+		<input type="hidden" name="amount" value="${pageMaker.pagingvo.amount}">
+		<input type="hidden" name="keyword" value="${pageMaker.pagingvo.keyword}">
+		<input type="hidden" name="type" value="${pageMaker.pagingvo.type }">
+		</form>
+
 
 
 	<p class="" id="totheTop">

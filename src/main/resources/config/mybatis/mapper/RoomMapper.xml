@@ -4,8 +4,8 @@
 <mapper namespace="com.multi.mapper.RoomMapper">
 	
 	<insert id="insertRoom" parameterType="Room">
-    	insert into room(roomid, rname, rplace, rmaxpeople, rgenre, rgame, rstr, rdatetime)
-    	values (#{roomid}, #{rname}, #{rplace}, #{rmaxpeople}, #{rgenre}, #{rgame}, #{rstr}, #{rdatetime})
+    	insert into room(roomid, cheif, rname, rplace, rmaxpeople, rgenre, rgame, rstr, rdatetime)
+    	values (#{roomid}, #{cheif}, #{rname}, #{rplace}, #{rmaxpeople}, #{rgenre}, #{rgame}, #{rstr}, #{rdatetime})
 	</insert>
 	
 	<select id="selectRoomByIdx" resultType="Room" parameterType="string">

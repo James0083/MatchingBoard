@@ -196,7 +196,6 @@ tr:first-child td span {
 		<div style="vertical-align: middle;">
 			<h3 class="mt-3" style="display: inline-block;">${room.rname}</h3>
 			<c:if test="${loginUser.userid eq room.cheif}">
-			<!-- <button type="button" id="btnTitleEdit" class="float-right btn btn-sm btn-outline-secondary">편집하기</button> -->
 			<form name="frm" id="frm">
 				<input type="hidden" id="roomId" name="roomId" value="<c:out value="${roomId}"/>">
 				<button type="button" id="btnRoomEdit" class="float-right btn btn-sm btn-outline-secondary" 
@@ -271,7 +270,9 @@ tr:first-child td span {
 				</tr>
 				<tr>
 					<td colspan="3" class="text-center">
+						<c:if test="${loginUser.userid ne room.cheif}">
 						<button type="button" class="btn btn-success" onclick="exit()">모임방 나가기</button>
+						</c:if>
 						<button type="button" id="btnEval" class="btn btn-success" onclick="evaluation()">후기 평가</button>
 					</td>
 				</tr>

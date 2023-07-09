@@ -71,12 +71,12 @@ let form = $("#infoForm");
 		form.attr("action", "boardSearch");
 		form.submit();
 	});
+*/	
 	
 	$("#enter_room").on("click", function(e){
 		opener.location.href="./roomView/"+'${room.roomid}';
 		window.close(); // 팝업 창을 닫습니다.
 	});
-*/	
 	
 	//팝업창 닫기 
 	 function closeTabClick() {

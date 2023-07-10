@@ -64,7 +64,7 @@ public class LoginController {
 	}
 	
 	@Autowired
-	private void setNaverLoginBO(KaKaoLoginBO kakaoLoginBO) {
+	private void setKakaoLoginBO(KaKaoLoginBO kakaoLoginBO) {
 		this.kakaoLoginBO = kakaoLoginBO;
 	}
 	

@@ -15,11 +15,13 @@ body {
 	margin: 20px;
 }
 
-h1 {
+h1, h4{
 	text-align: center;
+	margin-top: 1em;
 }
 
 .rating-container {
+	margin: 0 auto;
 	margin-top: 30px;
 	max-width: 400px;
 }
@@ -31,11 +33,12 @@ h1 {
 
 .rating-container .range-value {
 	font-weight: bold;
+	margin-bottom: 20px;
 }
 
 .rating-container .range-slider {
-	width: 100%;
-	margin-bottom: 20px;
+	width: 80%;
+	margin-bottom: 5px;
 }
 
 .rating-container button {
@@ -50,6 +53,11 @@ h1 {
 
 .rating-container button:hover {
 	background-color: #45a049;
+}
+
+#evalMem{
+	margin: 1em;
+	text-align: center;
 }
 </style>
 </head>
@@ -84,7 +92,7 @@ h1 {
 		</c:forEach>
 		<br> 
 		<input type="hidden" name="ranges" id="avgRange">
-		<button type="submit">제출</button>
+		<button type="submit" class="btn btn-success">제출</button>
 	</form>
 <script>
 	let sliderChanged = false;//슬라이더 변경여부

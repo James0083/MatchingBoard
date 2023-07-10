@@ -19,11 +19,6 @@ public class RoomVO {
 //	private Time rtime;
 	private String rdatetime;
 	
-	
-	private String wishroomid;
-	private String uuid;
-	
-	
 	public RoomVO(String roomid, String rname, String rplace, int rmaxpeople, String rgenre, String rgame, String rstr,
 			String rdatetime) {
 		super();

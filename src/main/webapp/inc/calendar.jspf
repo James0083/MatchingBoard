@@ -3,17 +3,21 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 <script>
 	$(function(){
+		var scheduleArr="${scheduleArr}".split(',');
+		alert(scheduleArr);
+		
 		var eventArr=[];
-		jsonData={
-			title: 'Test Day1',
-			start: '2023-06-21T12:30:00'
-		};
-		jsonData1={
-				title: 'Test Day2',
-				start: '2023-06-23T13:30:00'
-			}
-		eventArr.push(jsonData);
-		eventArr.push(jsonData1);
+		
+		for(let i=0; i<scheduleArr.length; i+=2){
+			console.log(scheduleArr[i]);
+			console.log(scheduleArr[i+1]);
+			jsonData={
+				title: scheduleArr[i],
+				start: scheduleArr[i+1]
+			};
+			eventArr.push(jsonData);
+		}
+
 		// calendar element 취득
 		var calendarEl = $('#calendar')[0];
 		// full-calendar 생성하기
@@ -26,7 +30,7 @@
 			headerToolbar: {
 			  left: 'prev,next today',
 			  center: 'title',
-			  right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+			  right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
 			},
 			initialView: 'listMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
 			navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크

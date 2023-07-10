@@ -50,21 +50,22 @@ tr:first-child td span.prograss-text {
 	appearance: none;
 	height: 0.8em;
 	display: inline-block;
-	width: 60%;
 }
 
 .progress::-webkit-progress-bar {
-	background: #f0f0f0;
+	background: #cdcdcd;
 	border-radius: 15px;
 	/* box-shadow: inset 3px 3px 10px #ccc; */
 }
 
 .progress::-webkit-progress-value {
 	border-radius: 10px;
-	background: #1D976C;
-	background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);
-	background: linear-gradient(to right, #93F9B9, #1D976C);
+	background: #28c231;
 	overflow: hidden;
+}
+
+#modal_manner::-webkit-progress-value {
+	background: #6da2ff;
 }
 
 #profile_img {
@@ -109,12 +110,12 @@ tr:first-child td span.prograss-text {
 						<br>
 						<span class="prograss-text">경험치</span>
 						<span class="prograss-span">
-							<progress class="progress" value="${loginUser.exp}" max="${loginUser.grade *100}"></progress>
+							<progress class="progress" value="${loginUser.exp}" max="${(loginUser.grade+1)*100}"></progress>
 						</span>
 						<br>
 						<span class="prograss-text">매너점수</span>
 						<span class="prograss-span">
-							<progress class="progress" value="${loginUser.manner}" max="100"></progress>
+							<progress class="progress" id="modal_manner" value="${loginUser.manner}" max="100"></progress>
 						</span>
 					</div>
 				</td>

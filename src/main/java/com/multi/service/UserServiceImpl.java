@@ -117,4 +117,10 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userMapper.getUserSocialConnections(userid);
 	}
+
+	@Override
+	public List<String> getUsersRoomIds(String userid) {
+
+		return userMapper.getUsersRoomIds(userid);
+	}
 }

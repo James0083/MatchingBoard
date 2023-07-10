@@ -12,4 +12,6 @@ public interface UserMapper {
 	UserVO getUserById(String userid);
 	
 	List<String> getUserSocialConnections(String userid);
+
+	List<String> getUsersRoomIds(String userid);
 }	

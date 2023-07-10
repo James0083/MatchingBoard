@@ -228,12 +228,12 @@ img {
 							height="170" xmlns="http://www.w3.org/2000/svg" role="img"
 							aria-label="Placeholder: pla"
 							preserveAspectRatio="xMidYMid slice" focusable="false">        
-           					<rect width="100%" height="100%" fill="#b3c9f9" style="cursor:pointer;" />                        
-       						
-        					 	<!-- 방이름 -->         	           
-           					<text x="50%" y="30%" fill="#353635" dy=".3em"> <c:out value="${list.rname}" /></text>
+           					<rect width="100%" height="100%" fill="#4A4846" style="cursor:pointer;"/>                    
+       						 <image href="${pageContext.request.contextPath}/images/gimages/${list.rgame}.png" style="opacity: 0.6; height:600; width:500;"/>                                                      
+        					 	<!-- 방이름 -->             				 	  	           
+           					<text style="font-weight:bold;" x="50%" y="30%" fill="#353635" dy=".3em" > <c:out value="${list.rname}" /></text>
            					<!-- 방설명  -->
-           					<text x="50%" y="45%" style="font-size:15px; overflow: auto; white-space: nowrap; width: 90%;" fill="#353635" dy=".3em">
+           					<text x="50%" y="45%" style="font-weight:bold; font-size:15px; font-color:#F5FFFA; overflow:auto; white-space:nowrap; width: 90%;" fill="#353635" dy=".3em">
 								<c:out value="${list.rstr}" /></text>          
           					</svg>
 					</div>

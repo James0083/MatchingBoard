@@ -80,7 +80,7 @@ tr:first-child td span {
 }
 
 .progress::-webkit-progress-bar {
-	background: #f0f0f0;
+	background: #cdcdcd;
 	border-radius: 15px;
 	/* box-shadow: inset 3px 3px 10px #ccc; */
 }
@@ -118,49 +118,76 @@ tr:first-child td span {
 		var rdt = '${room.rdatetime}'.split(/-|T|:/);
 		var str = rdt[0] + "년 " + rdt[1] + "월 " + rdt[2] + "일 - " + rdt[3] + "시 " + rdt[4] + "분";
 		document.getElementById('rdatetime').innerHTML = str;
-		
-		$(".member_profile").click(function() {
-			$("#member_profile_modal").modal({
-				backdrop : true 
-				// 배경 어둡게 ==> true : 배경 어두워짐, 배경 클릭시 모달 닫힘
-				// false : 배경 불변, 배경 클릭시 모달 유지
-				// "static" :  배경 어두워짐, 배경 클릭시 모달 유지
-			});
-			//////////
-			var modal_nickname='모달 유저 닉네임';
-			var modal_manner=50;
-			var modal_exp_value='70';
-			var modal_exp_max=100;
-			
-			var modal_area='모달 유저 지역';
-			var modal_genre='모달 선호 장르1'+', '+'장르2'+', '+'장르3';
-			var modal_game='모달 선호 게임1'+', '+'게임2'+', '+'게임3';
-			///////////
-			
-			$('#modal_nickname').text(modal_nickname);
-			$('#modal_manner').val(modal_manner);
-			$('#modal_exp').attr("value", modal_exp_value);
-			$('#modal_exp').attr("max", modal_exp_max);
-			
-			$('#modal_area').text(modal_area);
-			$('#modal_genre').text(modal_genre);
-			$('#modal_game').text(modal_game);
-
-			////
-			$('#modal_attend').text('5');
-			$('#modal_late').text('3');
-			//console.log($('#modal_late').text());
-			$('#modal_absent').text('0');
-			
-		});
+	
 	});
+	
+	function openProfileModal(membervo) {
+		$("#member_profile_modal").modal({
+			backdrop : true 
+			// 배경 어둡게 ==> true : 배경 어두워짐, 배경 클릭시 모달 닫힘
+			// false : 배경 불변, 배경 클릭시 모달 유지
+			// "static" :  배경 어두워짐, 배경 클릭시 모달 유지
+		});
+		//////////
+// 		console.log(membervo);
+		const membervolist =membervo.split('UserVO(').join('').split(')').join('').split(', ').join('=').split('='); 
+// 		console.log(membervolist);
+		let membermap = new Map();
+		for(let i=0; i<membervolist.length; i+=2){
+			membermap.set(membervolist[i], membervolist[i+1]);
+		}
+		
+		var mod_profile_img="../../images/profile_example.png"
+		let getProfile_img = membermap.get('profile_img');
+		if(getProfile_img != 'null') mod_profile_img = '../../resources/profileimg_upload/' + getProfile_img; 
+		
+		var mod_grade="../../images/grades/grade0.png"
+		let getGrade = membermap.get('grade')
+		mod_grade = '../../images/grades/grade' + membermap.get('grade') + '.png'; 
+		
+		var modal_nickname = membermap.get('nickname');
+		var modal_manner=membermap.get('manner');
+		var modal_exp_value=membermap.get('exp');
+		var modal_exp_max=(membermap.get('grade')+1)*100;
+		console.log("modal_exp_max : "+modal_exp_max);
+		
+		var modal_area = membermap.get('area_text');
+		var modal_genre='없음';//'모달 선호 장르1'+', '+'장르2'+', '+'장르3';
+		if(membermap.get('fgenre1') != 'null') modal_genre=membermap.get('fgenre1'); 
+		if(membermap.get('fgenre2') != 'null') modal_genre+=', '+membermap.get('fgenre2'); 
+		if(membermap.get('fgenre3') != 'null') modal_genre+=', '+membermap.get('fgenre3'); 
+		var modal_game='없음';//'모달 선호 장르1'+', '+'장르2'+', '+'장르3';
+		if(membermap.get('fgame1') != 'null') modal_game=membermap.get('fgame1'); 
+		if(membermap.get('fgame2') != 'null') modal_game+=', '+membermap.get('fgame2'); 
+		if(membermap.get('fgame3') != 'null') modal_game+=', '+membermap.get('fgame3'); 
+		///////////
+		
+		$('#modal_profile_img').attr("src", mod_profile_img);
+		$('#modal_grade').attr("src", mod_grade);
+		$('#modal_nickname').text(modal_nickname);
+		$('#modal_manner').val(modal_manner);
+		$('#modal_exp').attr("value", modal_exp_value);
+		$('#modal_exp').attr("max", modal_exp_max);
+		
+		$('#modal_area').text(modal_area);
+		$('#modal_genre').text(modal_genre);
+		$('#modal_game').text(modal_game);
+
+		////
+		$('#modal_attend').text(membermap.get('attend'));
+		$('#modal_late').text(membermap.get('late'));
+		//console.log($('#modal_late').text());
+		$('#modal_absent').text(membermap.get('absent'));
+		
+	}
 	
 	function evaluation(){
  		window.location.href = '../../eval/memberEval';
 	}
 	
 	function exit(){
-		 var roomId = document.getElementById("roomId").value;
+// 		 var roomId = document.getElementById("roomId").value;
+		 var roomId = "${roomId}";
 
 		    // AJAX 요청
 		    $.ajax({
@@ -209,23 +236,16 @@ tr:first-child td span {
 			<span id="cur_num">인원 : ${curPnum} / ${room.rmaxpeople}</span>
 			<br>
 			<div class="profiles" style="">
-			
-				<!--
-				<div class="member_profile" style="display: inline-block;" data-toggle="modal" data-target="#login">
-					<img class="profile_img mt-3" src="../images/profile_example.png">
-					<div class="profile_name">이름</div>
-				</div>
-				<div class="member_profile" style="display: inline-block;" data-toggle="modal" data-target="#login">
-					<img class="profile_img mt-3" src="../images/search_test.png">
-					<div class="profile_name">이름</div>
-				</div>
-				-->
-				
-<!-- 				<c:forEach var="for_profile" begin="1" end="8"></c:forEach>-->
  				<c:forEach var="members" items="${memberArr}">
-					<div class="member_profile" style="display: inline-block;" data-toggle="modal" data-target="#login">
-						<img class="profile_img mt-3" src="../../images/search_test.png">
-						<!--<div class="profile_name">${members.nickname}</div>  -->
+					<div class="member_profile mt-3" onclick="openProfileModal('${members}')" style="display: inline-block;" data-toggle="modal" data-target="#login">
+						<c:if test="${members.profile_img ne null}">
+							<img class="profile_img" src="../../resources/profileimg_upload/${members.profile_img}">
+						</c:if>
+						<c:if test="${members.profile_img eq null}">
+							<img class="profile_img" src="../../images/profile_example.png">
+						</c:if>
+<!-- 						<img class="profile_img mt-3" src="../../images/search_test.png"> -->
+						<div class="profile_name">${members.nickname}</div> 
 					</div>
 				</c:forEach>
 				
@@ -303,11 +323,11 @@ tr:first-child td span {
 	        <table class="table mt-3 text-center" style="width:100%;">
 				<tr>
 					<%-- <td width="25%"><img src="${loginUser.profile_img}"></td> --%>
-					<td width="25%"><img class="profile_img" id="profile_img" src="../../images/profile_example.png"></td>
+					<td width="25%"><img class="profile_img" id="modal_profile_img"></td>
 					<td width="75%">
 						<div style="margin: auto 0;">
-							<a href=""><img src="../../images/grades/grade1.png" style="width:1.2em; height:1.2em;"></a>
-							<b id="modal_nickname" style="color: #505050;">유저 닉네임</b>
+							<a href=""><img id="modal_grade" style="width:1.2em; height:1.2em;"></a>
+							<b id="modal_nickname" style="color: #505050;"></b>
 						<%--
 							<b>${loginUser.nickname}</b>
 						--%>
@@ -315,12 +335,12 @@ tr:first-child td span {
 							<br>
 							<span>경험치</span>
 							<span>
-								<progress class="progress" id="modal_exp" value="${loginUser.exp}" max="${loginUser.grade *100}"></progress>
+								<progress class="progress" id="modal_exp"></progress>
 							</span>
 							<br>
 							<span>매너점수</span>
 							<span>
-								<progress class="progress" id="modal_manner" value="${loginUser.manner}" max="100"></progress>
+								<progress class="progress" id="modal_manner" max="100"></progress>
 							</span>
 						</div>
 					</td>
@@ -362,7 +382,7 @@ tr:first-child td span {
 	
 	      <!-- Modal footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-success" data-dismiss="modal">확인</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 	      </div>
 	
 	    </div>

@@ -72,9 +72,4 @@ public class RoomServiceImpl implements RoomService {
 		return rMapper.selectUserIdsInRoom(roomId);
 	}
 
-	@Override
-	public UserVO selectMemberByUserId(String userId) {
-		// TODO Auto-generated method stub
-		return rMapper.selectMemberByUserId(userId);
-	}
 }

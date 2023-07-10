@@ -18,5 +18,4 @@ public interface RoomService {
 	int removeFromRoomPeople(String roomid,String userid);
 	boolean isUserInRoom(String roomId, String userId);
 	List<String> selectUserIdsInRoom(String roomId);
-	UserVO selectMemberByUserId(String userId);
 }

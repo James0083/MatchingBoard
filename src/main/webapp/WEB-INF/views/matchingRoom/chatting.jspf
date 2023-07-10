@@ -15,12 +15,22 @@
 	font-size: 0.6em;
 	margin-bottom: 0;
 	float: right;
+	margin: 0 0.6em;
 }
 .others_name_space{
 	font-size: 0.6em;
 	margin-bottom: 0;
 	float: left;
+	margin: 0 0.6em;
 }
+.alert_block{
+	width: auto;
+	max-width: 80%;
+	min-height: 34px;
+	padding: 5px;
+	margin: auto;
+}
+
 .msg_block{
 	width: auto;
 	max-width: 80%;
@@ -63,19 +73,20 @@
 window.addEventListener('DOMContentLoaded', connect);
 window.addEventListener('beforeunload', disconnect);
 
-var from = '${userid}';
+var from = '${loginUser.nickname}';
+var fromId = '${loginUser.userid}';
 var rid = '${roomId}';
 var stompClient = null;
 
 //채팅창에서 나갔을 때
 function disconnect() {
 	stompClient.send("/publish/chat/quit", {}, //prefix를 /app으로 지정함=>WebSocketConfigure에서 
-		      JSON.stringify({'roomId':rid, 'from':from}));
+		      JSON.stringify({'roomId':rid, 'from':from, 'fromId':fromId}));
 	
 	if(stompClient != null) {
 	    stompClient.disconnect();
 	}
-	setConnected(false);
+// 	setConnected(false);
 	console.log("Disconnected");
 }
 //채팅창에 들어왔을 때
@@ -84,9 +95,9 @@ function connect() {
 	stompClient = Stomp.over(socket);
 	stompClient.connect({}, function(frame) {
 		console.log("frame==="+frame)
-	    setConnected(true);
+// 	    setConnected(true);
 		stompClient.send("/publish/chat/join", {}, //prefix를 /app으로 지정함=>WebSocketConfigure에서 
-			      JSON.stringify({'roomId':rid, 'from':from}));
+			      JSON.stringify({'roomId':rid, 'from':from, 'fromId':fromId}));
 	    console.log('Connected: ' + frame);
 	    stompClient.subscribe('/subscribe/chatroom/'+'${roomId}', function(messageOutput) {
 	        showMessageOutput(JSON.parse(messageOutput.body));
@@ -95,7 +106,7 @@ function connect() {
 }
 
 function setConnected(connected) {
- 	var str = '${userid}';
+ 	var str = '${loginUser.nickname}';
  	str += connected? '님이 입장하였습니다.':'님이 퇴장하였습니다.';
  	str += '<br>';
 	$("#msgArea").append(str);
@@ -107,7 +118,7 @@ function sendMessage() {
     var text = document.getElementById('msg').value;
 	if(text){
 	    stompClient.send("/publish/chat/message", {}, //prefix를 /app으로 지정합=>WebSocketConfigure에서 
-	      JSON.stringify({'roomId':rid, 'from':from, 'text':text}));
+	      JSON.stringify({'roomId':rid, 'from':from, 'fromId':fromId, 'text':text}));
 	    $('#msg').val('');
 	}else{
 		alert('보낼 메세지를 입력해주세요.');
@@ -118,23 +129,32 @@ function sendMessage() {
 //서버에서 메시지를 받을 때
 function showMessageOutput(messageOutput) {
 	
-	var msgId = messageOutput.from; //보낸사람
+	var msgfrom = messageOutput.from; //보낸사람
+	var msgId = messageOutput.fromId; //보낸사람
 	var message = messageOutput.text;
 	var msgtime = messageOutput.time
 	
-	var arr = msgId.concat(":", message, "(", msgtime, ")");
+	var arr = msgfrom.concat(":", message, "(", msgtime, ")");
 	
 	console.log('arr: ' + arr);
 	
-	var curId = '${userid}'; //현재 로그인한 사람
+	var curId = '${loginUser.userid}'; //현재 로그인한 사람
 	console.log("curId : " + curId);
 	
 	
 	//로그인한 client와 다른 client 구분
-	if(msgId != curId){
+	if(msgId =='server'){
 		var str = "<div class='msg_div'>";
-		str += "<p class='my_name_space'>";
-		str += msgId;
+		str += "<p class='server_message alert_block'>";
+		str += message;
+		str += "</p></div>";
+		
+		$("#msgArea").append(str);
+	}
+	else if(msgId != curId){
+		var str = "<div class='msg_div'>";
+		str += "<p class='others_name_space'>";
+		str += msgfrom;
 		str += "</p><p class='others_message msg_block'>";
 		str += message;
 		str += "</p></div>";
@@ -146,7 +166,7 @@ function showMessageOutput(messageOutput) {
 		str += "<p class='my_message msg_block'>";
 		str += message;
 		str += "</p><p class='my_name_space'>";
-		str += msgId;
+		str += msgfrom;
 		str += "</p></div>";
 		
 		$("#msgArea").append(str);

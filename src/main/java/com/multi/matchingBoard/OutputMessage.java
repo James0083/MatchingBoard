@@ -11,6 +11,7 @@ public class OutputMessage {
 	
 	String roomId;
 	String from;
+	String fromId;
 	String text;
 	String time;
 

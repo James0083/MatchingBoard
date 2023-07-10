@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,8 +27,10 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.multi.model.RoomVO;
 import com.multi.model.SnsLoginVO;
 import com.multi.model.UserVO;
+import com.multi.service.RoomService;
 import com.multi.service.SocialService;
 import com.multi.service.UserService;
 import com.multi.snslogin.KaKaoLoginBO;
@@ -44,6 +47,8 @@ public class LoginController {
 	private SocialService socialservice;
 	@Autowired
 	private UserService userservice;
+	@Autowired
+	private RoomService rService;
 	
 	private NaverLoginBO naverLoginBO;
 	private String NaverapiResult =null;
@@ -281,6 +286,16 @@ public class LoginController {
 	    model.addAttribute("connectedNaver", userConnections.contains("Naver"));
 	    model.addAttribute("connectedKakao", userConnections.contains("Kakao"));
 		
+	    List<String> usersRoomIds = userservice.getUsersRoomIds(userid);
+	    List<String> scheduleArr = new ArrayList<>();
+	    for(String uRoomId : usersRoomIds) {
+	    	RoomVO room=rService.selectRoomByIdx(uRoomId);
+	    	scheduleArr.add(room.getRname()+" - "+room.getRplace());
+	    	scheduleArr.add(room.getRdatetime());
+	    }
+	    
+	    model.addAttribute("scheduleArr", scheduleArr);
+	    
 		return "user/mypage";
 	    
 	    

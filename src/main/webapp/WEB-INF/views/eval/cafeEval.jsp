@@ -12,15 +12,19 @@
 body {
 	font-family: Arial, sans-serif;
 	margin: 20px;
+	text-align: center;
 }
 
 h1 {
 	text-align: center;
+	margin-top: 1em;
 }
 
 .rating-container {
+	margin: 0 auto;
 	margin-top: 30px;
 	max-width: 400px;
+	text-align: center;
 }
 
 .rating-container p {
@@ -58,6 +62,10 @@ h1 {
 
 .rating-container button:hover {
 	background-color: #45a049;
+}
+
+#evalCafe{
+	margin: 1em;
 }
 </style>
 </head>
@@ -134,8 +142,8 @@ h1 {
 		<input type="hidden" name="saddr" value="addr"><!-- 받아올 카페 주소 -->
 		<input type="hidden" name="userid" value="2222"><!-- 평가할 유저 id 받기 -->
 		<input type="hidden" name="stars" id="averageRating">
-		<button type="submit">제출</button>
-		<button type="button" onclick="window.location.href='/matchingBoard/room/roomView'">건너뛰기</button>
+		<button type="submit" class="btn btn-success">제출</button>
+		<button type="button" class="btn btn-secondary" onclick="window.location.href='/matchingBoard/room/roomView'">건너뛰기</button>
 		<!-- <button type="button" onclick="redirectMemEval()">모임원 평가 이동</button> -->
 	</form>
 

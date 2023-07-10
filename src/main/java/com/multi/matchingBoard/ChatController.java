@@ -22,13 +22,14 @@ public class ChatController {
 //	@SendTo("/subscribe/messages")
 	public OutputMessage send(Message message) throws Exception {
 		String time = new SimpleDateFormat("HH:mm").format(new Date());
-		return new OutputMessage(message.getRoomId(), message.getFrom(), message.getText(), time);
+		return new OutputMessage(message.getRoomId(), message.getFrom(), message.getFromId(), message.getText(), time);
 	}
 	
 	@MessageMapping("/chat/join")
     public void join(Message message) {
         message.setText("[" + message.getFrom() + "]님이 입장하셨습니다.");
         message.setFrom("server");
+        message.setFromId("server");
         template.convertAndSend("/subscribe/chatroom/" + message.getRoomId(), message);
     }
 
@@ -36,6 +37,7 @@ public class ChatController {
     public void quit(Message message) {
         message.setText("[" + message.getFrom() + "]님이 퇴장하셨습니다.");
         message.setFrom("server");
+        message.setFromId("server");
         template.convertAndSend("/subscribe/chatroom/" + message.getRoomId(), message);
     }
 	

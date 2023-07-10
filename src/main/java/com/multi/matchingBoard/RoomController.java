@@ -21,6 +21,7 @@ import com.multi.model.RoomVO;
 import com.multi.model.UserVO;
 import com.multi.service.GameService;
 import com.multi.service.RoomService;
+import com.multi.service.UserService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -33,6 +34,9 @@ public class RoomController {
 	private RoomService rService;
 	@Autowired
 	private GameService gameService;
+	
+	@Inject
+	private UserService uService;
 	
 	@GetMapping(value="/createRoom")
 	public String createRoom(Model m) {
@@ -107,7 +111,7 @@ public class RoomController {
 	    // userIds를 이용해 Member 테이블의 정보를 가져와 UserVO에 저장하고, List<UserVO>에 추가
 	    List<UserVO> memberArr = new ArrayList<>();
 	    for (String userId : userIds) {
-	        UserVO user = rService.selectMemberByUserId(userId);
+	        UserVO user = uService.getUserById(userId);
 	        memberArr.add(user);
 	    }
 		//List<UserVO> memberArr=Arrays.asList(u1, u2);

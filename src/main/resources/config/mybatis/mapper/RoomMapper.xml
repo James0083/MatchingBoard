@@ -41,12 +41,7 @@
         FROM roompeople
         WHERE roomid = #{roomId}
     </select>
-    
-     <select id="selectMemberByUserId" resultType="com.multi.model.UserVO" parameterType="string">
-        SELECT userid, nickname
-        FROM member
-        WHERE userid = #{userId}
-    </select>
+
     
     <!-- *****수정확인 필요***** -->
     <select id="selectMemberAll" parameterType="java.lang.String" resultType="com.multi.model.UserVO">

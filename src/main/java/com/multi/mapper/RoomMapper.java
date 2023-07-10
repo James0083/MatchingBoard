@@ -21,6 +21,5 @@ public interface RoomMapper {
 	int removeFromRoomPeople(@Param("roomId") String roomId, @Param("userId") String userId);
 	int countUserInRoom(@Param("roomId") String roomId, @Param("userId") String userId);
 	List<String> selectUserIdsInRoom(String roomId);
-	UserVO selectMemberByUserId(String userId);
 	
 }

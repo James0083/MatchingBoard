@@ -1,13 +1,13 @@
 package com.multi.matchingBoard;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.multi.model.RoomPeopleVO;
 import com.multi.model.RoomVO;
 import com.multi.model.UserVO;
+import com.multi.service.GameService;
 import com.multi.service.RoomService;
 
 import lombok.extern.log4j.Log4j;
@@ -31,9 +31,13 @@ public class RoomController {
 
 	@Inject
 	private RoomService rService;
+	@Autowired
+	private GameService gameService;
 	
 	@GetMapping(value="/createRoom")
-	public String createRoom() {
+	public String createRoom(Model m) {
+		List<String> gameName = gameService.getAllGameNames();
+		m.addAttribute("gameName", gameName);
 		
 		return "matchingRoom/createRoom";
 	}
@@ -48,7 +52,6 @@ public class RoomController {
 		if(room.getRplace().isEmpty()) room.setRplace("(임시) 모임장소");
 		log.info("room=="+room.toString());
 		//////
-		
 		int n=rService.insertRoom(room);
 		String msg="모임방만들기 "; 
 		msg+=(n>0)?"성공":"실패";
@@ -168,6 +171,8 @@ public class RoomController {
 	@PostMapping(value="/editRoom")
 	public String showeditRoomFrom(Model m, @RequestParam String roomId) { //, @ModelAttribute RoomVO room, int memberNum) {
 		log.info("roomId: "+roomId);
+		List<String> gameName = gameService.getAllGameNames();
+		m.addAttribute("gameName", gameName);
 		
 		//////////////////
 		//방에 참여하고 있는 인원수 가져오기

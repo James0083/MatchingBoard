@@ -257,7 +257,7 @@ td:last-child {
 			</tr>
 		</table>
 		
-
+		
 	<div class="modal" id="modal">
 		<div class="modal_body">
 			<div class="m_head">
@@ -353,7 +353,12 @@ td:last-child {
 		if(${loginUser.fgame2 ne null}) fav_games.push("${loginUser.fgame2}");
 		if(${loginUser.fgame3 ne null}) fav_games.push("${loginUser.fgame3}");
 		$("#selectedGames").text(fav_games.join(", "));
-//-----------------------
+		console.log(fav_games);
+		
+		openGameModal();
+		document.getElementById("modal").classList.remove("show");
+
+		//-----------------------
 		
 		$.ajax({
 			type : "get",
@@ -485,18 +490,21 @@ td:last-child {
 	    }
 	}
 	
+	
 	var gameList = [
         <c:forEach items="${gameName}" var="game">
             '<c:out value="${game}" />',
         </c:forEach>
     ];
-
+	
+	
+	
 	function openGameModal() {
 		// 게임 목록 초기화
 		$("#m_body").empty();
 
 		// 각 게임에 대한 체크박스 생성
-		for (var i = 0; i < gameList.length; i++) {
+		for (var i = 0; i <gameList.length; i++) {
 			var checkBox = document.createElement("input");
 			var label = document.createElement("label");
 			var div = document.createElement("div");
@@ -507,14 +515,18 @@ td:last-child {
 			checkBox.onclick = function() { count_check_game(this); };
 			label.appendChild(document.createTextNode(gameList[i]));
 			label.htmlFor = gameList[i];
-			div.appendChild(checkBox);
-// 			if(${loginUser.fgame1 ne null} && ${loginUser.fgame1 eq gameList[i]}){
-// 				checkBox.setAttribute("checked", true);
-// 			}else if(${loginUser.fgame2 ne null} && ${loginUser.fgame2 eq gameList[i]}) {
-// 				checkBox.setAttribute("checked", true);
-// 			}else if(${loginUser.fgame3 ne null} && ${loginUser.fgame3 eq gameList[i]}) {
-// 				checkBox.setAttribute("checked", true);
-// 			}
+			
+			
+ 			if(${loginUser.fgame1 ne null} && '${loginUser.fgame1}' === gameList[i]){
+ 				checkBox.setAttribute("checked", true);
+ 			}else if(${loginUser.fgame2 ne null} && '${loginUser.fgame2}' === gameList[i]) {
+ 				checkBox.setAttribute("checked", true);
+ 			}else if(${loginUser.fgame3 ne null} && '${loginUser.fgame3}' === gameList[i]) {
+ 				checkBox.setAttribute("checked", true);
+ 			}
+ 			
+ 			div.appendChild(checkBox);
+		
 			div.appendChild(label);
 			document.getElementById("m_body").appendChild(div);
 		}
@@ -538,6 +550,8 @@ td:last-child {
 		$("#m_body input:checked").each(function() {
 			checkedGames.push($(this).val());
 		});
+		
+		$("#favGamesInput").val(checkedGames.join(", "));
 
 		// 선택한 게임을 '#selectedGames' 요소에 표시
 		$("#selectedGames").empty();
@@ -549,6 +563,7 @@ td:last-child {
 		// 모달 닫기
 		document.getElementById("modal").classList.remove("show");
 	});
+	
 		
 // 지역선택===========================
 	function openAreaSelect() {
@@ -589,8 +604,9 @@ td:last-child {
 		 var genreCheckboxes = document.getElementsByName("genre");
 		 for (var i = 0; i < genreCheckboxes.length; i++) {
  					if (genreCheckboxes[i].checked) {
-   					genres.push(genreCheckboxes[i].value);
-   					 formData.append("genres", genreCheckboxes[i].value);
+	   					genres.push(genreCheckboxes[i].value);
+	   					console.log(genreCheckboxes[i].value);
+	   					formData.append("genres", genreCheckboxes[i].value);
  					}
 		 }
 
@@ -598,13 +614,15 @@ td:last-child {
 		 var gameCheckboxes = document.getElementsByName("game");
 		 for (var i = 0; i < gameCheckboxes.length; i++) {
  					if (gameCheckboxes[i].checked) {
-   					games.push(gameCheckboxes[i].value);
-   					formData.append("games", gameCheckboxes[i].value);
+	   					games.push(gameCheckboxes[i].value);
+	   					console.log(gameCheckboxes[i].value);
+	   					formData.append("games", gameCheckboxes[i].value);
  					}
 		 }
 		 //formData.append("genres", genres);
 		 //formData.append("games", games);
-
+		console.log(formData.getAll('games'));
+		console.log(formData.getAll('genres'));
 
 		// AJAX 요청
 		$.ajax({

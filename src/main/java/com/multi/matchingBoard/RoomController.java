@@ -220,7 +220,11 @@ public class RoomController {
 	}
 	
 	@PostMapping(value="/delete")
-	public String deleteRoom(Model m,  @RequestParam(defaultValue="0") String roomId) {
+	public String deleteRoom(Model m, HttpSession session, @RequestParam(defaultValue="0") String roomId) {
+		
+		UserVO loginUser = (UserVO) session.getAttribute("loginUser");
+		String userId = loginUser.getUserid();
+		rService.removeFromRoomPeople(roomId, userId);
 		
 		int n=rService.deleteRoom(roomId);
 		

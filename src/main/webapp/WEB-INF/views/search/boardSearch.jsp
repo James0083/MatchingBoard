@@ -227,14 +227,16 @@ img {
 						<svg class="bd-placeholder-img card-img-top" width="100%"
 							height="170" xmlns="http://www.w3.org/2000/svg" role="img"
 							aria-label="Placeholder: pla"
-							preserveAspectRatio="xMidYMid slice" focusable="false">        
+							preserveAspectRatio="xMidYMid slice" focusable="false"
+							viewbox="0 0 500 500">        
            					<rect width="100%" height="100%" fill="#4A4846" style="cursor:pointer;"/>                    
-       						 <image href="${pageContext.request.contextPath}/images/gimages/${list.rgame}.png" style="opacity: 0.6; height:600; width:500;"/>                                                      
+       						 <image href="${pageContext.request.contextPath}/images/gimages/${list.rgame}.png"
+       						 	 height="600" width="500" style="opacity: 0.4;"/>                                                      
         					 	<!-- 방이름 -->             				 	  	           
-           					<text style="font-weight:bold;" x="50%" y="30%" fill="#353635" dy=".3em" > <c:out value="${list.rname}" /></text>
+           					<text style="font-weight:bold; font-size:1.6em;" x="50%" y="40%" fill="#e0e0e0" dy=".3em" > <c:out value="${list.rname}" /></text>
            					<!-- 방설명  -->
-           					<text x="50%" y="45%" style="font-weight:bold; font-size:15px; font-color:#F5FFFA; overflow:auto; white-space:nowrap; width: 90%;" fill="#353635" dy=".3em">
-								<c:out value="${list.rstr}" /></text>          
+           					<text x="50%" y="55%" width="80%" style="font-weight:bold; font-size:1.2em; font-color:#ffffff; overflow:auto; white-space:nowrap; width: 80%;" fill="#e0e0e0" dy=".3em">
+								<c:out value="${list.rstr}" /></text>
           					</svg>
 					</div>
 

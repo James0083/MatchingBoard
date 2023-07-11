@@ -15,6 +15,7 @@ public class ShopVO {
 	private double stars;
 	private double mapx;
 	private double mapy;
+	private String userid;
 	//private int reviews;
 	
 }

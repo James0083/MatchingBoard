@@ -139,11 +139,11 @@ h1 {
 		</div>
 
 		<br>
-		<input type="hidden" name="saddr" value="addr"><!-- 받아올 카페 주소 -->
-		<input type="hidden" name="userid" value="2222"><!-- 평가할 유저 id 받기 -->
+		<input type="hidden" name="shopid" value="${shopVO.shopid}"><!-- 받아올 카페 주소 -->
+		<input type="hidden" name="userid" value="${loginUser.userid}"><!-- 평가할 유저 id 받기 -->
 		<input type="hidden" name="stars" id="averageRating">
 		<button type="submit" class="btn btn-success">제출</button>
-		<button type="button" class="btn btn-secondary" onclick="window.location.href='/matchingBoard/room/roomView'">건너뛰기</button>
+		<button type="button" class="btn btn-secondary" onclick="window.location.href='/matchingBoard/room/roomList'">건너뛰기</button>
 		<!-- <button type="button" onclick="redirectMemEval()">모임원 평가 이동</button> -->
 	</form>
 

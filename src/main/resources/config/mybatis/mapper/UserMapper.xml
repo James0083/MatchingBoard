@@ -5,9 +5,9 @@
 
 	<insert id="insertUser" parameterType="User">
 		insert into
-		Member(userid,nickname,grade,exp,manner,attend,late,absent)
+		Member(userid,nickname,grade,exp,manner,attend,late,absent,area_code)
 		values
-		(#{userid},DBMS_RANDOM.STRING('X', 10),0,0,0,0,0,0)
+		(#{userid},DBMS_RANDOM.STRING('X', 10),0,0,0,0,0,0,0)
 	</insert>
 	
 	<select id="getUserById" resultType="User">

@@ -37,9 +37,9 @@ public class EvalController {
     	int n=evalCafeService.insertStars(shopVO);
     	String msg = "보드게임카페 평가";
     	EvaluationVO star=evalCafeService.cafeStars(shopVO);
-    	System.out.println("매장 평점: "+star.getStars());
+    	
     	//loc = (n > 0) ? "/matchingBoard/room/roomView" : "javascript:history.back()";
-    	String loc = (n > 0) ? "/matchingBoard/room/roomView" : "javascript:history.back()";
+    	String loc = (n > 0) ? "/matchingBoard/room/roomList" : "javascript:history.back()";
     	//System.out.println("매장 평점: "+star.getStars());
         
         msg += (n > 0) ? "성공" : "실패";

@@ -5,11 +5,11 @@
 <mapper namespace="com.multi.mapper.EvalCafeMapper">
 	<insert id="insertStars" parameterType="com.multi.model.ShopVO">
 		insert into evaluation 
-		values (evaluation_seq.nextval,#{userid}, #{saddr}, #{stars})
+		values (evaluation_seq.nextval,#{userid}, #{shopid}, #{stars})
 	</insert>
 	
 	<select id="cafeStars" parameterType="com.multi.model.ShopVO" resultType="com.multi.model.EvaluationVO">
-		select avg(stars) stars from evaluation where saddr=#{saddr}
+		select avg(stars) stars from evaluation where shopid=#{shopid}
 	</select>
     
 </mapper>

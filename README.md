@@ -16,8 +16,6 @@
 
 # ⏰개발 기간
 
-
-
 22.06.07 ~ 22.07.11
 
 ---
@@ -32,13 +30,29 @@
 ---
 
 # ⚙프로젝트 수행 도구
-![Java](https://img.shields.io/badge/-Java-blue?style=flat-square&logo=java)
-![Oracle](https://img.shields.io/badge/-Oracle-F80000?style=flat-square&logo=oracle)
-![Spring](https://img.shields.io/badge/-Spring-6DB33F?style=flat-square&logo=spring)
-![MyBatis](https://img.shields.io/badge/-MyBatis-000000?style=flat-square)
-![Tomcat](https://img.shields.io/badge/-Tomcat-F8DC75?style=flat-square&logo=apache-tomcat)
-![HTML5](https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/-CSS-1572B6?style=flat-square&logo=css3)
-![JavaScript](https://img.shields.io/badge/-JavaScript-yellow?style=flat-square&logo=javascript)
-![jQuery](https://img.shields.io/badge/-jQuery-0769AD?style=flat-square&logo=jquery)
-![Bootstrap](https://img.shields.io/badge/-Bootstrap-563D7C?style=flat-square&logo=bootstrap)
+
+[https://img.shields.io/badge/-Java-blue?style=flat-square&logo=java](https://img.shields.io/badge/-Java-blue?style=flat-square&logo=java)
+
+[https://img.shields.io/badge/-Oracle-F80000?style=flat-square&logo=oracle](https://img.shields.io/badge/-Oracle-F80000?style=flat-square&logo=oracle)
+
+[https://img.shields.io/badge/-Spring-6DB33F?style=flat-square&logo=spring](https://img.shields.io/badge/-Spring-6DB33F?style=flat-square&logo=spring)
+
+[https://img.shields.io/badge/-MyBatis-000000?style=flat-square](https://img.shields.io/badge/-MyBatis-000000?style=flat-square)
+
+[https://img.shields.io/badge/-Tomcat-F8DC75?style=flat-square&logo=apache-tomcat](https://img.shields.io/badge/-Tomcat-F8DC75?style=flat-square&logo=apache-tomcat)
+
+[https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white](https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+
+[https://img.shields.io/badge/-CSS-1572B6?style=flat-square&logo=css3](https://img.shields.io/badge/-CSS-1572B6?style=flat-square&logo=css3)
+
+[https://img.shields.io/badge/-JavaScript-yellow?style=flat-square&logo=javascript](https://img.shields.io/badge/-JavaScript-yellow?style=flat-square&logo=javascript)
+
+[https://img.shields.io/badge/-jQuery-0769AD?style=flat-square&logo=jquery](https://img.shields.io/badge/-jQuery-0769AD?style=flat-square&logo=jquery)
+
+[https://img.shields.io/badge/-Bootstrap-563D7C?style=flat-square&logo=bootstrap](https://img.shields.io/badge/-Bootstrap-563D7C?style=flat-square&logo=bootstrap)
+
+---
+
+# 📜클래스 다이어그램
+
+<img src="https://github.com/GYEONGDONGBAEK/JavaStudy/assets/122242439/4b296396-505b-41be-b779-b629eabf0718">

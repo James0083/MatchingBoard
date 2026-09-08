@@ -48,6 +48,10 @@
         select * from roompeople where roomid = #{roomid}
     </select>
     
+    <delete id="deleteRoomPeopleByRoomId" parameterType="string">
+    	delete from roompeople where roomid=#{roomid}
+    </delete>
+
     <delete id="deleteRoom" parameterType="string">
     	delete from room where roomid=#{roomid}
     </delete>

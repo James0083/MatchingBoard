@@ -3,9 +3,8 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 <script>
 	$(function(){
-		var scheduleArr="${scheduleArr}".split(',');
-		alert(scheduleArr);
-		
+		var scheduleArr=${scheduleArr};
+
 		var eventArr=[];
 		
 		for(let i=0; i<scheduleArr.length; i+=2){

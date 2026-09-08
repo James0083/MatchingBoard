@@ -15,7 +15,8 @@ public interface RoomMapper {
 	//*****수정확인 필요*****
 	List<UserVO> selectMemberAll(String roomid);
 	int deleteRoom(String roomid);
-	
+	int deleteRoomPeopleByRoomId(String roomid);
+
 	int insertIntoRoomPeople(@Param("roomId") String roomId, @Param("userId") String userId);
 	
 	int removeFromRoomPeople(@Param("roomId") String roomId, @Param("userId") String userId);

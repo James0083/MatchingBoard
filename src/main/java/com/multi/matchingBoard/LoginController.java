@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -290,11 +291,15 @@ public class LoginController {
 	    List<String> scheduleArr = new ArrayList<>();
 	    for(String uRoomId : usersRoomIds) {
 	    	RoomVO room=rService.selectRoomByIdx(uRoomId);
+	    	if(room == null) {
+	    		// 이미 삭제된 방(참여 기록만 남아있는 경우) 건너뜀
+	    		continue;
+	    	}
 	    	scheduleArr.add(room.getRname()+" - "+room.getRplace());
 	    	scheduleArr.add(room.getRdatetime());
 	    }
-	    
-	    model.addAttribute("scheduleArr", scheduleArr);
+
+	    model.addAttribute("scheduleArr", new Gson().toJson(scheduleArr));
 	    
 		return "user/mypage";
 	    
